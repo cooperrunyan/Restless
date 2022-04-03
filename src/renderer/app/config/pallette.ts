@@ -1,0 +1,15 @@
+export const pallette = {
+  blue: 'var(--blue)', // color(#3982f2)
+  paleBlue: 'var(--pale-blue)', // color(#67befe)
+  purple: 'var(--purple)', // color(#9e51ec)
+  palePurple: 'var(--pale-purple)', // color(#c479ff)
+  lightGrey: 'var(--light-grey)', // color(#808080)
+  grey: 'var(--grey)', // color(#202429)
+  darkGrey: 'var(--dark-grey)', // color(#101111)
+  black: 'var(--black)', // color(#000000)
+  white: 'var(--white)', // color(#ffffff)
+  orange: 'var(--orange)', // color(#ff8a00)
+  paleOrange: 'var(--pale-orange)', // color(#dfb678)
+  green: 'var(--green)', // color(#2fca51)
+  red: 'var(--red)', // color(#f34c4c)
+};

@@ -1,0 +1,209 @@
+.MenuBar {
+  padding: 2rem 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.1rem solid var(--grey);
+  user-select: none;
+  position: relative;
+  z-index: 10000;
+
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 2rem;
+    outline: none;
+
+    user-select: none;
+
+    .icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .turn {
+      transform: rotate(-90deg);
+    }
+
+    span span {
+      color: var(--light-grey);
+    }
+
+    .chevron {
+      height: 2.4rem;
+      width: 2.4rem;
+    }
+  }
+}
+
+.list {
+  position: absolute;
+  top: 5.6rem;
+  left: 2rem;
+  background-color: var(--black);
+  border: 0.1rem solid var(--grey);
+  border-radius: var(--border-radius);
+  z-index: 1000;
+  box-shadow: 0 0.4rem 5.6rem var(--black);
+
+  padding: 2.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  min-width: 38rem;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+
+  * {
+    font-weight: 600;
+  }
+
+  p,
+  a {
+    font-size: 2rem;
+  }
+
+  ul {
+    list-style: none;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    li {
+      display: flex;
+      width: 100%;
+
+      a {
+        padding: 2rem 1.2rem;
+        background-color: var(--black);
+        border: 0.1rem solid var(--grey);
+        border-radius: var(--border-radius);
+        height: fit-content;
+        display: flex;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+          background-color: var(--dark-grey);
+        }
+
+        &.create {
+          background-color: var(--blue);
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+.createMenu {
+  position: absolute;
+  box-shadow: 0 0.4rem 5.6rem var(--black);
+  top: 5.6rem;
+  left: 2rem;
+  background-color: var(--black);
+  border: 0.1rem solid var(--grey);
+  border-radius: var(--border-radius);
+  z-index: 1000;
+  padding: 2.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  min-width: min(65rem, calc(100% - 4rem));
+
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+
+  p,
+  p * {
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .back {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .backLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 2.4rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+
+    & > button {
+      background-color: var(--blue);
+      width: fit-content;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.6rem;
+    }
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+
+    label {
+      font-size: 2rem;
+    }
+
+    input {
+      background-color: var(--dark-grey);
+      border: 0.1rem solid var(--grey);
+      border-radius: var(--border-radius);
+      padding: 0.8rem 1.2rem;
+      font-size: 2rem;
+      width: 100%;
+      outline: none;
+    }
+  }
+}
+
+.shown {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--black);
+  opacity: 0;
+  z-index: 1000;
+  pointer-events: none;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+
+  &.show {
+    opacity: 0.5;
+    pointer-events: all;
+  }
+}

@@ -1,0 +1,24 @@
+@import './fonts/Inter';
+@import './fonts/fonts/roboto-mono-v13-latin/font.css';
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+div,
+ul,
+input,
+button {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: var(--letting);
+}
+
+p {
+  font-size: 1.6rem;
+}
