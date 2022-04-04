@@ -15,21 +15,16 @@ export function StatusBar() {
         onClick={() => {
           dataManager?.toggleSidebar();
           dataManager?.push();
-        }}
-      >
-        <Sidebar
-          className={
-            style.Sidebar +
-            ' ' +
-            (!dataManager?.storage?.settings?.hideSidebar ? style.flip : '')
-          }
-        />
+        }}>
+        <Sidebar className={style.Sidebar + ' ' + (!dataManager?.storage?.settings?.hideSidebar ? style.flip : '')} />
         Sidebar
       </li>
-      <li>
-        <Terminal />
-        Terminal
-      </li>
+      {window?.electron?.store && (
+        <li>
+          <Terminal />
+          Terminal
+        </li>
+      )}
       <li>
         <Flash />
         Shortcuts

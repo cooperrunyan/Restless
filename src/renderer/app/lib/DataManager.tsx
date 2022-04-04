@@ -19,36 +19,37 @@ export const DataContext = createContext<{
   createCollection(name: string): void;
   createFolder(name: string, parentId?: string | undefined): true | null;
   createRequest(name: string, parentId?: string | undefined): true | null;
-  moveXintoY(
-    idOfElementToBeMoved: string,
-    idOfElementToBeMovedInto: string,
-    index: number
-  ): any;
+  moveXintoY(idOfElementToBeMoved: string, idOfElementToBeMovedInto: string, index: number): any;
   deleteTreeItem(idOfElementToBeDeleted: string): any;
   modifyRequest(id: string, request: Partial<Request>): true | null;
   modifyCurrentRequest(request: Partial<Request>): true | null;
   toggleSidebar(): void;
+  uuid(): string;
 } | null>(null);
 
+const defaultStorage = {
+  currentWorkspace: null,
+  workspaces: [],
+  settings: {
+    hideSidebar: false,
+  },
+};
+
 export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
-  const [storage, setStorage] = useState<Storage>({
-    currentWorkspace: null,
-    workspaces: [],
-    settings: {
-      hideSidebar: false,
-    },
-  });
+  const [storage, setStorage] = useState<Storage>(defaultStorage);
 
   useEffect(() => {
     pull();
   }, []);
 
   function push() {
-    window.electron.store.set(storage);
+    if (window?.electron?.store) window.electron.store.set(storage);
+    else localStorage?.setItem('storage', JSON.stringify(storage));
   }
 
   function pull() {
-    setStorage(window.electron.store.get());
+    if (window?.electron?.store) setStorage(window.electron.store.get());
+    else setStorage(JSON.parse(localStorage.getItem('storage') || JSON.stringify(defaultStorage)));
   }
 
   function getAllWorkspaces() {
@@ -105,18 +106,17 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
     const collection = getCurrentCollection();
     if (!collection || !collection.currentRequest) return null;
 
-    return getElementById(storage, collection.currentRequest, collection)
-      .child as Request | null;
+    return getElementById(storage, collection.currentRequest, collection).child as Request | null;
   }
 
   function modifyRequest(id: string, request: Partial<Request>) {
     const collection = getCurrentCollection();
     if (!collection) return null;
 
-    const req = getElementById(storage, id, collection).child as Request;
+    const req = getElementById(storage, id, collection).child as any;
 
     for (const [key, value] of Object.entries(request)) {
-      req[key as keyof Request] = value;
+      req[key as any] = value;
     }
 
     setStorage({ ...storage });
@@ -139,7 +139,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
   }
 
   function createWorkspace(name: string) {
-    const id = window.electron.uuid();
+    const id = uuid();
     const _storage = storage;
     _storage.workspaces.push({
       name,
@@ -152,7 +152,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
   }
 
   function createCollection(name: string) {
-    const id = window.electron.uuid();
+    const id = uuid();
     for (const workspace of storage.workspaces) {
       if (workspace.id === storage.currentWorkspace) {
         workspace.collections.push({
@@ -172,15 +172,14 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
       if (workspace.id === s.currentWorkspace) {
         for (const collection of workspace.collections) {
           if (collection.id === workspace.currentCollection) {
-            const parent = parentId
-              ? findParent(parentId, collection)
-              : collection;
+            const parent = parentId ? findParent(parentId, collection) : collection;
 
             parent?.children.push({
               name,
-              id: window.electron.uuid(),
+              id: uuid(),
               auth: {
                 type: null,
+                data: '',
               },
               method: 'GET',
               body: {
@@ -192,8 +191,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
               docs: `# ${name}`,
               headers: {},
               query: {},
-              schema: {},
-            } as Request);
+            });
 
             setStorage(s);
             return true;
@@ -210,14 +208,12 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
       if (workspace.id === s.currentWorkspace) {
         for (const collection of workspace.collections) {
           if (collection.id === workspace.currentCollection) {
-            const parent = parentId
-              ? findParent(parentId, collection)
-              : collection;
+            const parent = parentId ? findParent(parentId, collection) : collection;
 
             parent?.children.push({
               name,
               children: [],
-              id: window.electron.uuid(),
+              id: uuid(),
             });
 
             setStorage(s);
@@ -233,58 +229,32 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
     const collection = getCurrentCollection();
     if (!collection) return null;
 
-    const elementToBeDeleted = getElementById(
-      storage,
-      idOfElementToBeDeleted,
-      collection
-    );
+    const elementToBeDeleted = getElementById(storage, idOfElementToBeDeleted, collection);
 
     if (!elementToBeDeleted.child) return null;
     if (elementToBeDeleted.child.id !== idOfElementToBeDeleted) return null;
 
-    elementToBeDeleted.parent!.children.splice(
-      elementToBeDeleted.parent!.children.indexOf(elementToBeDeleted.child),
-      1
-    );
+    elementToBeDeleted.parent!.children.splice(elementToBeDeleted.parent!.children.indexOf(elementToBeDeleted.child), 1);
 
     setStorage({ ...storage });
     return true;
   }
 
-  function moveXintoY(
-    idOfElementToBeMoved: string,
-    idOfElementToBeMovedInto: string,
-    index: number
-  ): any {
+  function moveXintoY(idOfElementToBeMoved: string, idOfElementToBeMovedInto: string, index: number): any {
     const collection = getCurrentCollection();
     if (!collection) return null;
 
-    const elementToBeMoved = getElementById(
-      storage,
-      idOfElementToBeMoved,
-      collection
-    );
+    const elementToBeMoved = getElementById(storage, idOfElementToBeMoved, collection);
 
-    const elementToBeMovedInto = getElementById(
-      storage,
-      idOfElementToBeMovedInto,
-      collection
-    ) as any;
+    const elementToBeMovedInto = getElementById(storage, idOfElementToBeMovedInto, collection) as any;
 
     if (!elementToBeMoved.child || !elementToBeMovedInto.child) return null;
     if (elementToBeMoved.child.id !== idOfElementToBeMoved) return null;
     if (elementToBeMovedInto.child.id !== idOfElementToBeMovedInto) return null;
 
-    elementToBeMoved.parent!.children.splice(
-      elementToBeMoved.parent!.children.indexOf(elementToBeMoved.child),
-      1
-    );
+    elementToBeMoved.parent!.children.splice(elementToBeMoved.parent!.children.indexOf(elementToBeMoved.child), 1);
 
-    elementToBeMovedInto.child.children.splice(
-      index,
-      0,
-      elementToBeMoved.child
-    );
+    elementToBeMovedInto.child.children.splice(index, 0, elementToBeMoved.child);
 
     setStorage({ ...storage });
   }
@@ -293,6 +263,25 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
     storage.settings.hideSidebar = !storage.settings.hideSidebar;
 
     setStorage({ ...storage });
+  }
+
+  function uuid() {
+    // Public Domain/MIT
+    var d = new Date().getTime(); //Timestamp
+    var d2 = (typeof performance !== 'undefined' && performance.now && performance.now() * 1000) || 0; //Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16; //random number between 0 and 16
+      if (d > 0) {
+        //Use timestamp until depleted
+        r = (d + r) % 16 | 0;
+        d = Math.floor(d / 16);
+      } else {
+        //Use microseconds since page-load if supported
+        r = (d2 + r) % 16 | 0;
+        d2 = Math.floor(d2 / 16);
+      }
+      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
   }
 
   return (
@@ -318,18 +307,15 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
         deleteTreeItem,
         modifyRequest,
         modifyCurrentRequest,
-        toggleSidebar
-      }}
-    >
+        toggleSidebar,
+        uuid,
+      }}>
       {children}
     </DataContext.Provider>
   );
 }
 
-function findParent(
-  parentId: string,
-  collection: Collection | Folder
-): Folder | null {
+function findParent(parentId: string, collection: Collection | Folder): Folder | null {
   for (const child of collection.children) {
     if (!(child as Folder).children) continue;
     if ((child as Folder).id === parentId) return child as Folder;
@@ -341,11 +327,7 @@ function findParent(
   return null;
 }
 
-function getElementById(
-  storage: Storage,
-  id: string,
-  scope: Collection | Folder
-): { child: Folder | Request | null; parent: Folder | Collection | null } {
+function getElementById(storage: Storage, id: string, scope: Collection | Folder): { child: Folder | Request | null; parent: Folder | Collection | null } {
   let result = null;
 
   if (id === scope.id) {

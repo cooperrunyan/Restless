@@ -1,6 +1,6 @@
 <svg width="543" height="543" viewBox="0 0 543 543" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g clip-path="url(#clip0_60_2)">
-    <rect width="543" height="543" fill="white" />
+    <rect width="543" height="543" fill="none" />
     <circle cx="274.215" cy="268.785" r="236.205" fill="black" />
     <circle cx="274.215" cy="268.785" r="236.205" transform="rotate(42 274.215 268.785)" fill="url(#paint0_linear_60_2)" fill-opacity="0.41" />
     <circle cx="271.5" cy="271.5" r="59.73" fill="white" />

@@ -28,8 +28,7 @@ let mainWindow: BrowserWindow | null = null;
 const store = {
   get() {
     app.getPath('home');
-    if (!fs.existsSync(app.getPath('home') + '/.restless'))
-      fs.mkdirSync(app.getPath('home') + '/.restless');
+    if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
 
     if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
       fs.writeFileSync(
@@ -37,16 +36,13 @@ const store = {
         JSON.stringify({
           currentWorkspace: null,
           workspaces: [],
-        })
+        }),
       );
 
-    return JSON.parse(
-      fs.readFileSync(app.getPath('home') + '/.restless/storage.json', 'utf-8')
-    );
+    return JSON.parse(fs.readFileSync(app.getPath('home') + '/.restless/storage.json', 'utf-8'));
   },
   set(value: any) {
-    if (!fs.existsSync(app.getPath('home') + '/.restless'))
-      fs.mkdirSync(app.getPath('home') + '/.restless');
+    if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
 
     if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
       fs.writeFileSync(
@@ -54,13 +50,10 @@ const store = {
         JSON.stringify({
           currentWorkspace: null,
           workspaces: [],
-        })
+        }),
       );
 
-    return fs.writeFileSync(
-      app.getPath('home') + '/.restless/storage.json',
-      JSON.stringify(value)
-    );
+    return fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(value));
   },
 };
 
@@ -82,17 +75,14 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-const isDevelopment =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDevelopment) {
   require('electron-debug')();
 }
 
 const createWindow = async () => {
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
+  const RESOURCES_PATH = app.isPackaged ? path.join(process.resourcesPath, 'assets') : path.join(__dirname, '../../assets');
 
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);
@@ -111,9 +101,7 @@ const createWindow = async () => {
     icon: getAssetPath('icon.icns'),
     webPreferences: {
       nodeIntegration: true,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+      preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
 
@@ -149,7 +137,7 @@ app.setAboutPanelOptions({
   applicationVersion: '0.0.0',
   authors: ['Cooper Runyan'],
   copyright: 'EPL-2.0',
-  iconPath: '../../assets/icon.icns',
+  iconPath: '../../public/icon.icns',
 });
 
 app.setName('Restless');

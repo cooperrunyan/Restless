@@ -124,7 +124,7 @@
   flex-direction: column;
   gap: 1.4rem;
 
-  min-width: min(65rem, calc(100% - 4rem));
+  min-width: clamp(0rem, calc(100% - 4rem), 65rem);
 
   opacity: 0;
   pointer-events: none;

@@ -15,7 +15,7 @@ export function App({ children }: { children?: ReactChild | ReactChild[] }) {
   return (
     <Data>
       <div className="App">
-        <div className="TitleBar"></div>
+        {window?.electron?.store && <div className="TitleBar"></div>}
         <div className="App-Contents">{children}</div>
       </div>
     </Data>
