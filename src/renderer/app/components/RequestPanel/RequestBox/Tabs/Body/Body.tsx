@@ -18,8 +18,7 @@ export function Body() {
   useEffect(() => {
     document.querySelector('.ace_editor')?.classList.remove('editing-yaml');
 
-    if (request?.body.type === 'yaml')
-      document.querySelector('.ace_editor')?.classList.add('editing-yaml');
+    if (request?.body.type === 'yaml') document.querySelector('.ace_editor')?.classList.add('editing-yaml');
   }, [request?.body?.type]);
 
   if (!request) return <div className={style.Body}></div>;
@@ -29,24 +28,11 @@ export function Body() {
       <div className={style.contentType}>
         <span>Content Type:</span>
         <div className={style.contentTypeParent}>
-          <div
-            className={style.contentTypeSelector}
-            onClick={(e) => setOpenContentType(!openContentType)}
-          >
+          <div className={style.contentTypeSelector} onClick={(e) => setOpenContentType(!openContentType)}>
             {formatContentType(request.body.type)}
-            <ChevronBack
-              className={
-                style.chevron + ' ' + (openContentType ? style.turn : '')
-              }
-            />
+            <ChevronBack className={style.chevron + ' ' + (openContentType ? style.turn : '')} />
           </div>
-          <div
-            className={
-              style.contentDropdown +
-              ' ' +
-              (openContentType ? style.activeContent : '')
-            }
-          >
+          <div className={style.contentDropdown + ' ' + (openContentType ? style.activeContent : '')}>
             <ul>
               <li
                 onClick={(e) => {
@@ -54,8 +40,7 @@ export function Body() {
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'json' },
                   });
-                }}
-              >
+                }}>
                 JSON
               </li>
               <li
@@ -64,8 +49,7 @@ export function Body() {
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'yaml' },
                   });
-                }}
-              >
+                }}>
                 YAML
               </li>
               <li
@@ -74,8 +58,7 @@ export function Body() {
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'text' },
                   });
-                }}
-              >
+                }}>
                 Text
               </li>
               <li
@@ -84,8 +67,7 @@ export function Body() {
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: null },
                   });
-                }}
-              >
+                }}>
                 None
               </li>
             </ul>
@@ -93,16 +75,11 @@ export function Body() {
         </div>
       </div>
       <div
-        className={
-          style.body +
-          ' ' +
-          (request.body.type === 'text' ? style.bodytext : '')
-        }
+        className={style.body + ' ' + (request.body.type === 'text' ? style.bodytext : '')}
         onScroll={(e) => {
           e.stopPropagation();
           e.preventDefault();
-        }}
-      >
+        }}>
         {/* request body will go here */}
         {request.body.type && (
           <AceEditor
@@ -116,9 +93,7 @@ export function Body() {
             fontSize={14}
             showPrintMargin={false}
             showGutter={false}
-            height={`${
-              (request.body.data?.split('\n').length || 0) * 1.4 + 7
-            }em`}
+            height={`${(request.body.data?.split('\n').length || 0) * 1.4}em`}
             highlightActiveLine={false}
             value={request.body.data || ''}
             setOptions={{

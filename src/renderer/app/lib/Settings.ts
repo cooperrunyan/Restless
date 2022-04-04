@@ -37,11 +37,11 @@ export type Request = {
     data: string | null;
   };
   headers: {
-    [key: string]: {
-      content: string;
-      enabled: boolean;
-    };
-  };
+    id: string;
+    key: string;
+    value: string;
+    enabled: boolean;
+  }[];
   docs: string; // Markdown
   auth: {
     type: AuthType;
@@ -64,21 +64,8 @@ export type Response = {
   headers: { [key: string]: string };
 };
 
-export type Method =
-  | 'GET'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE'
-  | 'HEAD'
-  | 'OPTIONS';
+export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
-export type AuthType =
-  | 'basic'
-  | 'digest'
-  | 'bearer'
-  | 'oauth2'
-  | 'api_key'
-  | null;
+export type AuthType = 'basic' | 'digest' | 'bearer' | 'oauth2' | 'api_key' | null;
 
 export type Server = {};

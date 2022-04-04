@@ -189,7 +189,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
               endpoint: 'https://echo.cooperrunyan.com/ping',
 
               docs: `# ${name}`,
-              headers: {},
+              headers: [],
               query: {},
             });
 

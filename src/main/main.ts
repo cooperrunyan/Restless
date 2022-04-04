@@ -23,6 +23,14 @@ export default class AppUpdater {
   }
 }
 
+const defaultStorage = {
+  currentWorkspace: null,
+  workspaces: [],
+  settings: {
+    hideSidebar: false,
+  },
+};
+
 let mainWindow: BrowserWindow | null = null;
 
 const store = {
@@ -31,13 +39,7 @@ const store = {
     if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
 
     if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
-      fs.writeFileSync(
-        app.getPath('home') + '/.restless/storage.json',
-        JSON.stringify({
-          currentWorkspace: null,
-          workspaces: [],
-        }),
-      );
+      fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(defaultStorage));
 
     return JSON.parse(fs.readFileSync(app.getPath('home') + '/.restless/storage.json', 'utf-8'));
   },
@@ -45,13 +47,7 @@ const store = {
     if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
 
     if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
-      fs.writeFileSync(
-        app.getPath('home') + '/.restless/storage.json',
-        JSON.stringify({
-          currentWorkspace: null,
-          workspaces: [],
-        }),
-      );
+      fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(defaultStorage));
 
     return fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(value));
   },
