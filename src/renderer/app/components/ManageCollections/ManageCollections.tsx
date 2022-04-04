@@ -19,36 +19,30 @@ export function ManageCollections() {
         onClick={(e) => {
           setShowCreate(false);
           setShowList(!showList);
-        }}
-      >
+        }}>
         {dataManager?.getCurrentCollection()?.name || 'Select A Collection'}
         <ChevronBack className={showList || showCreate ? style.turn : ''} />
       </div>
       <div className={style.list + ' ' + (showList ? style.shown : '')}>
         <p>Collections</p>
         <ul>
-          {dataManager
-            ?.getCurrentWorkspace()
-            ?.collections?.map((collection) => {
-              return (
-                <CollectionOption
-                  key={Math.random()}
-                  state={{ setShowCreate, setShowList }}
-                >
-                  {collection}
-                </CollectionOption>
-              );
-            })}
+          {dataManager?.getCurrentWorkspace()?.collections?.map((collection) => {
+            return (
+              <CollectionOption key={Math.random()} state={{ setShowCreate, setShowList }}>
+                {collection}
+              </CollectionOption>
+            );
+          })}
 
           <li>
             <a
+              tabIndex={-1}
               className={style.create}
               onClick={(e) => {
                 e.preventDefault();
                 setShowList(false);
                 setShowCreate(true);
-              }}
-            >
+              }}>
               Create Collection
             </a>
           </li>
@@ -60,8 +54,7 @@ export function ManageCollections() {
           onClick={(e) => {
             setShowList(true);
             setShowCreate(false);
-          }}
-        >
+          }}>
           <ChevronBack className={style.back} id="back" />
           <label>New Collection</label>
         </p>
@@ -78,18 +71,12 @@ export function ManageCollections() {
 
             dataManager?.createCollection(name);
             dataManager?.push();
-          }}
-        >
+          }}>
           <div className={style.row}>
             <label htmlFor="collection-name">Name</label>
-            <input
-              ref={newCollectionName as any}
-              type="text"
-              id="collection-name"
-              placeholder="Collection Name"
-            />
+            <input tabIndex={-1} ref={newCollectionName as any} type="text" id="collection-name" placeholder="Collection Name" />
           </div>
-          <button className={style.submit} type={'submit'}>
+          <button tabIndex={-1} className={style.submit} type={'submit'}>
             Create Collection
           </button>
         </form>
@@ -98,17 +85,12 @@ export function ManageCollections() {
   );
 }
 
-function CollectionOption({
-  children,
-  state,
-}: {
-  children: Collection;
-  state: any;
-}) {
+function CollectionOption({ children, state }: { children: Collection; state: any }) {
   const dataManager = useContext(DataContext);
   return (
     <li>
       <a
+        tabIndex={-1}
         onClick={(e) => {
           e.preventDefault();
           state.setShowList(false);
@@ -116,8 +98,7 @@ function CollectionOption({
 
           dataManager?.setCurrentCollection(children.id);
           dataManager?.push();
-        }}
-      >
+        }}>
         {children.name}
       </a>
     </li>

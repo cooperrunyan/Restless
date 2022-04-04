@@ -80,7 +80,6 @@ export function Body() {
           e.stopPropagation();
           e.preventDefault();
         }}>
-        {/* request body will go here */}
         {request.body.type && (
           <AceEditor
             mode={request.body.type}

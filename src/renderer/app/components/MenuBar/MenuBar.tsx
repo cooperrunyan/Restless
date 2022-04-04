@@ -17,37 +17,26 @@ export function MenuBar() {
       <div className={style.MenuBar}>
         <div className={style.workspaces}>
           <button
+            tabIndex={-1}
             onClick={(e) => {
               e.preventDefault();
 
               if (showCreate) setShowCreate(false);
               else if (showList) setShowList(false);
               else if (!showCreate && !showList) setShowList(true);
-            }}
-          >
+            }}>
             <span>
               Workspaces
-              {Object.keys(dataManager?.getCurrentWorkspace() || {})[0] && (
-                <span>
-                  &nbsp;/&nbsp;{dataManager?.getCurrentWorkspace()?.name}
-                </span>
-              )}
+              {Object.keys(dataManager?.getCurrentWorkspace() || {})[0] && <span>&nbsp;/&nbsp;{dataManager?.getCurrentWorkspace()?.name}</span>}
             </span>
-            <ChevronBack
-              className={`${style.icon} ${
-                showCreate || showList ? style.turn : ''
-              }`}
-            />
+            <ChevronBack className={`${style.icon} ${showCreate || showList ? style.turn : ''}`} />
           </button>
           <div className={style.list + ' ' + (showList ? style.shown : '')}>
             <p>Workspaces</p>
             <ul>
               {dataManager?.storage?.workspaces?.map((workspace) => {
                 return (
-                  <WorkspaceOption
-                    key={Math.random()}
-                    state={{ setShowCreate, setShowList }}
-                  >
+                  <WorkspaceOption key={Math.random()} state={{ setShowCreate, setShowList }}>
                     {workspace}
                   </WorkspaceOption>
                 );
@@ -55,32 +44,30 @@ export function MenuBar() {
 
               <li>
                 <a
+                  tabIndex={-1}
                   className={style.create}
                   onClick={(e) => {
                     e.preventDefault();
                     setShowList(false);
                     setShowCreate(true);
-                  }}
-                >
+                  }}>
                   Create Workspace
                 </a>
               </li>
             </ul>
           </div>
-          <div
-            className={`${style.createMenu} ${showCreate ? style.shown : ''}`}
-          >
+          <div className={`${style.createMenu} ${showCreate ? style.shown : ''}`}>
             <p
               className={style.backLabel}
               onClick={(e) => {
                 setShowList(true);
                 setShowCreate(false);
-              }}
-            >
+              }}>
               <ChevronBack className={style.back} id="back" />
               <label>New Workspace</label>
             </p>
             <form
+              tabIndex={-1}
               onSubmit={async (e) => {
                 e.preventDefault();
                 const name = newWorkspaceName.current?.value;
@@ -93,18 +80,14 @@ export function MenuBar() {
 
                 dataManager?.createWorkspace(name);
                 dataManager?.push();
-              }}
-            >
+              }}>
               <div className={style.row}>
-                <label htmlFor="workspace-name">Name</label>
-                <input
-                  ref={newWorkspaceName as any}
-                  type="text"
-                  id="workspace-name"
-                  placeholder="Workspace Name"
-                />
+                <label tabIndex={-1} htmlFor="workspace-name">
+                  Name
+                </label>
+                <input tabIndex={-1} ref={newWorkspaceName as any} type="text" id="workspace-name" placeholder="Workspace Name" />
               </div>
-              <button className={style.submit} type={'submit'}>
+              <button tabIndex={-1} className={style.submit} type={'submit'}>
                 Create Workspace
               </button>
             </form>
@@ -112,29 +95,21 @@ export function MenuBar() {
         </div>
       </div>
       <div
-        className={
-          style.overlay + ' ' + (showList || showCreate ? style.show : '')
-        }
+        className={style.overlay + ' ' + (showList || showCreate ? style.show : '')}
         onClick={() => {
           setShowCreate(false);
           setShowList(false);
-        }}
-      ></div>
+        }}></div>
     </>
   );
 }
 
-function WorkspaceOption({
-  children,
-  state,
-}: {
-  children: Workspace;
-  state: any;
-}) {
+function WorkspaceOption({ children, state }: { children: Workspace; state: any }) {
   const dataManager = useContext(DataContext);
   return (
     <li>
       <a
+        tabIndex={-1}
         onClick={(e) => {
           e.preventDefault();
           state.setShowList(false);
@@ -142,8 +117,7 @@ function WorkspaceOption({
 
           dataManager?.setCurrentWorkspace(children.id);
           dataManager?.push();
-        }}
-      >
+        }}>
         {children.name}
       </a>
     </li>

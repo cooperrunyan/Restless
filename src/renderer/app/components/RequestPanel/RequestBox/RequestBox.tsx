@@ -11,9 +11,7 @@ import { Docs } from './Tabs/Docs/Docs';
 
 export function RequestBox() {
   const dataManager = useContext(DataContext);
-  const [activeTab, setActiveTab] = useState<
-    'body' | 'headers' | 'query' | 'auth' | 'docs'
-  >('body');
+  const [activeTab, setActiveTab] = useState<'body' | 'headers' | 'query' | 'auth' | 'docs'>('body');
 
   const request = dataManager?.getCurrentRequest();
 
@@ -44,24 +42,10 @@ export function RequestBox() {
   );
 }
 
-function Show({
-  when,
-  children,
-}: {
-  when: boolean;
-  children: ReactChild | ReactChild[];
-}) {
-  return (
-    <div className={style.content + ' ' + (when ? style.active : '')}>
-      {children}
-    </div>
-  );
+function Show({ when, children }: { when: boolean; children: ReactChild | ReactChild[] }) {
+  return <div className={style.content + ' ' + (when ? style.active : '')}>{when && <>{children}</>}</div>;
 }
 
-function OverlapChildren({
-  children,
-}: {
-  children?: ReactChild | ReactChild[];
-}) {
+function OverlapChildren({ children }: { children?: ReactChild | ReactChild[] }) {
   return <div className={style.overlapChildren}>{children}</div>;
 }

@@ -69,6 +69,7 @@
   position: relative;
   padding: 2.4rem !important;
   border: 0.1rem solid var(--grey);
+  border-radius: var(--border-radius);
 
   &.bodytext,
   &.bodytext * {

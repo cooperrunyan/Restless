@@ -14,25 +14,13 @@ export function UrlBox() {
 
   return (
     <div className={style.UrlBox}>
-      <div
-        className={style.method}
-        onClick={(e) => setMethodSelectOpen(!methodSelectOpen)}
-      >
+      <div className={style.method} onClick={(e) => setMethodSelectOpen(!methodSelectOpen)}>
         <span>{request.method}</span>
         <ChevronBack className={methodSelectOpen ? style.turn : ''} />
       </div>
-      <div
-        className={
-          style.methodSelect + ' ' + (methodSelectOpen ? style.open : '')
-        }
-      >
-        {(
-          ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'] as const
-        ).map((method) => (
-          <MethodOption
-            key={method}
-            close={setMethodSelectOpen.bind(false) as any}
-          >
+      <div className={style.methodSelect + ' ' + (methodSelectOpen ? style.open : '')}>
+        {(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'] as const).map((method) => (
+          <MethodOption key={method} close={setMethodSelectOpen.bind(false) as any}>
             {method}
           </MethodOption>
         ))}
@@ -41,6 +29,7 @@ export function UrlBox() {
         className={style.url}
         value={request.endpoint}
         ref={urlref}
+        tabIndex={-1}
         onChange={() => {
           dataManager?.modifyCurrentRequest({
             endpoint: urlref.current!.value,
@@ -48,7 +37,7 @@ export function UrlBox() {
           dataManager?.push();
         }}
       />
-      <button className={style.send} onClick={send}>
+      <button tabIndex={-1} className={style.send} onClick={send}>
         Send
       </button>
     </div>
@@ -59,13 +48,7 @@ function send(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   e.preventDefault();
 }
 
-function MethodOption({
-  children: option,
-  close,
-}: {
-  children: Method;
-  close: () => void;
-}) {
+function MethodOption({ children: option, close }: { children: Method; close: () => void }) {
   const dataManager = useContext(DataContext);
 
   return (
@@ -75,8 +58,7 @@ function MethodOption({
         dataManager?.modifyCurrentRequest({ method: option });
         dataManager?.push();
         close();
-      }}
-    >
+      }}>
       {option}
     </div>
   );
