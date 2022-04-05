@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from 'react';
+import { buildRequest } from 'renderer/app/lib/buildRequest';
 import { ChevronBack } from '../../../icons/chevron-back-outline';
 import { DataContext } from '../../../lib/DataManager';
-import { Method } from '../../../lib/Settings';
+import { Method, Request } from '../../../lib/Settings';
 import style from './UrlBox.module.scss';
 
 export function UrlBox() {
@@ -37,15 +38,66 @@ export function UrlBox() {
           dataManager?.push();
         }}
       />
-      <button tabIndex={-1} className={style.send} onClick={send}>
+      <button tabIndex={-1} className={style.send} onClick={send(request, dataManager)}>
         Send
       </button>
     </div>
   );
 }
 
-function send(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-  e.preventDefault();
+function send(request: Request, dataManager: any) {
+  return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    if (!request || !dataManager) return;
+
+    const args = buildRequest(request);
+
+    const startTime = Date.now();
+    const sentAt = new Date();
+
+    try {
+      fetch(...args)
+        .catch((err) => {
+          const response = { error: (err as any).message };
+          dataManager.modifyCurrentRequest({ response });
+          dataManager.push();
+        })
+        .then((response) => {
+          if (!response) return;
+          const status = response.status;
+          let responseTime = Date.now() - startTime;
+          let text = '';
+          response
+            .text()
+            .catch(() => {})
+            .then((data) => {
+              responseTime = Date.now() - startTime;
+              if (data) text = data;
+            })
+
+            .finally(() => {
+              const headers: any = {};
+              response.headers.forEach((value, key) => (headers[key] = value));
+              request.response = {
+                body: {
+                  raw: text,
+                },
+                headers,
+                sentAt,
+                status,
+                time: responseTime,
+              };
+
+              dataManager.modifyCurrentRequest({ response: request.response });
+              dataManager.push();
+            });
+        });
+    } catch (err) {
+      const response = { error: (err as any).message };
+      dataManager.modifyCurrentRequest({ response });
+      dataManager.push();
+    }
+  };
 }
 
 function MethodOption({ children: option, close }: { children: Method; close: () => void }) {

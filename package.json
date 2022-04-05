@@ -150,7 +150,8 @@
     "react-scripts": "^5.0.0",
     "react-split-pane": "^0.1.92",
     "serve": "^13.0.2",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "yaml": "^1.10.2"
   },
   "devEngines": {
     "node": ">=14.x",

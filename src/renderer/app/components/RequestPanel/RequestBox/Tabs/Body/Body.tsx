@@ -74,13 +74,14 @@ export function Body() {
           </div>
         </div>
       </div>
-      <div
-        className={style.body + ' ' + (request.body.type === 'text' ? style.bodytext : '')}
-        onScroll={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}>
-        {request.body.type && (
+      {request.body.type && (
+        <div
+          className={style.body + ' ' + (request.body.type === 'text' ? style.bodytext : '')}
+          onScroll={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}>
+          (
           <AceEditor
             mode={request.body.type}
             onChange={(e) => {
@@ -104,8 +105,8 @@ export function Body() {
               useWorker: false,
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

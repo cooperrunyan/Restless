@@ -1,2 +1,75 @@
 .Auth {
+  .type {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-weight: 500;
+    padding: 2.4rem;
+
+    .icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      transition: all 0.1s ease-in-out;
+
+      &.open {
+        transform: rotate(-90deg);
+      }
+    }
+
+    .dropdownController {
+      cursor: pointer;
+      padding: 1rem 1.2rem;
+      min-width: 12rem;
+      background-color: var(--dark-grey);
+      border: 0.1rem solid var(--grey);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 0.6rem);
+      width: 100%;
+      border: 0.1rem solid var(--grey);
+      z-index: 10;
+      background-color: var(--black);
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--border-radius);
+      transition: all 0.1s ease-in-out;
+      opacity: 0;
+      pointer-events: none;
+
+      &.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      li {
+        padding: 1.2rem;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--grey);
+        }
+
+        &:not(:last-of-type) {
+          border-bottom: 0.1rem solid var(--grey);
+        }
+      }
+    }
+
+    .dropdownParent {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+  }
 }

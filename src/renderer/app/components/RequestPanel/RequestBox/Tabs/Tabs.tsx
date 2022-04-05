@@ -5,8 +5,8 @@ export function Tabs({
   activeTab,
   setActiveTab,
 }: {
-  activeTab: 'body' | 'headers' | 'query' | 'auth' | 'docs';
-  setActiveTab: Setter<'body' | 'headers' | 'query' | 'auth' | 'docs'>;
+  activeTab: 'body' | 'headers' | 'query' | 'auth';
+  setActiveTab: Setter<'body' | 'headers' | 'query' | 'auth'>;
 }) {
   return (
     <div className={style.Tabs}>
@@ -15,42 +15,30 @@ export function Tabs({
           className={activeTab === 'body' ? style.active : ''}
           onClick={(e) => {
             setActiveTab('body');
-          }}
-        >
+          }}>
           Body
         </li>
         <li
           className={activeTab === 'headers' ? style.active : ''}
           onClick={(e) => {
             setActiveTab('headers');
-          }}
-        >
+          }}>
           Headers
         </li>
         <li
           className={activeTab === 'query' ? style.active : ''}
           onClick={(e) => {
             setActiveTab('query');
-          }}
-        >
+          }}>
           Query
         </li>
-        <li
+        {/* <li
           className={activeTab === 'auth' ? style.active : ''}
           onClick={(e) => {
             setActiveTab('auth');
-          }}
-        >
+          }}>
           Auth
-        </li>
-        <li
-          className={activeTab === 'docs' ? style.active : ''}
-          onClick={(e) => {
-            setActiveTab('docs');
-          }}
-        >
-          Docs
-        </li>
+        </li> */}
       </ul>
     </div>
   );

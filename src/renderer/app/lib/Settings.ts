@@ -28,6 +28,8 @@ export type Folder = {
 };
 
 export type Request = {
+  sending: boolean;
+
   name: string;
   id: string;
   endpoint: string;
@@ -48,24 +50,28 @@ export type Request = {
     data: any;
   };
   query: {
-    [key: string]: {
-      content: string;
-      enabled: boolean;
-    };
-  };
+    id: string;
+    key: string;
+    value: string;
+    enabled: boolean;
+  }[];
   response?: Response;
 };
 
-export type Response = {
-  body: {
-    raw: string;
-    json: string;
-  };
-  headers: { [key: string]: string };
-};
+export type Response =
+  | { error: string }
+  | {
+      body: {
+        raw: string;
+      };
+      time: number;
+      sentAt: Date;
+      status: number;
+      headers: { [key: string]: string };
+    };
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
-export type AuthType = 'basic' | 'digest' | 'bearer' | 'oauth2' | 'api_key' | null;
+export type AuthType = 'basic' | 'digest' | 'bearer' | 'api_key' | null;
 
 export type Server = {};

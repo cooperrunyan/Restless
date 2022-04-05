@@ -4,17 +4,9 @@ import style from './ResponseBox.module.scss';
 
 export function ResponseBox() {
   const dataManager = useContext(DataContext);
+  const request = dataManager?.getCurrentRequest();
 
-  return (
-    <div className={style.ResponseBox}>
-      res
-      <br />
-      res
-      <br />
-      res
-      <br />
-      res <br />
-      res
-    </div>
-  );
+  if (!request) return <div className={style.ResponseBox}></div>;
+
+  return <div className={style.ResponseBox}>{JSON.stringify(request.response || '{}', null, 2)}</div>;
 }

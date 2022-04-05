@@ -16,9 +16,6 @@ export function Headers() {
         <div key={header.id} id={`id-${header.id}`} className={style.header}>
           <div className={style.inputContainer}>
             <input
-              onKeyDown={(e) => {
-                return true;
-              }}
               placeholder="Key"
               type="text"
               value={header.key}
@@ -32,9 +29,6 @@ export function Headers() {
               }}
             />
             <input
-              onKeyDown={(e) => {
-                return true;
-              }}
               placeholder="Value"
               type="text"
               value={header.value}
@@ -88,7 +82,6 @@ export function Headers() {
       ))}
 
       <button
-        tabIndex={-1}
         onClick={(e) => {
           e.preventDefault();
           dataManager?.modifyCurrentRequest({

@@ -175,6 +175,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
             const parent = parentId ? findParent(parentId, collection) : collection;
 
             parent?.children.push({
+              sending: false,
               name,
               id: uuid(),
               auth: {
@@ -190,7 +191,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
 
               docs: `# ${name}`,
               headers: [],
-              query: {},
+              query: [],
             });
 
             setStorage(s);
