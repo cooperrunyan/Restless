@@ -58,17 +58,15 @@ export type Request = {
   response?: Response;
 };
 
-export type Response =
-  | { error: string }
-  | {
-      body: {
-        raw: string;
-      };
-      time: number;
-      sentAt: Date;
-      status: number;
-      headers: { [key: string]: string };
-    };
+export type Response = {
+  body: {
+    raw: string;
+  };
+  time: number;
+  sentAt: Date;
+  status: number;
+  headers: { [key: string]: string };
+};
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
