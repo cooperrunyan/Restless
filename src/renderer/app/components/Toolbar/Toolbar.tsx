@@ -1,7 +1,7 @@
 import { Options } from '../../icons/options';
 import style from './Toolbar.module.scss';
 
-export function Toolbar() {
+export const Toolbar: React.FC = () => {
   return (
     <div className={style.Toolbar}>
       <ul>
@@ -11,4 +11,4 @@ export function Toolbar() {
       </ul>
     </div>
   );
-}
+};

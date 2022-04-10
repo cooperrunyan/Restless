@@ -3,8 +3,9 @@ import { DataContext } from 'renderer/app/lib/DataManager';
 import { Collection } from 'renderer/app/lib/Settings';
 import { ChevronBack } from '../../icons/chevron-back-outline';
 import style from './ManageCollections.module.scss';
+import React from 'react';
 
-export function ManageCollections() {
+export const ManageCollections: React.FC<{}> = () => {
   const [showList, setShowList] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const newCollectionName = useRef<HTMLInputElement>(null);
@@ -16,7 +17,7 @@ export function ManageCollections() {
     <>
       <div
         className={style.selectCollection}
-        onClick={(e) => {
+        onClick={e => {
           setShowCreate(false);
           setShowList(!showList);
         }}>
@@ -26,7 +27,7 @@ export function ManageCollections() {
       <div className={style.list + ' ' + (showList ? style.shown : '')}>
         <p>Collections</p>
         <ul>
-          {dataManager?.getCurrentWorkspace()?.collections?.map((collection) => {
+          {dataManager?.getCurrentWorkspace()?.collections?.map(collection => {
             return (
               <CollectionOption key={Math.random()} state={{ setShowCreate, setShowList }}>
                 {collection}
@@ -38,7 +39,7 @@ export function ManageCollections() {
             <a
               tabIndex={-1}
               className={style.create}
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault();
                 setShowList(false);
                 setShowCreate(true);
@@ -51,7 +52,7 @@ export function ManageCollections() {
       <div className={`${style.createMenu} ${showCreate ? style.shown : ''}`}>
         <p
           className={style.backLabel}
-          onClick={(e) => {
+          onClick={e => {
             setShowList(true);
             setShowCreate(false);
           }}>
@@ -59,7 +60,7 @@ export function ManageCollections() {
           <label>New Collection</label>
         </p>
         <form
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             const name = newCollectionName.current?.value;
             if (!name) return;
@@ -83,15 +84,20 @@ export function ManageCollections() {
       </div>
     </>
   );
+};
+
+interface CollectionOptionProps {
+  children: Collection;
+  state: any;
 }
 
-function CollectionOption({ children, state }: { children: Collection; state: any }) {
+const CollectionOption: React.FC<CollectionOptionProps> = ({ children, state }: CollectionOptionProps) => {
   const dataManager = useContext(DataContext);
   return (
     <li>
       <a
         tabIndex={-1}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           state.setShowList(false);
           state.setShowCreate(false);
@@ -103,4 +109,4 @@ function CollectionOption({ children, state }: { children: Collection; state: an
       </a>
     </li>
   );
-}
+};

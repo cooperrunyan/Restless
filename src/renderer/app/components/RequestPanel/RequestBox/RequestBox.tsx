@@ -1,4 +1,4 @@
-import { ReactChild, useContext, useState } from 'react';
+import React, { ReactChild, useContext, useState } from 'react';
 import { DataContext } from '../../../lib/DataManager';
 import style from './RequestBox.module.scss';
 import { Tabs } from './Tabs/Tabs';
@@ -8,7 +8,7 @@ import { Headers } from './Tabs/Headers/Headers';
 import { Query } from './Tabs/Query/Query';
 import { Auth } from './Tabs/Auth/Auth';
 
-export function RequestBox() {
+export const RequestBox: React.FC = () => {
   const dataManager = useContext(DataContext);
   const [activeTab, setActiveTab] = useState<'body' | 'headers' | 'query' | 'auth'>('body');
 
@@ -36,7 +36,7 @@ export function RequestBox() {
       </OverlapChildren>
     </div>
   );
-}
+};
 
 function Show({ when, children }: { when: boolean; children: ReactChild | ReactChild[] }) {
   return <div className={style.content + ' ' + (when ? style.active : '')}>{when && <>{children}</>}</div>;

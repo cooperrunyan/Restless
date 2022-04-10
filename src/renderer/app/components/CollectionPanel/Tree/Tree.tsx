@@ -1,65 +1,62 @@
 import style from './Tree.module.scss';
 import { DataContext } from '../../../lib/DataManager';
 import { Folder, Request } from '../../../lib/Settings';
-import { Balloon } from '../../../icons/balloon';
 import React, { useContext, useRef, useState } from 'react';
 import { ChevronBack } from '../../../icons/chevron-back-outline';
-import { Setter } from 'renderer/app/types/State';
-import { Plane } from 'renderer/app/icons/plane';
 
-export function Tree() {
+interface TreeProps {}
+
+interface TreeItemProps<T> {
+  item: T;
+  id: string;
+}
+
+export const Tree: React.FC<TreeProps> = ({}: TreeProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const dataManager = useContext(DataContext);
   return (
     <div
       ref={ref}
       className={style.Tree}
-      onDragOver={(e) => {
+      onDragOver={e => {
         // When user starts to drag ANOTHER element over this one
         e.preventDefault();
         e.stopPropagation();
         ref.current!.classList.add('drag-target');
       }}
-      onDragLeave={(e) => {
+      onDragLeave={e => {
         // When user stops dragging another element over this one
         e.preventDefault();
         e.stopPropagation();
         ref.current!.classList.remove('drag-target');
-      }}
-    >
-      {dataManager?.getCurrentCollection()?.children?.map((child) => (
+      }}>
+      {dataManager?.getCurrentCollection()?.children?.map(child => (
         <TreeItem key={child.id} item={child} id={child.id} />
       ))}
     </div>
   );
-}
+};
 
-function TreeRequest({ item, id }: { item: Request; id: string }) {
+export const TreeRequest: React.FC<TreeItemProps<Request>> = ({ item, id }: TreeItemProps<Request>) => {
   const dataManager = useContext(DataContext);
   const ref = useRef<HTMLDivElement>(null);
 
   return (
     <div
       ref={ref}
-      className={
-        style.Item +
-        ' ' +
-        style.request +
-        ' ' +
-        (item.id === dataManager?.getCurrentRequest()?.id ? style.current : '')
-      }
+      className={style.Item + ' ' + style.request + ' ' + (item.id === dataManager?.getCurrentRequest()?.id ? style.current : '')}
       onMouseOver={hover(ref)}
       onMouseOut={unhover(ref)}
       draggable
       id={id}
-      onDragStart={(e) => {
+      onDragStart={e => {
         // When user starts to drag THIS element
         document.documentElement.style.cursor = 'move';
         ref.current!.style.cursor = 'move';
         ref.current!.classList.add('dragging');
         e.stopPropagation();
       }}
-      onDragEnd={(e) => {
+      onDragEnd={e => {
         // When user stops dragging THIS element
         document.documentElement.style.cursor = '';
         ref.current!.style.cursor = '';
@@ -68,9 +65,7 @@ function TreeRequest({ item, id }: { item: Request; id: string }) {
         const subjectElement = ref.current!;
         const draggingInto = document.querySelector('.drag-target');
 
-        for (const el of Array.from(
-          document.querySelectorAll('.drag-target')
-        )) {
+        for (const el of Array.from(document.querySelectorAll('.drag-target'))) {
           el.classList.remove('drag-target');
         }
 
@@ -81,11 +76,7 @@ function TreeRequest({ item, id }: { item: Request; id: string }) {
         }
 
         if (!draggingInto?.id) {
-          dataManager?.moveXintoY(
-            subjectElement.id,
-            dataManager?.getCurrentCollection()?.id || '',
-            0
-          );
+          dataManager?.moveXintoY(subjectElement.id, dataManager?.getCurrentCollection()?.id || '', 0);
           dataManager?.push();
           e.stopPropagation();
           return;
@@ -97,20 +88,19 @@ function TreeRequest({ item, id }: { item: Request; id: string }) {
 
         draggingInto!.classList.remove('drag-target');
       }}
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation();
         dataManager?.setCurrentRequest(item.id);
         dataManager?.push();
-      }}
-    >
+      }}>
       <div className={style.content} id={item.id}>
         <span>{item.name}</span> <p>{item.method}</p>
       </div>
     </div>
   );
-}
+};
 
-function TreeFolder({ item, id }: { item: Folder; id: string }) {
+export const TreeFolder: React.FC<TreeItemProps<Folder>> = ({ item, id }: TreeItemProps<Folder>) => {
   const dataManager = useContext(DataContext);
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(true);
@@ -123,14 +113,14 @@ function TreeFolder({ item, id }: { item: Folder; id: string }) {
       onMouseOut={unhover(ref)}
       draggable
       id={id}
-      onDragStart={(e) => {
+      onDragStart={e => {
         // When user starts to drag THIS element
         document.documentElement.style.cursor = 'move';
         ref.current!.style.cursor = 'move';
         ref.current!.classList.add('dragging');
         e.stopPropagation();
       }}
-      onDragEnd={(e) => {
+      onDragEnd={e => {
         // When user stops dragging THIS element
         document.documentElement.style.cursor = '';
         ref.current!.style.cursor = '';
@@ -139,9 +129,7 @@ function TreeFolder({ item, id }: { item: Folder; id: string }) {
         const subjectElement = ref.current!;
         const draggingInto = document.querySelector('.drag-target');
 
-        for (const el of Array.from(
-          document.querySelectorAll('.drag-target')
-        )) {
+        for (const el of Array.from(document.querySelectorAll('.drag-target'))) {
           el.classList.remove('drag-target');
         }
 
@@ -152,11 +140,7 @@ function TreeFolder({ item, id }: { item: Folder; id: string }) {
         }
 
         if (!draggingInto?.id) {
-          dataManager?.moveXintoY(
-            subjectElement.id,
-            dataManager?.getCurrentCollection()?.id || '',
-            0
-          );
+          dataManager?.moveXintoY(subjectElement.id, dataManager?.getCurrentCollection()?.id || '', 0);
           dataManager?.push();
           e.stopPropagation();
           return;
@@ -170,15 +154,12 @@ function TreeFolder({ item, id }: { item: Folder; id: string }) {
 
         draggingInto!.classList.remove('drag-target');
       }}
-      onDragOver={(e) => {
+      onDragOver={e => {
         // When user starts to drag ANOTHER element over this one
         e.preventDefault();
 
         const dragging = document.querySelector('.dragging')!;
-        if (
-          dragging?.id === item.id ||
-          sloppyIDCheckingOnParents(ref.current!, dragging.id)
-        ) {
+        if (dragging?.id === item.id || sloppyIDCheckingOnParents(ref.current!, dragging.id)) {
           e.stopPropagation();
           return;
         }
@@ -186,36 +167,31 @@ function TreeFolder({ item, id }: { item: Folder; id: string }) {
         setOpen(true);
         ref.current!.classList.add('drag-target');
       }}
-      onDragLeave={(e) => {
+      onDragLeave={e => {
         // When user stops dragging another element over this one
         e.preventDefault();
         e.stopPropagation();
         ref.current!.classList.remove('drag-target');
       }}
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation();
         setOpen(!open);
-      }}
-    >
+      }}>
       <div className={style.content}>
-        <span>{item.name}</span>{' '}
-        <ChevronBack className={open ? style.turn : ''} />
+        <span>{item.name}</span> <ChevronBack className={open ? style.turn : ''} />
       </div>
-      {open &&
-        (item as Folder).children.map((child) => (
-          <TreeItem id={child.id} key={child.id} item={child} />
-        ))}
+      {open && (item as Folder).children.map(child => <TreeItem id={child.id} key={child.id} item={child} />)}
     </div>
   );
-}
+};
 
-function TreeItem({ item, id }: { item: Folder | Request; id: string }) {
+export const TreeItem: React.FC<TreeItemProps<Folder | Request>> = ({ item, id }: TreeItemProps<Folder | Request>) => {
   const isFolder = Array.isArray((item as Folder).children);
 
   if (isFolder) return <TreeFolder item={item as Folder} id={id} />;
 
   return <TreeRequest item={item as Request} id={id} />;
-}
+};
 
 function hover(ref: React.RefObject<HTMLDivElement>) {
   return (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -237,22 +213,14 @@ function sloppyIDCheckingOnParents(ref: HTMLElement, id: string) {
     ref.parentElement?.parentElement?.id === id ||
     ref.parentElement?.parentElement?.parentElement?.id === id ||
     ref.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.id === id ||
-    ref.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.parentElement
-      ?.parentElement?.parentElement?.parentElement?.id === id
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+      ?.id === id ||
+    ref.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement?.parentElement
+      ?.parentElement?.id === id
   );
 }

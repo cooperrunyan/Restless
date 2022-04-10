@@ -5,7 +5,11 @@ import style from './CollectionPanel.module.scss';
 import { New } from './New/New';
 import { Tree } from './Tree/Tree';
 
-export function CollectionPanel() {
+import React from 'react';
+
+interface Props {}
+
+export const CollectionPanel: React.FC<Props> = ({}: Props) => {
   const [hover, setHover] = useState(false);
   const [isCreatingRequest, setIsCreatingRequest] = useState(false);
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
@@ -13,22 +17,22 @@ export function CollectionPanel() {
 
   return (
     <div className={style.CollectionPanelParent}>
-    <div className={style.CollectionPanel}>
-      <ManageCollections />
-      {dataManager?.getCurrentCollection() && (
-        <div className={style.requests}>
-          <New
-            hover={hover}
-            setHover={setHover}
-            isCreatingRequest={isCreatingRequest}
-            setIsCreatingRequest={setIsCreatingRequest}
-            isCreatingFolder={isCreatingFolder}
-            setIsCreatingFolder={setIsCreatingFolder}
-          />
-          <Tree />
-        </div>
-      )}
-    </div>
+      <div className={style.CollectionPanel}>
+        <ManageCollections />
+        {dataManager?.getCurrentCollection() && (
+          <div className={style.requests}>
+            <New
+              hover={hover}
+              setHover={setHover}
+              isCreatingRequest={isCreatingRequest}
+              setIsCreatingRequest={setIsCreatingRequest}
+              isCreatingFolder={isCreatingFolder}
+              setIsCreatingFolder={setIsCreatingFolder}
+            />
+            <Tree />
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};

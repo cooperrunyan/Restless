@@ -6,7 +6,7 @@ import style from './StatusBar.module.scss';
 import { useContext } from 'react';
 import { DataContext } from 'renderer/app/lib/DataManager';
 
-export function StatusBar() {
+export const StatusBar: React.FC = () => {
   const dataManager = useContext(DataContext);
 
   return (
@@ -31,4 +31,4 @@ export function StatusBar() {
       </li>
     </ul>
   );
-}
+};

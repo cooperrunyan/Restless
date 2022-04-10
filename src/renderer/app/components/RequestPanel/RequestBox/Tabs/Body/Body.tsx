@@ -9,7 +9,7 @@ import 'ace-builds/src-noconflict/mode-text';
 import 'ace-builds/src-noconflict/mode-yaml';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-export function Body() {
+export const Body: React.FC = () => {
   const dataManager = useContext(DataContext);
   const [openContentType, setOpenContentType] = useState(false);
 
@@ -28,14 +28,14 @@ export function Body() {
       <div className={style.contentType}>
         <span>Content Type:</span>
         <div className={style.contentTypeParent}>
-          <div className={style.contentTypeSelector} onClick={(e) => setOpenContentType(!openContentType)}>
+          <div className={style.contentTypeSelector} onClick={e => setOpenContentType(!openContentType)}>
             {formatContentType(request.body.type)}
             <ChevronBack className={style.chevron + ' ' + (openContentType ? style.turn : '')} />
           </div>
           <div className={style.contentDropdown + ' ' + (openContentType ? style.activeContent : '')}>
             <ul>
               <li
-                onClick={(e) => {
+                onClick={e => {
                   setOpenContentType(false);
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'json' },
@@ -44,7 +44,7 @@ export function Body() {
                 JSON
               </li>
               <li
-                onClick={(e) => {
+                onClick={e => {
                   setOpenContentType(false);
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'yaml' },
@@ -53,7 +53,7 @@ export function Body() {
                 YAML
               </li>
               <li
-                onClick={(e) => {
+                onClick={e => {
                   setOpenContentType(false);
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: 'text' },
@@ -62,7 +62,7 @@ export function Body() {
                 Text
               </li>
               <li
-                onClick={(e) => {
+                onClick={e => {
                   setOpenContentType(false);
                   dataManager?.modifyCurrentRequest({
                     body: { data: request.body.data, type: null },
@@ -77,13 +77,13 @@ export function Body() {
       {request.body.type && (
         <div
           className={style.body + ' ' + (request.body.type === 'text' ? style.bodytext : '')}
-          onScroll={(e) => {
+          onScroll={e => {
             e.stopPropagation();
             e.preventDefault();
           }}>
           <AceEditor
             mode={request.body.type}
-            onChange={(e) => {
+            onChange={e => {
               dataManager?.modifyCurrentRequest({
                 body: { data: e, type: request.body.type },
               });
@@ -108,7 +108,7 @@ export function Body() {
       )}
     </div>
   );
-}
+};
 
 function formatContentType(type: 'json' | 'text' | 'yaml' | null) {
   if (type === 'json') return 'JSON';

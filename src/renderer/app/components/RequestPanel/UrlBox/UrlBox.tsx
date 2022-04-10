@@ -6,7 +6,7 @@ import { Method, Request } from '../../../lib/Settings';
 import style from './UrlBox.module.scss';
 import { send as sendRequest } from 'renderer/app/lib/send';
 
-export function UrlBox() {
+export const UrlBox: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
   const [methodSelectOpen, setMethodSelectOpen] = useState(false);
@@ -16,12 +16,12 @@ export function UrlBox() {
 
   return (
     <div className={style.UrlBox}>
-      <div className={style.method} onClick={(e) => setMethodSelectOpen(!methodSelectOpen)}>
+      <div className={style.method} onClick={e => setMethodSelectOpen(!methodSelectOpen)}>
         <span>{request.method}</span>
         <ChevronBack className={methodSelectOpen ? style.turn : ''} />
       </div>
       <div className={style.methodSelect + ' ' + (methodSelectOpen ? style.open : '')}>
-        {(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'] as const).map((method) => (
+        {(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'] as const).map(method => (
           <MethodOption key={method} close={setMethodSelectOpen.bind(false) as any}>
             {method}
           </MethodOption>
@@ -44,7 +44,7 @@ export function UrlBox() {
       </button>
     </div>
   );
-}
+};
 
 function send(request: Request, dataManager: any) {
   return async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -58,13 +58,18 @@ function send(request: Request, dataManager: any) {
   };
 }
 
-function MethodOption({ children: option, close }: { children: Method; close: () => void }) {
+interface MethodOptionProps {
+  children: Method;
+  close: () => void;
+}
+
+const MethodOption: React.FC<MethodOptionProps> = ({ children: option, close }: MethodOptionProps) => {
   const dataManager = useContext(DataContext);
 
   return (
     <div
       className={style.MethodOption}
-      onClick={(e) => {
+      onClick={e => {
         dataManager?.modifyCurrentRequest({ method: option });
         dataManager?.push();
         close();
@@ -72,4 +77,4 @@ function MethodOption({ children: option, close }: { children: Method; close: ()
       {option}
     </div>
   );
-}
+};

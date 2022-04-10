@@ -9,7 +9,7 @@ import 'ace-builds/src-noconflict/mode-text';
 import 'ace-builds/src-noconflict/mode-yaml';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-export function ResponseBox(): JSX.Element {
+export const ResponseBox: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -73,7 +73,7 @@ export function ResponseBox(): JSX.Element {
       </OverlapChildren>
     </div>
   );
-}
+};
 
 function Show({ when, children }: { when: boolean; children: ReactChild | ReactChild[] }) {
   return <div className={style.content + ' ' + (when ? style.active : '')}>{when && <>{children}</>}</div>;

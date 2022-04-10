@@ -4,7 +4,7 @@ import { DataContext } from 'renderer/app/lib/DataManager';
 import { AuthType } from 'renderer/app/lib/Settings';
 import style from './Auth.module.scss';
 
-export function Auth() {
+export const Auth: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -22,7 +22,7 @@ export function Auth() {
       <div className={style.type}>
         <span>Type:</span>
         <div className={style.dropdownParent}>
-          <div className={style.dropdownController} onClick={(e) => setOpenDropdown(!openDropdown)}>
+          <div className={style.dropdownController} onClick={e => setOpenDropdown(!openDropdown)}>
             <span>{formatAuthType(request.auth.type)}</span> <ChevronBack className={style.icon + ' ' + (openDropdown ? style.open : '')} />
           </div>
           <ul className={style.dropdown + ' ' + (openDropdown ? style.show : '')}>
@@ -36,7 +36,7 @@ export function Auth() {
       </div>
     </div>
   );
-}
+};
 
 function formatAuthType(type: AuthType) {
   // prettier-ignore

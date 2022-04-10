@@ -6,8 +6,9 @@ import { RequestPanel } from '../RequestPanel/RequestPanel';
 import { Toolbar } from '../Toolbar/Toolbar';
 import { useContext } from 'react';
 import { DataContext } from 'renderer/app/lib/DataManager';
+import React from 'react';
 
-export function Main() {
+export const Main: React.FC<{}> = () => {
   const dataManager = useContext(DataContext);
 
   return (
@@ -23,7 +24,7 @@ export function Main() {
       {!dataManager?.storage?.settings?.zenmode && <Toolbar />}
     </div>
   );
-}
+};
 
 const splitPaneConfig = {
   split: 'vertical',

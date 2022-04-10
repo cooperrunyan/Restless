@@ -4,7 +4,7 @@ import { Trash } from 'renderer/app/icons/trash';
 import { DataContext } from 'renderer/app/lib/DataManager';
 import style from './Headers.module.scss';
 
-export function Headers() {
+export const Headers: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -12,16 +12,16 @@ export function Headers() {
 
   return (
     <div className={style.Headers}>
-      {request.headers.map((header) => (
+      {request.headers.map(header => (
         <div key={header.id} id={`id-${header.id}`} className={style.header}>
           <div className={style.inputContainer}>
             <input
               placeholder="Key"
               type="text"
               value={header.key}
-              onChange={(e) => {
+              onChange={e => {
                 const headers = request.headers;
-                headers.forEach((_header) => {
+                headers.forEach(_header => {
                   if (_header.id === header.id) _header.key = e.target.value;
                 });
                 dataManager?.modifyCurrentRequest({ headers });
@@ -32,9 +32,9 @@ export function Headers() {
               placeholder="Value"
               type="text"
               value={header.value}
-              onChange={(e) => {
+              onChange={e => {
                 const headers = request.headers;
-                headers.forEach((_header) => {
+                headers.forEach(_header => {
                   if (_header.id === header.id) _header.value = e.target.value;
                 });
                 dataManager?.modifyCurrentRequest({ headers });
@@ -53,9 +53,9 @@ export function Headers() {
             className={style.checkbox}
             checked={header.enabled}
             tabIndex={-1}
-            onChange={(e) => {
+            onChange={e => {
               const headers = request.headers;
-              headers.forEach((_header) => {
+              headers.forEach(_header => {
                 if (_header.id === header.id) _header.enabled = e.target.checked;
               });
               dataManager?.modifyCurrentRequest({ headers });
@@ -65,7 +65,7 @@ export function Headers() {
           <div className={style.icon}>
             <button
               tabIndex={-1}
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault();
 
                 const headers = request.headers;
@@ -82,7 +82,7 @@ export function Headers() {
       ))}
 
       <button
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           dataManager?.modifyCurrentRequest({
             headers: [
@@ -100,4 +100,4 @@ export function Headers() {
       </button>
     </div>
   );
-}
+};

@@ -5,7 +5,7 @@ import { Main } from '../../components/Main/Main';
 import { useContext } from 'react';
 import { DataContext } from 'renderer/app/lib/DataManager';
 
-export function Index() {
+export const Index: React.FC = () => {
   const dataManager = useContext(DataContext);
 
   return (
@@ -19,4 +19,4 @@ export function Index() {
       )}
     </div>
   );
-}
+};

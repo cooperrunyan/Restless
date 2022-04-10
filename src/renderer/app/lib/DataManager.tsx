@@ -35,7 +35,11 @@ const defaultStorage = {
   },
 };
 
-export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
+interface Props {
+  children?: ReactChild | ReactChild[];
+}
+
+export const Data: React.FC<Props> = ({ children }: Props) => {
   const [storage, setStorage] = useState<Storage>(defaultStorage);
 
   useEffect(() => void pull(), []);
@@ -313,7 +317,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
       {children}
     </DataContext.Provider>
   );
-}
+};
 
 function findParent(parentId: string, collection: Collection | Folder): Folder | null {
   for (const child of collection.children) {

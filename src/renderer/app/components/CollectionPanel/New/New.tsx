@@ -4,22 +4,18 @@ import { Add } from '../../../icons/add';
 import style from './New.module.scss';
 import { Setter } from '../../../types/State';
 import { DataContext } from 'renderer/app/lib/DataManager';
+import React from 'react';
 
-export function New({
-  hover,
-  setHover,
-  isCreatingRequest,
-  isCreatingFolder,
-  setIsCreatingFolder,
-  setIsCreatingRequest,
-}: {
+interface Props {
   hover: boolean;
   setHover: Setter<boolean>;
   isCreatingRequest: boolean;
   setIsCreatingRequest: Setter<boolean>;
   isCreatingFolder: boolean;
   setIsCreatingFolder: Setter<boolean>;
-}) {
+}
+
+export const New: React.FC<Props> = ({ hover, setHover, isCreatingRequest, isCreatingFolder, setIsCreatingFolder, setIsCreatingRequest }: Props) => {
   const folderNameRef = useRef<HTMLInputElement>(null);
   const requestNameRef = useRef<HTMLInputElement>(null);
   const dataManager = useContext(DataContext);
@@ -42,7 +38,7 @@ export function New({
         <div className={style.hovered + ' ' + (hover ? style.showHover : '')}>
           <button
             tabIndex={-1}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               setIsCreatingRequest(true);
               setIsCreatingFolder(false);
@@ -51,7 +47,7 @@ export function New({
           </button>
           <button
             tabIndex={-1}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               setIsCreatingRequest(false);
               setIsCreatingFolder(true);
@@ -72,7 +68,7 @@ export function New({
             />
           </p>
           <form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               if (!folderNameRef?.current?.value.trim()) return;
 
@@ -103,7 +99,7 @@ export function New({
             />
           </p>
           <form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
 
               if (!requestNameRef.current!.value.trim()) return;
@@ -125,4 +121,4 @@ export function New({
       )}
     </>
   );
-}
+};

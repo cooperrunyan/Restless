@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import SplitPane from 'react-split-pane';
 import { DataContext } from '../../lib/DataManager';
 import { RequestBox } from './RequestBox/RequestBox';
@@ -6,7 +6,7 @@ import style from './RequestPanel.module.scss';
 import { ResponseBox } from './ResponseBox/ResponseBox';
 import { UrlBox } from './UrlBox/UrlBox';
 
-export function RequestPanel() {
+export const RequestPanel: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -29,7 +29,7 @@ export function RequestPanel() {
       </div>
     </div>
   );
-}
+};
 
 const splitPaneConfig = {
   split: 'horizontal',

@@ -4,7 +4,7 @@ import { Workspace } from 'renderer/app/lib/Settings';
 import { ChevronBack } from '../../icons/chevron-back-outline';
 import style from './MenuBar.module.scss';
 
-export function MenuBar() {
+export const MenuBar: React.FC<{}> = () => {
   const [showList, setShowList] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const newWorkspaceName = useRef<HTMLInputElement>(null);
@@ -18,7 +18,7 @@ export function MenuBar() {
         <div className={style.workspaces}>
           <button
             tabIndex={-1}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
 
               if (showCreate) setShowCreate(false);
@@ -34,7 +34,7 @@ export function MenuBar() {
           <div className={style.list + ' ' + (showList ? style.shown : '')}>
             <p>Workspaces</p>
             <ul>
-              {dataManager?.storage?.workspaces?.map((workspace) => {
+              {dataManager?.storage?.workspaces?.map(workspace => {
                 return (
                   <WorkspaceOption key={Math.random()} state={{ setShowCreate, setShowList }}>
                     {workspace}
@@ -46,7 +46,7 @@ export function MenuBar() {
                 <a
                   tabIndex={-1}
                   className={style.create}
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     setShowList(false);
                     setShowCreate(true);
@@ -59,7 +59,7 @@ export function MenuBar() {
           <div className={`${style.createMenu} ${showCreate ? style.shown : ''}`}>
             <p
               className={style.backLabel}
-              onClick={(e) => {
+              onClick={e => {
                 setShowList(true);
                 setShowCreate(false);
               }}>
@@ -68,7 +68,7 @@ export function MenuBar() {
             </p>
             <form
               tabIndex={-1}
-              onSubmit={async (e) => {
+              onSubmit={async e => {
                 e.preventDefault();
                 const name = newWorkspaceName.current?.value;
                 if (!name) return;
@@ -102,15 +102,20 @@ export function MenuBar() {
         }}></div>
     </>
   );
+};
+
+interface WorkspaceOptionProps {
+  children: Workspace;
+  state: any;
 }
 
-function WorkspaceOption({ children, state }: { children: Workspace; state: any }) {
+const WorkspaceOption: React.FC<WorkspaceOptionProps> = ({ children, state }: WorkspaceOptionProps) => {
   const dataManager = useContext(DataContext);
   return (
     <li>
       <a
         tabIndex={-1}
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           state.setShowList(false);
           state.setShowCreate(false);
@@ -122,4 +127,4 @@ function WorkspaceOption({ children, state }: { children: Workspace; state: any 
       </a>
     </li>
   );
-}
+};

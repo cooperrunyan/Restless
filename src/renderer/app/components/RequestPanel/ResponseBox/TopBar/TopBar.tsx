@@ -3,7 +3,12 @@ import { DataContext } from 'renderer/app/lib/DataManager';
 import { Setter } from 'renderer/app/types/State';
 import style from './TopBar.module.scss';
 
-export function TopBar({ tab, setTab }: { tab: 'body' | 'headers'; setTab: Setter<'body' | 'headers'> }) {
+interface Props {
+  tab: 'body' | 'headers';
+  setTab: Setter<'body' | 'headers'>;
+}
+
+export const TopBar: React.FC<Props> = ({ tab, setTab }: Props) => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -29,9 +34,9 @@ export function TopBar({ tab, setTab }: { tab: 'body' | 'headers'; setTab: Sette
           <a
             className={style.status + ' ' + statusStyle(request.response.status)}
             href={`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${request.response.status}`}
-            onClick={(e) => {
+            onClick={e => {
               if (window.electron.openLink) {
-                window.electron.openLink(`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${request.response.status}`);
+                window.electron.openLink(`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${request.response!.status}`);
                 e.preventDefault();
               }
             }}>
@@ -41,7 +46,7 @@ export function TopBar({ tab, setTab }: { tab: 'body' | 'headers'; setTab: Sette
       </ul>
     </div>
   );
-}
+};
 
 export const Break: React.FC = () => <li className={style.break}>|</li>;
 

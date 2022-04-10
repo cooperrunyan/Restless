@@ -5,7 +5,7 @@ import { addQueryParams } from '../../../../../lib/addQueryParams';
 import { DataContext } from '../../../../../lib/DataManager';
 import style from './Query.module.scss';
 
-export function Query() {
+export const Query: React.FC = () => {
   const dataManager = useContext(DataContext);
   const request = dataManager?.getCurrentRequest();
 
@@ -15,16 +15,16 @@ export function Query() {
     <div className={style.Query}>
       <p className={style.urlPreviewtext}>Url preview</p>
       <div className={style.urlPreview}>{addQueryParams(request)}</div>
-      {request.query.map((query) => (
+      {request.query.map(query => (
         <div key={query.id} id={`id-${query.id}`} className={style.query}>
           <div className={style.inputContainer}>
             <input
               placeholder="Key"
               type="text"
               value={query.key}
-              onChange={(e) => {
+              onChange={e => {
                 const queries = request.query;
-                queries.forEach((_query) => {
+                queries.forEach(_query => {
                   if (_query.id === query.id) _query.key = e.target.value;
                 });
                 dataManager?.modifyCurrentRequest({ query: queries });
@@ -35,9 +35,9 @@ export function Query() {
               placeholder="Value"
               type="text"
               value={query.value}
-              onChange={(e) => {
+              onChange={e => {
                 const queries = request.query;
-                queries.forEach((_query) => {
+                queries.forEach(_query => {
                   if (_query.id === query.id) _query.value = e.target.value;
                 });
                 dataManager?.modifyCurrentRequest({ query: queries });
@@ -56,9 +56,9 @@ export function Query() {
             className={style.checkbox}
             checked={query.enabled}
             tabIndex={-1}
-            onChange={(e) => {
+            onChange={e => {
               const queries = request.query;
-              queries.forEach((_query) => {
+              queries.forEach(_query => {
                 if (_query.id === query.id) _query.enabled = e.target.checked;
               });
               dataManager?.modifyCurrentRequest({ query: queries });
@@ -68,7 +68,7 @@ export function Query() {
           <div className={style.icon}>
             <button
               tabIndex={-1}
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault();
 
                 const queries = request.query;
@@ -85,7 +85,7 @@ export function Query() {
       ))}
 
       <button
-        onClick={(e) => {
+        onClick={e => {
           e.preventDefault();
           dataManager?.modifyCurrentRequest({
             query: [
@@ -103,4 +103,4 @@ export function Query() {
       </button>
     </div>
   );
-}
+};
