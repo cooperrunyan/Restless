@@ -24,7 +24,7 @@ export function Body() {
   if (!request) return <div className={style.Body}></div>;
 
   return (
-    <div className={style.Body}>
+    <div className={style.Body + ' '}>
       <div className={style.contentType}>
         <span>Content Type:</span>
         <div className={style.contentTypeParent}>
@@ -81,7 +81,6 @@ export function Body() {
             e.stopPropagation();
             e.preventDefault();
           }}>
-          (
           <AceEditor
             mode={request.body.type}
             onChange={(e) => {

@@ -53,6 +53,10 @@ input {
   outline: none;
 }
 
+.MainResizer:hover {
+  opacity: 1 !important;
+}
+
 .Resizer {
   background-color: var(--grey);
   transition: all 0.15s ease-in-out;
@@ -63,19 +67,25 @@ input {
 
   &.vertical {
     cursor: col-resize;
-    width: 0.3rem;
+    min-width: 0.3rem;
+    max-width: 0.3rem;
+    width: 100%;
 
     &:hover {
-      width: 0.9rem;
+      min-width: 0.9rem;
+      max-width: 0.9rem;
     }
   }
 
   &.horizontal {
     cursor: row-resize;
-    height: 0.3rem;
+    min-height: 0.3rem;
+    max-height: 0.3rem;
+    height: 100%;
 
     &:hover {
-      height: 0.9rem;
+      min-height: 0.9rem;
+      max-height: 0.9rem;
     }
   }
 }
@@ -147,4 +157,8 @@ input {
 
 .ace_list {
   color: var(--white) !important;
+}
+
+.ace_escape {
+  color: var(--pale-green) !important;
 }

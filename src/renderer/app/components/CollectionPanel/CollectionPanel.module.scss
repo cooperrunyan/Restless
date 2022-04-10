@@ -1,8 +1,14 @@
+.CollectionPanelParent {
+  width: 100%;
+  overflow: hidden;
+}
+
 .CollectionPanel {
-  position: relative;
+  // position: relative;
   user-select: none;
   height: 100%;
   display: flex;
+  min-width: 250px;
   flex-direction: column;
 
   .requests {

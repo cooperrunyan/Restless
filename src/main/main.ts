@@ -12,8 +12,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import fs from 'fs';
 import crypto from 'crypto';
+import fetch, { Response } from 'node-fetch-commonjs';
+import { store } from './store';
 
 export default class AppUpdater {
   constructor() {
@@ -23,40 +24,13 @@ export default class AppUpdater {
   }
 }
 
-const defaultStorage = {
-  currentWorkspace: null,
-  workspaces: [],
-  settings: {
-    hideSidebar: false,
-  },
-};
-
 let mainWindow: BrowserWindow | null = null;
-
-const store = {
-  get() {
-    app.getPath('home');
-    if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
-
-    if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
-      fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(defaultStorage));
-
-    return JSON.parse(fs.readFileSync(app.getPath('home') + '/.restless/storage.json', 'utf-8'));
-  },
-  set(value: any) {
-    if (!fs.existsSync(app.getPath('home') + '/.restless')) fs.mkdirSync(app.getPath('home') + '/.restless');
-
-    if (!fs.existsSync(app.getPath('home') + '/.restless/storage.json'))
-      fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(defaultStorage));
-
-    return fs.writeFileSync(app.getPath('home') + '/.restless/storage.json', JSON.stringify(value));
-  },
-};
 
 // IPC listener
 ipcMain.on('electron-store-get', (e) => {
   e.returnValue = store.get();
 });
+
 ipcMain.on('electron-store-set', (e, val) => {
   store.set(val);
   ipcMain.emit('electron-store-set-success');
@@ -66,6 +40,43 @@ ipcMain.on('electron-uuid', (e, val) => {
   e.returnValue = crypto.randomUUID();
 });
 
+ipcMain.on('electron-open-link', (e, link) => {
+  shell.openExternal(link);
+})
+
+ipcMain.handle('electron-fetch', async (e, url, options) => {
+  try {
+    const res = (await fetch(url, options)) as Response;
+    const response: {
+      type: string;
+      body: string;
+      url: string;
+      status: number;
+      statusText: string;
+      headers: { [key: string]: string };
+      ok: boolean;
+      size: number;
+    } = {
+      headers: {},
+      status: res.status,
+      statusText: res.statusText,
+      type: res.type,
+      url: res.url,
+      body: await res.text(),
+      ok: res.ok,
+      size: res.size,
+    };
+
+    for (const [key, value] of res.headers) response.headers[key] = value;
+
+    e.returnValue = { ...response };
+    return { ...response };
+  } catch (error) {
+    e.returnValue = { error };
+    return { error };
+  }
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -73,9 +84,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const isDevelopment = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
-if (isDevelopment) {
-  require('electron-debug')();
-}
+if (isDevelopment) require('electron-debug')();
 
 const createWindow = async () => {
   const RESOURCES_PATH = app.isPackaged ? path.join(process.resourcesPath, 'assets') : path.join(__dirname, '../../assets');

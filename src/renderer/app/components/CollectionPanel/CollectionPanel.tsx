@@ -12,6 +12,7 @@ export function CollectionPanel() {
   const dataManager = useContext(DataContext);
 
   return (
+    <div className={style.CollectionPanelParent}>
     <div className={style.CollectionPanel}>
       <ManageCollections />
       {dataManager?.getCurrentCollection() && (
@@ -27,6 +28,7 @@ export function CollectionPanel() {
           <Tree />
         </div>
       )}
+    </div>
     </div>
   );
 }

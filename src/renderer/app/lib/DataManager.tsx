@@ -23,7 +23,7 @@ export const DataContext = createContext<{
   deleteTreeItem(idOfElementToBeDeleted: string): any;
   modifyRequest(id: string, request: Partial<Request>): true | null;
   modifyCurrentRequest(request: Partial<Request>): true | null;
-  toggleSidebar(): void;
+  toggleZen(): void;
   uuid(): string;
 } | null>(null);
 
@@ -31,19 +31,17 @@ const defaultStorage = {
   currentWorkspace: null,
   workspaces: [],
   settings: {
-    hideSidebar: false,
+    zenmode: false,
   },
 };
 
 export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
   const [storage, setStorage] = useState<Storage>(defaultStorage);
 
-  useEffect(() => {
-    pull();
-  }, []);
+  useEffect(() => void pull(), []);
 
   function push() {
-    if (window?.electron?.store) window.electron.store.set(storage);
+    if (window?.electron?.store?.set) window.electron.store.set(storage);
     else localStorage?.setItem('storage', JSON.stringify(storage));
   }
 
@@ -122,6 +120,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
     setStorage({ ...storage });
     return true;
   }
+
   function modifyCurrentRequest(request: Partial<Request>) {
     const collection = getCurrentCollection();
     if (!collection?.currentRequest) return null;
@@ -260,8 +259,8 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
     setStorage({ ...storage });
   }
 
-  function toggleSidebar() {
-    storage.settings.hideSidebar = !storage.settings.hideSidebar;
+  function toggleZen() {
+    storage.settings.zenmode = !storage.settings.zenmode;
 
     setStorage({ ...storage });
   }
@@ -308,7 +307,7 @@ export function Data({ children }: { children?: ReactChild | ReactChild[] }) {
         deleteTreeItem,
         modifyRequest,
         modifyCurrentRequest,
-        toggleSidebar,
+        toggleZen,
         uuid,
       }}>
       {children}

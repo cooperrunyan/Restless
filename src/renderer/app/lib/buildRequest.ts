@@ -1,3 +1,4 @@
+import { RequestInit } from 'node-fetch-commonjs';
 import { addQueryParams } from './addQueryParams';
 import { createBody } from './createBody';
 import { createHeaders } from './createHeaders';
@@ -16,7 +17,6 @@ export function buildRequest(request: Request) {
     body: body?.data,
     headers,
     method: request.method,
-    window: null,
   };
 
   if (!options.body) delete options.body;

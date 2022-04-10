@@ -13,17 +13,19 @@ export function RequestPanel() {
   if (!request) return <div className={style.RequestPanel}></div>;
 
   return (
-    <div className={style.RequestPanel}>
-      <UrlBox />
-      <div className={style.splitterContainer}>
-        <SplitPane {...splitPaneConfig}>
-          <div className={style.request}>
-            <RequestBox />
-          </div>
-          <div className={style.response}>
-            <ResponseBox />
-          </div>
-        </SplitPane>
+    <div className={style.RequestPanelParent}>
+      <div className={style.RequestPanel}>
+        <UrlBox />
+        <div className={style.splitterContainer + ' request-panel'}>
+          <SplitPane {...splitPaneConfig} minSize={0}>
+            <div className={style.request}>
+              <RequestBox />
+            </div>
+            <div className={style.response}>
+              <ResponseBox />
+            </div>
+          </SplitPane>
+        </div>
       </div>
     </div>
   );
@@ -34,20 +36,22 @@ const splitPaneConfig = {
   defaultSize: (window.innerHeight - 200) / 2,
   allowResize: true,
   minHeight: 0,
+  minSize: 0,
+  maxHeight: window.innerHeight - 200,
   // primary: 'first',
   resizerClassName: 'RequestResizer',
   onDragStarted() {
     const el = document.querySelector('.RequestResizer') as HTMLDivElement;
 
     el.style.backgroundColor = 'var(--blue)';
-    el.style.height = '.9rem';
+    el.style.minHeight = '.9rem';
     document.documentElement.style.cursor = 'row-resize';
   },
   onDragFinished() {
     const el = document.querySelector('.RequestResizer') as HTMLDivElement;
 
     el.style.backgroundColor = '';
-    el.style.height = '';
+    el.style.minHeight = '';
     document.documentElement.style.cursor = '';
   },
 } as const;

@@ -12,21 +12,15 @@ export function Main() {
 
   return (
     <div className={style.Main}>
-      <Navigation />
-      {!dataManager?.storage?.settings.hideSidebar && (
-        <div className={style.SplitParent}>
-          <SplitPane {...splitPaneConfig}>
-            <CollectionPanel />
-            <RequestPanel />
-          </SplitPane>
-        </div>
-      )}
-      {dataManager?.storage?.settings.hideSidebar && (
-        <div className={style.SplitParent}>
+      {!dataManager?.storage?.settings?.zenmode && <Navigation />}
+      <div className={style.SplitParent + ' main'}>
+        <SplitPane {...splitPaneConfig}>
+          <CollectionPanel />
           <RequestPanel />
-        </div>
-      )}
-      <Toolbar />
+        </SplitPane>
+      </div>
+
+      {!dataManager?.storage?.settings?.zenmode && <Toolbar />}
     </div>
   );
 }
@@ -37,7 +31,8 @@ const splitPaneConfig = {
   primary: 'first',
   allowResize: true,
   maxSize: 450,
-  minSize: 250,
+  minSize: 0,
+
   size: 350,
   resizerClassName: 'MainResizer',
   onDragStarted() {

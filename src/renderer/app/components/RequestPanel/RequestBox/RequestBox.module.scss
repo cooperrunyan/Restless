@@ -6,6 +6,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .contentType {
@@ -61,16 +63,6 @@
 
 .contentTypeParent {
   position: relative;
-}
-
-.overlapChildren {
-  display: grid;
-  grid-template-areas: 'stuff';
-  height: 100%;
-
-  & > * {
-    grid-area: stuff;
-  }
 }
 
 .body {

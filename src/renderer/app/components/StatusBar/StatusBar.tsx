@@ -13,11 +13,11 @@ export function StatusBar() {
     <ul className={style.StatusBar}>
       <li
         onClick={() => {
-          dataManager?.toggleSidebar();
+          dataManager?.toggleZen();
           dataManager?.push();
         }}>
-        <Sidebar className={style.Sidebar + ' ' + (!dataManager?.storage?.settings?.hideSidebar ? style.flip : '')} />
-        Sidebar
+        <Flash className={style.Sidebar + ' ' + (!dataManager?.storage?.settings?.zenmode ? style.flip : '')} />
+        Zen Mode
       </li>
       {window?.electron?.store && (
         <li>
@@ -25,10 +25,6 @@ export function StatusBar() {
           Terminal
         </li>
       )}
-      <li>
-        <Flash />
-        Shortcuts
-      </li>
       <li>
         <Aperture />
         Cookies

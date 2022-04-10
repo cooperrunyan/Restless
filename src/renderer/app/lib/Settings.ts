@@ -2,7 +2,7 @@ export type Storage = {
   currentWorkspace: string | null;
   workspaces: Workspace[];
   settings: {
-    hideSidebar: boolean;
+    zenmode: boolean;
   };
 };
 
@@ -59,13 +59,16 @@ export type Request = {
 };
 
 export type Response = {
-  body: {
-    raw: string;
-  };
+  body: object;
   time: number;
   sentAt: Date;
   status: number;
   headers: { [key: string]: string };
+  ok: boolean;
+  statusText: string;
+  type: string;
+  url: string;
+  size: number;
 };
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';

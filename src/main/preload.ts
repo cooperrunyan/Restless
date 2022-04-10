@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { RequestInit } from 'node-fetch';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -32,4 +33,25 @@ contextBridge.exposeInMainWorld('electron', {
   uuid() {
     return ipcRenderer.sendSync('electron-uuid');
   },
+  async fetch(
+    url: string,
+    options: RequestInit,
+  ): Promise<{
+    type: string;
+    body: string;
+    url: string;
+    status: number;
+    statusText: string;
+    headers: {
+      [key: string]: string;
+    };
+    ok: boolean;
+    size: number;
+  }> {
+    return ipcRenderer.invoke('electron-fetch', url, options);
+  },
+
+  openLink(link: string) {
+    ipcRenderer.send('electron-open-link', link)
+  }
 });

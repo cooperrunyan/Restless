@@ -4,6 +4,7 @@ import { ChevronBack } from '../../../icons/chevron-back-outline';
 import { DataContext } from '../../../lib/DataManager';
 import { Method, Request } from '../../../lib/Settings';
 import style from './UrlBox.module.scss';
+import { send as sendRequest } from 'renderer/app/lib/send';
 
 export function UrlBox() {
   const dataManager = useContext(DataContext);
@@ -46,57 +47,14 @@ export function UrlBox() {
 }
 
 function send(request: Request, dataManager: any) {
-  return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  return async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (!request || !dataManager) return;
 
-    const args = buildRequest(request);
+    const response = await sendRequest(request);
 
-    const startTime = Date.now();
-    const sentAt = new Date();
-
-    try {
-      fetch(...args)
-        .catch((err) => {
-          const response = { error: (err as any).message };
-          dataManager.modifyCurrentRequest({ response });
-          dataManager.push();
-        })
-        .then((response) => {
-          if (!response) return;
-          const status = response.status;
-          let responseTime = Date.now() - startTime;
-          let text = '';
-          response
-            .text()
-            .catch(() => {})
-            .then((data) => {
-              responseTime = Date.now() - startTime;
-              if (data) text = data;
-            })
-
-            .finally(() => {
-              const headers: any = {};
-              response.headers.forEach((value, key) => (headers[key] = value));
-              request.response = {
-                body: {
-                  raw: text,
-                },
-                headers,
-                sentAt,
-                status,
-                time: responseTime,
-              };
-
-              dataManager.modifyCurrentRequest({ response: request.response });
-              dataManager.push();
-            });
-        });
-    } catch (err) {
-      const response = { error: (err as any).message };
-      dataManager.modifyCurrentRequest({ response });
-      dataManager.push();
-    }
+    dataManager.modifyCurrentRequest({ response });
+    dataManager.push();
   };
 }
 
