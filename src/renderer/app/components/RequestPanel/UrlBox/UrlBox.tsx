@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { buildRequest } from 'renderer/app/lib/buildRequest';
 import { ChevronBack } from '../../../icons/chevron-back-outline';
 import { DataContext } from '../../../lib/DataManager';
@@ -12,10 +12,12 @@ export const UrlBox: React.FC = () => {
   const [methodSelectOpen, setMethodSelectOpen] = useState(false);
   const urlref = useRef<HTMLInputElement>(null);
 
+  useEffect(() => console.log(!!request?.sending), [request?.sending]);
+
   if (!request) return <div className={style.UrlBox}></div>;
 
   return (
-    <div className={style.UrlBox}>
+    <form className={style.UrlBox} onSubmit={send(request, dataManager)}>
       <div className={style.method} onClick={e => setMethodSelectOpen(!methodSelectOpen)}>
         <span>{request.method}</span>
         <ChevronBack className={methodSelectOpen ? style.turn : ''} />
@@ -39,21 +41,27 @@ export const UrlBox: React.FC = () => {
           dataManager?.push();
         }}
       />
-      <button tabIndex={-1} className={style.send} onClick={send(request, dataManager)}>
+      <button tabIndex={-1} className={style.send + ' ' + (request?.sending ? style.sending : '')} type="submit" disabled={!!request?.sending}>
         Send
       </button>
-    </div>
+    </form>
   );
 };
 
 function send(request: Request, dataManager: any) {
-  return async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  return async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!request || !dataManager) return;
 
+    request.sending = true;
+    dataManager.modifyCurrentRequest(request);
+    dataManager.push();
+
     const response = await sendRequest(request);
 
-    dataManager.modifyCurrentRequest({ response });
+    request.sending = false;
+    request.response = response as any;
+    dataManager.modifyCurrentRequest(request);
     dataManager.push();
   };
 }

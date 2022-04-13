@@ -6,7 +6,7 @@
   border-bottom: 0.1rem solid var(--grey);
 
   .emph {
-    color: var(--pale-purple);
+    // color: var(--pale-purple);
     font-weight: 600;
     font-size: 1.6rem;
   }
@@ -69,17 +69,17 @@
 }
 
 .status-red {
-  background: var(--red);
+  background: var(--red) !important;
 }
 
 .status-purple {
-  background: var(--purple);
+  background: var(--purple) !important;
 }
 
 .status-blue {
-  background: var(--blue);
+  background: var(--blue) !important;
 }
 
 .status-orange {
-  background: var(--orange);
+  background: var(--orange) !important;
 }

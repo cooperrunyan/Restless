@@ -25,6 +25,15 @@ export const DataContext = createContext<{
   modifyCurrentRequest(request: Partial<Request>): true | null;
   toggleZen(): void;
   uuid(): string;
+  deleteRequest(id: string): void;
+  getElementById(
+    storage: Storage,
+    id: string,
+    scope: Collection | Folder,
+  ): {
+    child: Folder | Request | null;
+    parent: Folder | Collection | null;
+  };
 } | null>(null);
 
 const defaultStorage = {
@@ -108,7 +117,7 @@ export const Data: React.FC<Props> = ({ children }: Props) => {
     const collection = getCurrentCollection();
     if (!collection || !collection.currentRequest) return null;
 
-    return getElementById(storage, collection.currentRequest, collection).child as Request | null;
+    return getElementById(storage, collection.currentRequest, collection)?.child as Request | null;
   }
 
   function modifyRequest(id: string, request: Partial<Request>) {
@@ -166,6 +175,14 @@ export const Data: React.FC<Props> = ({ children }: Props) => {
         workspace.currentCollection = id;
       }
     }
+    setStorage({ ...storage });
+  }
+
+  function deleteRequest(id: string) {
+    const collection = getCurrentCollection();
+    if (!collection) return;
+    const r = getElementById(storage, id, collection);
+    if (r.child) r.parent?.children.splice(r.parent.children.indexOf(r.child), 1);
     setStorage({ ...storage });
   }
 
@@ -288,6 +305,25 @@ export const Data: React.FC<Props> = ({ children }: Props) => {
     });
   }
 
+  function getElementById(storage: Storage, id: string, scope: Collection | Folder): { child: Folder | Request | null; parent: Folder | Collection | null } {
+    let result = null;
+
+    if (id === scope.id) {
+      return { child: scope, parent: null };
+    }
+
+    for (const child of scope.children) {
+      if (child.id === id) {
+        return { child, parent: scope };
+      }
+
+      if (!result && Array.isArray((child as Folder).children)) {
+        result = getElementById(storage, id, child as Folder);
+      }
+    }
+    return result as any;
+  }
+
   return (
     <DataContext.Provider
       value={{
@@ -313,6 +349,8 @@ export const Data: React.FC<Props> = ({ children }: Props) => {
         modifyCurrentRequest,
         toggleZen,
         uuid,
+        deleteRequest,
+        getElementById,
       }}>
       {children}
     </DataContext.Provider>
@@ -329,23 +367,4 @@ function findParent(parentId: string, collection: Collection | Folder): Folder |
     }
   }
   return null;
-}
-
-function getElementById(storage: Storage, id: string, scope: Collection | Folder): { child: Folder | Request | null; parent: Folder | Collection | null } {
-  let result = null;
-
-  if (id === scope.id) {
-    return { child: scope, parent: null };
-  }
-
-  for (const child of scope.children) {
-    if (child.id === id) {
-      return { child, parent: scope };
-    }
-
-    if (!result && Array.isArray((child as Folder).children)) {
-      result = getElementById(storage, id, child as Folder);
-    }
-  }
-  return result as any;
 }

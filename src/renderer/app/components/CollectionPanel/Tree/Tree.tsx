@@ -3,6 +3,7 @@ import { DataContext } from '../../../lib/DataManager';
 import { Folder, Request } from '../../../lib/Settings';
 import React, { useContext, useRef, useState } from 'react';
 import { ChevronBack } from '../../../icons/chevron-back-outline';
+import { Trash } from 'renderer/app/icons/trash';
 
 interface TreeProps {}
 
@@ -94,7 +95,7 @@ export const TreeRequest: React.FC<TreeItemProps<Request>> = ({ item, id }: Tree
         dataManager?.push();
       }}>
       <div className={style.content} id={item.id}>
-        <span>{item.name}</span> <p>{item.method}</p>
+        <span>{item.name || 'NO_NAME'}</span> <p>{item.method}</p>
       </div>
     </div>
   );
@@ -178,7 +179,20 @@ export const TreeFolder: React.FC<TreeItemProps<Folder>> = ({ item, id }: TreeIt
         setOpen(!open);
       }}>
       <div className={style.content}>
-        <span>{item.name}</span> <ChevronBack className={open ? style.turn : ''} />
+        <span>{item.name}</span>
+        <span>
+          <button
+            className={style.delete}
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              dataManager?.deleteRequest(id);
+            }}>
+            <Trash />
+          </button>
+          <ChevronBack className={open ? style.turn : ''} />
+        </span>
       </div>
       {open && (item as Folder).children.map(child => <TreeItem id={child.id} key={child.id} item={child} />)}
     </div>

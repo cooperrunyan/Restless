@@ -15,6 +15,17 @@ import { resolveHtmlPath } from './util';
 import crypto from 'crypto';
 import fetch, { Response } from 'node-fetch-commonjs';
 import { store } from './store';
+import contextMenu from 'electron-context-menu';
+
+contextMenu({
+  showSaveImageAs: true,
+  showSaveLinkAs: true,
+  showCopyImage: true,
+  showCopyImageAddress: true,
+  showLookUpSelection: true,
+  showSaveImage: true,
+  showSearchWithGoogle: true,
+});
 
 export default class AppUpdater {
   constructor() {
@@ -27,7 +38,7 @@ export default class AppUpdater {
 let mainWindow: BrowserWindow | null = null;
 
 // IPC listener
-ipcMain.on('electron-store-get', (e) => {
+ipcMain.on('electron-store-get', e => {
   e.returnValue = store.get();
 });
 
@@ -42,7 +53,7 @@ ipcMain.on('electron-uuid', (e, val) => {
 
 ipcMain.on('electron-open-link', (e, link) => {
   shell.openExternal(link);
-})
+});
 
 ipcMain.handle('electron-fetch', async (e, url, options) => {
   try {
@@ -107,6 +118,7 @@ const createWindow = async () => {
     webPreferences: {
       nodeIntegration: true,
       preload: app.isPackaged ? path.join(__dirname, 'preload.js') : path.join(__dirname, '../../.erb/dll/preload.js'),
+      spellcheck: true,
     },
   });
 
@@ -131,7 +143,7 @@ const createWindow = async () => {
   menuBuilder.buildMenu();
 
   // Open urls in the user's browser
-  mainWindow.webContents.setWindowOpenHandler((edata) => {
+  mainWindow.webContents.setWindowOpenHandler(edata => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });

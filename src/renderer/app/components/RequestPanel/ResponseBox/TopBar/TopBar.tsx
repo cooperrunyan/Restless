@@ -17,10 +17,10 @@ export const TopBar: React.FC<Props> = ({ tab, setTab }: Props) => {
   return (
     <div className={style.TopBar}>
       <ul className={style.tabs}>
-        <li className={tab === 'body' ? style.active : ''} onClick={() => setTab('body')}>
+        <li className={tab === 'body' && !(request.response as any).error! ? style.active : ''} onClick={() => setTab('body')}>
           Body
         </li>
-        <li className={tab === 'headers' ? style.active : ''} onClick={() => setTab('headers')}>
+        <li className={tab === 'headers' && !(request.response as any).error! ? style.active : ''} onClick={() => setTab('headers')}>
           Headers
         </li>
       </ul>
@@ -35,12 +35,17 @@ export const TopBar: React.FC<Props> = ({ tab, setTab }: Props) => {
             className={style.status + ' ' + statusStyle(request.response.status)}
             href={`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${request.response.status}`}
             onClick={e => {
+              if (!request.response!.status) {
+                e.preventDefault();
+                return;
+              }
               if (window.electron.openLink) {
                 window.electron.openLink(`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${request.response!.status}`);
                 e.preventDefault();
               }
             }}>
-            {request.response.status} - {request.response.statusText}
+            {request.response.status || 'Error'}
+            {request.response.statusText ? ` - ${request.response.statusText}` : ''}
           </a>
         </li>
       </ul>

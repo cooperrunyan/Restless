@@ -10,6 +10,26 @@
   cursor: pointer;
   gap: 1.4rem;
 
+  & > * > * > .delete {
+    opacity: 0;
+  }
+
+  &:hover > * > * > .delete {
+    opacity: 0.5;
+  }
+
+  & > * > * > .delete {
+    background-color: transparent;
+    color: var(--red);
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   span {
     max-width: 80%;
     white-space: nowrap;

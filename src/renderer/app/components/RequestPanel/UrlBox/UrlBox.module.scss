@@ -37,6 +37,12 @@
     padding: 1rem 2.4rem;
     background-color: var(--blue);
     border: none;
+    transition: all 0.1s ease-in-out;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .method {

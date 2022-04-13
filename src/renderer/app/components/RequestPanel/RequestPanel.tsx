@@ -37,7 +37,7 @@ const splitPaneConfig = {
   allowResize: true,
   minHeight: 0,
   minSize: 0,
-  maxHeight: window.innerHeight - 200,
+  maxHeight: window.innerHeight - 0,
   // primary: 'first',
   resizerClassName: 'RequestResizer',
   onDragStarted() {

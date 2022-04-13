@@ -74,18 +74,10 @@
     color: var(--white) !important;
   }
 
-  &::selection {
-    background-color: red !important;
-  }
-
   * {
     font-family: var(--mono) !important;
     font-weight: 400 !important;
     overflow: unset !important;
-
-    &::selection {
-      background-color: red !important;
-    }
   }
 }
 

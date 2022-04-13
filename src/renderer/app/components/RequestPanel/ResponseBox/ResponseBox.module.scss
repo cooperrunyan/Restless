@@ -25,3 +25,25 @@
     overflow: unset !important;
   }
 }
+
+.error {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .errorText {
+    font-size: 2.4rem;
+    color: var(--red);
+    padding: 2rem;
+    border-bottom: 0.1rem solid var(--grey);
+    letter-spacing: 0;
+  }
+
+  .errorMessage {
+    font-family: var(--mono);
+    letter-spacing: 0.015em;
+    margin: 1.6rem 2rem;
+    font-weight: 400;
+  }
+}

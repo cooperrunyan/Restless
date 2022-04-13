@@ -4,6 +4,7 @@ import { Collection } from 'renderer/app/lib/Settings';
 import { ChevronBack } from '../../icons/chevron-back-outline';
 import style from './ManageCollections.module.scss';
 import React from 'react';
+import { Trash } from 'renderer/app/icons/trash';
 
 export const ManageCollections: React.FC<{}> = () => {
   const [showList, setShowList] = useState(false);
@@ -106,6 +107,9 @@ const CollectionOption: React.FC<CollectionOptionProps> = ({ children, state }: 
           dataManager?.push();
         }}>
         {children.name}
+        <button>
+          <Trash />
+        </button>
       </a>
     </li>
   );

@@ -7,6 +7,10 @@
   color: inherit;
 }
 
+::selection {
+  background-color: var(--grey);
+}
+
 html {
   font-size: 62.5%;
 }
@@ -102,7 +106,8 @@ input {
 
 .Pane.horizontal {
   overflow-y: scroll;
-  max-height: calc(100vh - 25rem);
+  // max-height: calc(100vh - 25rem);
+  max-height: calc(100% - 0.3rem);
 }
 
 .ace_bracket,
