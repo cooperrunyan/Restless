@@ -1,32 +1,19 @@
-import { RequestInit, Response } from 'node-fetch';
+import type { PrismaClient } from '@prisma/client';
 
 declare global {
   interface Window {
     electron: {
-      ipcRenderer: {
-        on(channel: string, func: (...args: any[]) => void): void;
-        once(channel: string, func: (...args: any[]) => void): void;
+      ipcRenderer: Electron.IpcRenderer;
+      prisma: {
+        workspace: PrismaClient['workspace'];
+        user: PrismaClient['user'];
+        collection: PrismaClient['collection'];
+        settings: PrismaClient['settings'];
+        request: PrismaClient['request'];
+        response: PrismaClient['response'];
+        $connect: PrismaClient['$connect'];
+        $disconnect: PrismaClient['$disconnect'];
       };
-      openLink: (url: string) => void;
-      store: {
-        get: () => any;
-        set: (val: any) => void;
-        updater: (cb: (...args: any[]) => void) => void;
-      };
-      uuid: () => string;
-      fetch: (
-        url: string,
-        options: RequestInit,
-      ) => Promise<{
-        type: string;
-        body: string;
-        url: string;
-        status: number;
-        statusText: string;
-        headers: { [key: string]: string };
-        ok: boolean;
-        size: number;
-      }>;
     };
   }
 }

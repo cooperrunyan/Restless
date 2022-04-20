@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./storage.db"
+}
+
+model User {
+  id                 String      @id @unique @default(uuid())
+  currentWorkspaceId String?
+  workspaces         Workspace[]
+  settings           Settings?
+}
+
+model Settings {
+  id     String @id @unique @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Workspace {
+  id                String       @id @unique @default(uuid())
+  owner             User         @relation(fields: [userId], references: [id])
+  name              String
+  userId            String
+  collections       Collection[]
+  currentCollection String?
+}
+
+model Collection {
+  id             String    @id @unique @default(uuid())
+  owner          Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId    String
+  children       Request[]
+  currentRequest String?
+}
+
+model Request {
+  id              String      @id @unique @default(uuid())
+  path            String
+  name            String
+  owner           Collection? @relation(fields: [collectionId], references: [id])
+  url             String
+  method          String      @default("GET")
+  headers         String?     @default("{}")
+  body            String?
+  authentication  String?
+  documentation   String
+  responses       Response[]
+  collectionId    String?
+  currentResponse String?
+}
+
+model Response {
+  id      String  @id @unique @default(uuid())
+  ownerId String
+  owner   Request @relation(fields: [ownerId], references: [id])
+}
