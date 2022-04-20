@@ -13,6 +13,9 @@ export async function getCurrentCollection() {
       workspaceId: currentWorkspace.id,
       id: currentWorkspace.currentCollection,
     },
+    include: {
+      paths: true,
+    },
   });
   prisma.$disconnect();
   return result[0];

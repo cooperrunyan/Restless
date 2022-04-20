@@ -38,6 +38,14 @@ model Collection {
   workspaceId    String
   children       Request[]
   currentRequest String?
+  paths          Path[]
+}
+
+model Path {
+  id           String      @id @unique @default(uuid())
+  value        String      @unique
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId String?
 }
 
 model Request {
