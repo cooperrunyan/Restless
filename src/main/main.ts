@@ -3,7 +3,6 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import sqlite3 from 'sqlite3';
 import { mainWindow } from './window';
 import { setup, listen, info } from './setup';
 import { ensureUser } from './ensureUser';
@@ -15,8 +14,6 @@ export default class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-
-new sqlite3.Database('./prisma/storage.db');
 
 setup();
 info();

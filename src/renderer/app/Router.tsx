@@ -12,8 +12,8 @@ export const Router: React.FC<Props> = ({}: Props) => (
   <Refresher>
     <MemoryRouter>
       <Routes>
-        <Route path="/rest" element={<Rest />} />
-        <Route path="/" element={<Index />} />
+        <Route path="/home" element={<Index />} />
+        <Route path="/" element={<Rest />} />
       </Routes>
     </MemoryRouter>
   </Refresher>

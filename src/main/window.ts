@@ -11,7 +11,7 @@ app.whenReady().then(() => {
     height: 10000,
     minWidth: 600,
     minHeight: 400,
-    backgroundColor: '#000000',
+    backgroundColor: '#191d23',
     frame: false,
     title: 'Restless',
     titleBarStyle: 'hiddenInset',

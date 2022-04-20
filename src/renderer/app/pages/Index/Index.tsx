@@ -18,7 +18,6 @@ export const Index: React.FC = () => {
   return (
     <App>
       <div className={style.App}>
-        <h1>Restless</h1>
         <div className={style.contents}></div>
       </div>
     </App>

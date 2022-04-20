@@ -1,0 +1,47 @@
+.StatusBar {
+  height: 3.2rem;
+  border-top: 0.1rem solid var(--4);
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  background-color: var(--2);
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  & > * {
+    height: 100%;
+    color: var(--7);
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0.7rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      background-color: var(--3);
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .cloud {
+    color: var(--8);
+    background-color: var(--primary);
+    padding-inline: 1.2rem;
+
+    &:hover {
+      filter: brightness(0.85);
+    }
+  }
+}
