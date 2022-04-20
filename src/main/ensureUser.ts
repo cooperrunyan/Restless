@@ -9,6 +9,11 @@ export async function ensureUser() {
   await prisma.user.create({
     data: {
       settings: {},
+      workspaces: {
+        create: {
+          name: 'My Workspace',
+        },
+      },
     },
   });
   prisma.$disconnect();
