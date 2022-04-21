@@ -19,4 +19,4 @@ if (process.env.NODE_ENV === 'development') {
   };
 }
 
-const RESOURCES_PATH = app.isPackaged ? path.join(process.resourcesPath, 'assets') : path.join(__dirname, '../../assets');
+const RESOURCES_PATH = app.isPackaged ? path.join(process.resourcesPath, 'public') : path.join(__dirname, '../../public');
