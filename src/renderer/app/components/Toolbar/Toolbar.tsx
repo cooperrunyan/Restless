@@ -13,7 +13,7 @@ export const Toolbar: React.FC = () => {
       <Item name="Rest" href="/">
         {ShapesOutline}
       </Item>
-      <Item name="Mock_Servers" href="/mock-servers">
+      <Item name="Mock Servers" href="/mock-servers">
         {ServerOutline}
       </Item>
       <Item name="Realtime" href="realtime">
@@ -56,7 +56,10 @@ const Item: React.FC<Props> = ({ children: Icon, href, name }) => {
       <Icon height="2.4rem" width="2.4rem" color={current === pathname ? 'var(--7)' : 'var(--5)'} />
 
       <h6 className={style.tooltip + ' ' + (showTooltip ? style.show : ' ')}>
-        <Triangle /> {name}
+        <Triangle />{' '}
+        {name.split(' ').map(word => (
+          <span>{word}</span>
+        ))}
       </h6>
     </a>
   );
