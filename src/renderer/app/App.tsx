@@ -2,7 +2,9 @@ import { ReactChild, useEffect } from 'react';
 import React from 'react';
 import { Refresher } from './Refresher';
 import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+import './style/toastify.scss';
 
 interface Props {
   children?: ReactChild | ReactChild[];
@@ -28,9 +30,9 @@ export const App: React.FC<Props> = ({ children }: Props) => {
 
   return (
     <Refresher>
+      <ToastContainer theme="dark" />
       <div className="App">
         <div className="TitleBar"></div>
-        <ToastContainer />
         <div className="App-Contents">{children}</div>
       </div>
     </Refresher>

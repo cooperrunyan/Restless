@@ -58,7 +58,7 @@ const Item: React.FC<Props> = ({ children: Icon, href, name }) => {
       <h6 className={style.tooltip + ' ' + (showTooltip ? style.show : ' ')}>
         <Triangle />{' '}
         {name.split(' ').map(word => (
-          <span>{word}</span>
+          <span key={word}>{word}</span>
         ))}
       </h6>
     </a>

@@ -7,7 +7,10 @@ export const StatusBar: React.FC = () => {
       <a className={style.cloud} href="#">
         <CloudyOutline height="19px" title={null} color="var(--8)" />
       </a>
-      <button>
+      <button
+        onClick={() => {
+          throw new Error('This feature has not yet been implemented!');
+        }}>
         <TerminalOutline height="16px" title={null} color="var(--7)" />
         <p>Terminal</p>
       </button>
