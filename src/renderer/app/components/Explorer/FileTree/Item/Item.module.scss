@@ -1,0 +1,39 @@
+.Item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  user-select: none;
+  cursor: pointer;
+
+  .content {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0.4rem 1.4rem;
+    padding-right: none;
+    transition: all 0.1s ease-in-out;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-90deg);
+      transition: all 0.1s ease-in-out;
+    }
+
+    &.open span {
+      transform: rotate(0deg);
+    }
+
+    @for $i from 0 through 24 {
+      &.layer-#{$i} {
+        padding-left: #{1.4 * ($i + 1)}rem;
+      }
+    }
+
+    h6 {
+      font-size: 1.2rem;
+      color: var(--5);
+    }
+  }
+}

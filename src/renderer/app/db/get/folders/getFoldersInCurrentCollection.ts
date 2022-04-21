@@ -1,6 +1,6 @@
 import { getCurrentCollection } from '../collection/getCurrentCollection';
 
-export async function getRequest(id: string) {
+export async function getFoldersInCurrentCollection() {
   const prisma = window.electron.prisma;
   await prisma.$connect();
 
@@ -8,16 +8,12 @@ export async function getRequest(id: string) {
 
   if (!currentCollection) return;
 
-  const result = await prisma.request.findMany({
+  const result = await prisma.path.findMany({
     where: {
       collectionId: currentCollection.id,
-      id,
-    },
-    include: {
-      responses: true,
     },
   });
 
   // prisma.$disconnect();
-  return result[0];
+  return result;
 }

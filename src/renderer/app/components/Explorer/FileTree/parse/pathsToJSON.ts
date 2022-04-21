@@ -1,0 +1,19 @@
+export function pathsToJSON(paths: { path: string; method?: string; id: string; isRequest?: boolean }[]) {
+  return paths.reduce(
+    (r, { path, method, id, isRequest }) => {
+      let directories = ('root' + (path || '')).split('/');
+
+      directories.reduce((d: any, key) => {
+        if (!d[key] && key) {
+          d[key] = { _: [] };
+          d._.push((d[key].parent = { children: !isRequest ? d[key]._ : null, name: key, id, method, layer: path.split('/').indexOf(key) }));
+        }
+        return d[key];
+      }, r);
+      return r;
+    },
+    { _: [] },
+  )._;
+}
+
+// Magic. Source: https://stackoverflow.com/questions/62089566/file-paths-to-json-tree-structure
