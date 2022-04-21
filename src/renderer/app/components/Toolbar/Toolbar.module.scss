@@ -18,6 +18,36 @@
     transition: all 0.1s ease-in-out;
     position: relative;
 
+    .tooltip {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 2.1rem);
+      transform: translateY(-50%);
+      color: var(--7);
+      font-size: 1.2rem;
+      background-color: var(--0);
+      border-radius: var(--border-radius);
+      padding: 0.4rem 0.8rem;
+      width: fit-content;
+      display: flex;
+      pointer-events: none;
+      transition: all 0.1s ease-in-out;
+      opacity: 0;
+
+      &.show {
+        opacity: 1;
+      }
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: -0.9rem;
+        width: 0.9rem;
+        height: 1.2rem;
+        transform: translateY(-50%);
+      }
+    }
+
     & > * {
       display: flex;
       align-items: center;
