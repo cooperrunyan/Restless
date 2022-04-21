@@ -6,7 +6,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import chalk from 'chalk';
 import { merge } from 'webpack-merge';
 import { execSync, spawn } from 'child_process';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import webpackPaths from './webpack.paths';
 import checkNodeEnv from '../scripts/check-node-env';
@@ -19,22 +18,13 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 1212;
 const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json');
-const requiredByDLLConfig = module.parent!.filename.includes(
-  'webpack.config.renderer.dev.dll'
-);
+const requiredByDLLConfig = module.parent!.filename.includes('webpack.config.renderer.dev.dll');
 
 /**
  * Warn if the DLL is not built
  */
-if (
-  !requiredByDLLConfig &&
-  !(fs.existsSync(webpackPaths.dllPath) && fs.existsSync(manifest))
-) {
-  console.log(
-    chalk.black.bgYellow.bold(
-      'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"'
-    )
-  );
+if (!requiredByDLLConfig && !(fs.existsSync(webpackPaths.dllPath) && fs.existsSync(manifest))) {
+  console.log(chalk.black.bgYellow.bold('The DLL files are missing. Sit back while we build them for you with "npm run build-dll"'));
   execSync('npm run postinstall');
 }
 
@@ -45,11 +35,7 @@ const configuration: webpack.Configuration = {
 
   target: ['web', 'electron-renderer'],
 
-  entry: [
-    `webpack-dev-server/client?http://localhost:${port}/dist`,
-    'webpack/hot/only-dev-server',
-    path.join(webpackPaths.srcRendererPath, 'index.tsx'),
-  ],
+  entry: [`webpack-dev-server/client?http://localhost:${port}/dist`, 'webpack/hot/only-dev-server', path.join(webpackPaths.srcRendererPath, 'index.tsx')],
 
   output: {
     path: webpackPaths.distRendererPath,
@@ -128,8 +114,6 @@ const configuration: webpack.Configuration = {
       debug: true,
     }),
 
-    new ReactRefreshWebpackPlugin(),
-
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
       template: path.join(webpackPaths.srcRendererPath, 'index.ejs'),
@@ -168,7 +152,7 @@ const configuration: webpack.Configuration = {
         stdio: 'inherit',
       })
         .on('close', (code: number) => process.exit(code!))
-        .on('error', (spawnError) => console.error(spawnError));
+        .on('error', spawnError => console.error(spawnError));
 
       console.log('Starting Main Process...');
       spawn('npm', ['run', 'start:main'], {
@@ -179,7 +163,7 @@ const configuration: webpack.Configuration = {
           preloadProcess.kill();
           process.exit(code!);
         })
-        .on('error', (spawnError) => console.error(spawnError));
+        .on('error', spawnError => console.error(spawnError));
       return middlewares;
     },
   },
