@@ -6,6 +6,6 @@ export async function getWorkspace(id: string) {
       id,
     },
   });
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

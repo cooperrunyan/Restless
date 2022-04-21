@@ -34,6 +34,7 @@ model Workspace {
 
 model Collection {
   id             String    @id @unique @default(uuid())
+  name           String
   owner          Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId    String
   children       Request[]

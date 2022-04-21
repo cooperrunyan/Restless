@@ -1,0 +1,163 @@
+.Explorer {
+  height: 100%;
+  width: 36rem;
+  background-color: var(--0);
+  border-right: 0.3rem solid var(--4);
+  position: relative;
+}
+
+.backdrop {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--0);
+  transition: all 0.1s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  z-index: 0;
+
+  &.active {
+    opacity: 0.5;
+    pointer-events: all;
+  }
+}
+
+.Collections {
+  .content {
+    padding: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    border-bottom: 0.1rem solid var(--4);
+    user-select: none;
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+      background-color: var(--1);
+    }
+
+    & > span {
+      transition: all 0.1s ease-in-out;
+
+      &.active {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 5.6rem;
+    left: 0;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--1);
+    border-bottom: 0.1rem solid var(--4);
+    transition: all 0.1s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    filter: brightness(0.8);
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    li {
+      padding: 0.8rem 1.6rem;
+      cursor: pointer;
+      border-bottom: 0.1rem solid var(--4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        background-color: var(--3);
+      }
+
+      &.new {
+        cursor: unset;
+        color: var(--4);
+        border: none;
+
+        form {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        input {
+          color: var(--7);
+          border: none;
+          background-color: transparent;
+          padding: 0;
+          margin: 0;
+          outline: none;
+          width: 80%;
+          font-size: 1.6rem;
+        }
+
+        button {
+          padding: 0;
+          margin: 0;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.FileTree {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  .manager {
+    height: 3.6rem;
+    width: 100%;
+    background-color: var(--1);
+    display: flex;
+    align-items: center;
+    padding-inline: 1.6rem;
+    gap: 0.8rem;
+    margin-bottom: 1.6rem;
+
+    button {
+      background-color: var(--3);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-size: 1.2rem;
+      outline: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+
+      &:hover {
+        filter: brightness(1.15);
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

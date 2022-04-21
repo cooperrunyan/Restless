@@ -18,6 +18,6 @@ export async function getCurrentRequest() {
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result[0];
 }

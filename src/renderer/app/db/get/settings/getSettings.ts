@@ -12,6 +12,6 @@ export async function getSettings() {
       userId: user.id,
     },
   });
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

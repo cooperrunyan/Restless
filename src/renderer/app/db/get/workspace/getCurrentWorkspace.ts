@@ -13,7 +13,7 @@ export async function getCurrentWorkspace() {
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

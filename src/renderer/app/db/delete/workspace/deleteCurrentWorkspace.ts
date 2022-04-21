@@ -11,6 +11,6 @@ export async function deleteCurrentWorkspace() {
   const result = await prisma.workspace.delete({ where: { id } });
   await modifyUser({ currentWorkspaceId: null });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

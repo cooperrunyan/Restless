@@ -4,6 +4,6 @@ export async function deleteRequest(id: string) {
 
   const result = await prisma.request.delete({ where: { id } });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

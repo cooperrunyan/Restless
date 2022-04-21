@@ -19,7 +19,7 @@ export async function createResponse(requestId: string, data: Prisma.ResponseCre
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return response;
 }

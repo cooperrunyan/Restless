@@ -15,7 +15,7 @@ export async function modifyCurrentRequest(data: Prisma.RequestUpdateInput) {
     data,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

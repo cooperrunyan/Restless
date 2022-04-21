@@ -17,6 +17,6 @@ export async function getCurrentCollection() {
       paths: true,
     },
   });
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result[0];
 }

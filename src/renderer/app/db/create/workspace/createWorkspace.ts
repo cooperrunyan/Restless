@@ -24,7 +24,7 @@ export async function createWorkspace(name: string) {
     currentWorkspaceId: response.id,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return response;
 }

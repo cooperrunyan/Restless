@@ -25,7 +25,7 @@
       transform: translateY(-50%);
       color: var(--7);
       font-size: 1.2rem;
-      background-color: var(--0);
+      background-color: var(--2);
       border-radius: var(--border-radius);
       padding: 0.4rem 0.8rem;
       width: fit-content;
@@ -34,6 +34,7 @@
       pointer-events: none;
       transition: all 0.1s ease-in-out;
       opacity: 0;
+      z-index: 2;
 
       &.show {
         opacity: 1;

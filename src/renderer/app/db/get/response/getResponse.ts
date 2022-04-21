@@ -15,6 +15,6 @@ export async function getResponse(id: string) {
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

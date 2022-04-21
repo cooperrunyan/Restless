@@ -14,10 +14,10 @@ export async function getCollection(id: string) {
       id,
     },
     include: {
-      paths: true
-    }
+      paths: true,
+    },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result[0];
 }

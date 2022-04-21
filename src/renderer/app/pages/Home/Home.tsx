@@ -2,10 +2,10 @@ import { PrismaClient } from '@prisma/client';
 import { useEffect, useState, useContext } from 'react';
 import { db } from 'renderer/app/db';
 import { App } from '../../App';
-import style from './Index.module.scss';
+import style from './Home.module.scss';
 import { RefresherContext } from '../../Refresher';
 
-export const Index: React.FC = () => {
+export const Home: React.FC = () => {
   const [user, setUser] = useState<Awaited<ReturnType<PrismaClient['user']['findFirst']>>>(null);
   const { refresh, iteration } = useContext(RefresherContext);
 

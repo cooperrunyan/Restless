@@ -15,7 +15,7 @@ export async function modifyCurrentWorkspace(data: Prisma.WorkspaceUpdateInput) 
     data,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

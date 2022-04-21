@@ -21,5 +21,5 @@ export async function ensureUser() {
     where: { id: user.id },
     data: { currentWorkspaceId: workspace?.id },
   });
-  prisma.$disconnect();
+  // prisma.$disconnect();
 }

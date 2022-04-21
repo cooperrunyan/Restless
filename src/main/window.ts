@@ -16,8 +16,8 @@ app.whenReady().then(() => {
     title: 'Restless',
     titleBarStyle: 'hiddenInset',
     trafficLightPosition: {
-      x: 18,
-      y: 18,
+      x: 12,
+      y: 12,
     },
     icon: getAssetPath('icon.icns'),
     webPreferences: {

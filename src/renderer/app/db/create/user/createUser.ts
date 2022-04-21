@@ -10,7 +10,7 @@ export async function createUser() {
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return response;
 }

@@ -11,6 +11,6 @@ export async function deleteCurrentCollection() {
   const result = await prisma.collection.delete({ where: { id: workspace.currentCollection } });
   await modifyCurrentWorkspace({ currentCollection: null });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

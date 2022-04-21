@@ -1,10 +1,9 @@
-import { Prisma } from '@prisma/client';
 import { getCurrentWorkspace } from '../../get/workspace';
 import { createCollection } from './createCollection';
 
-export async function createCollectionInCurrentWorkspace(data: Prisma.CollectionCreateInput) {
+export async function createCollectionInCurrentWorkspace(name: string) {
   const currentWorkspace = await getCurrentWorkspace();
   if (!currentWorkspace) return;
 
-  return createCollection(currentWorkspace.id, data);
+  return createCollection(currentWorkspace.id, name);
 }

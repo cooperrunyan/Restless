@@ -15,7 +15,7 @@ export async function modifyCurrentCollection(data: Prisma.CollectionUpdateInput
     data,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

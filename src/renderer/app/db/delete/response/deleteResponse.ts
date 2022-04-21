@@ -4,6 +4,6 @@ export async function deleteResponse(id: string) {
 
   const result = await prisma.response.delete({ where: { id } });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

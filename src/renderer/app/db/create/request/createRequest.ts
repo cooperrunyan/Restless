@@ -19,7 +19,7 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
     },
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return response;
 }

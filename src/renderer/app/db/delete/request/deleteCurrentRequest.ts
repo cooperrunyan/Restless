@@ -11,6 +11,6 @@ export async function deleteCurrentRequest() {
   const result = await prisma.request.delete({ where: { id: collection.currentRequest } });
   await modifyCurrentCollection({ currentRequest: null });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }

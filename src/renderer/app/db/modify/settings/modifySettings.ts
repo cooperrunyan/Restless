@@ -15,7 +15,7 @@ export async function modifySettings(data: Prisma.SettingsUpdateInput) {
     data,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

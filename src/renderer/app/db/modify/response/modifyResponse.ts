@@ -11,7 +11,7 @@ export async function modifyResponse(id: string, data: Prisma.ResponseUpdateInpu
     data,
   });
 
-  prisma.$disconnect();
+  // prisma.$disconnect();
 
   return result;
 }

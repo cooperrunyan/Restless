@@ -6,7 +6,6 @@ import { resolveHtmlPath } from './util';
 import { mainWindow } from './window';
 import { setup, listen, info } from './setup';
 import { ensureUser } from './ensureUser';
-import unhandled from 'electron-unhandled';
 
 export default class AppUpdater {
   constructor() {
@@ -15,10 +14,6 @@ export default class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-
-unhandled({
-  showDialog: false,
-});
 
 setup();
 info();

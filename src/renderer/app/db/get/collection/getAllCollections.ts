@@ -16,6 +16,6 @@ export async function getAllCollections() {
       paths: true,
     },
   });
-  prisma.$disconnect();
+  // prisma.$disconnect();
   return result;
 }
