@@ -1,7 +1,7 @@
 import { ReactChild, useEffect } from 'react';
 import React from 'react';
 import { Refresher } from './Refresher';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './style/toastify.scss';
@@ -30,7 +30,6 @@ export const App: React.FC<Props> = ({ children }: Props) => {
 
   return (
     <Refresher>
-      <ToastContainer theme="dark" />
       <div className="App">
         <div className="TitleBar"></div>
         <div className="App-Contents">{children}</div>

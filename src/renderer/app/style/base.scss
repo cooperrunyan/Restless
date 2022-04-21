@@ -22,6 +22,7 @@ html {
   color: var(--7);
   font-size: 1.6rem;
   font-family: var(--sans);
+  position: relative;
 }
 
 .App-Contents {
@@ -29,6 +30,7 @@ html {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .TitleBar {
