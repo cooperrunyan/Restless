@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowBackOutline, OptionsOutline, ReaderOutline, ServerOutline, ShapesOutline, TimerOutline } from 'react-ionicons';
-import { useNavigate, useResolvedPath } from 'react-router-dom';
+import { useLocation, useNavigate, useResolvedPath } from 'react-router-dom';
 import style from './Toolbar.module.scss';
 import { Triangle } from './Triangle';
 
@@ -37,8 +37,9 @@ interface Props {
 
 const Item: React.FC<Props> = ({ children: Icon, href, name }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { pathname } = useResolvedPath(href);
-  const current = new URL(window.location.href).pathname;
+  const current = location.pathname;
 
   const [showTooltip, setShowTooltip] = useState(false);
 
