@@ -22,7 +22,7 @@ export const App: React.FC<Props> = ({ children }: Props) => {
           return;
         }
 
-        toast.error(e.message);
+        toast.error(e.message.replace('Uncaught Error: ', ''));
       },
       { capture: true },
     );
