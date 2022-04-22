@@ -25,7 +25,7 @@ export const FileTree: React.FC = () => {
   useEffect(() => {
     window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e, type: string, id: string) => {
       if (type === 'request') deleteRequest(id).then(refresh);
-      if (type === 'folder') deleteFolder(id).then(refresh)
+      if (type === 'folder') deleteFolder(id).then(refresh);
     });
 
     (async () => {
@@ -58,8 +58,12 @@ export const FileTree: React.FC = () => {
   }, [iteration]);
 
   return (
-    <div className={style.FileTree}>
-      <div className={style.manager}>
+    <div
+      className={style.FileTree}
+      onDoubleClick={e => {
+        if (!showTemplate) setShowTemplate(true);
+      }}>
+      <div className={style.manager} onClick={e => e.stopPropagation()}>
         <button
           tabIndex={-1}
           onClick={e => {

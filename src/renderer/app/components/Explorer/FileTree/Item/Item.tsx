@@ -15,22 +15,15 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id }) => 
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={style.Item}>
+    <div className={style.Item} onClick={e => e.stopPropagation()}>
       <div
         className={style.content + ' ' + style[`layer-${layer || 0}`] + ' ' + (open ? style.open : '')}
         ref={ref}
         id={`{"deletable":true,"id":"${id}","type":"${children ? 'folder' : 'request'}"}`}
-        onContextMenu={e => {
-          e.stopPropagation();
-          (e.nativeEvent as any).CUSTOM_PROP = ref.current!.parentElement!.id;
-        }}
+        onContextMenu={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation();
-
-          if (children) {
-            setOpen(!open);
-            return;
-          }
+          if (children) setOpen(!open);
         }}
         onMouseOver={e => {
           e.stopPropagation();
