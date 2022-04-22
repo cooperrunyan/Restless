@@ -8,11 +8,14 @@ export interface Props {
   id: string;
   children?: Props[];
   layer: number;
+  rename?: boolean;
 }
 
-export const Item: React.FC<Props> = ({ method, name, children, layer, id }) => {
+export const Item: React.FC<Props> = ({ method, name, children, layer, id, rename = false }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+
+  if (rename) console.log(`rename ${name}`);
 
   return (
     <div className={style.Item} onClick={e => e.stopPropagation()}>
