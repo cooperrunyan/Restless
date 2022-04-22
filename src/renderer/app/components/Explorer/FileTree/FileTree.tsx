@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AddOutline } from 'react-ionicons';
-import { createRequestInCurrentCollection as createRequest } from 'renderer/app/db/create/request';
 import { folders } from 'renderer/app/db/get';
-import { getFoldersInCurrentCollection } from 'renderer/app/db/get/folders';
 import { getAllRequests } from 'renderer/app/db/get/request';
 import { RefresherContext } from 'renderer/app/Refresher';
 import style from './FileTree.module.scss';
@@ -12,9 +10,7 @@ import * as channels from '../../../../../channels';
 import { deleteRequest } from 'renderer/app/db/delete/request';
 import { TemplateItem } from './TemplateItem/TemplateItem';
 import { deleteFolder } from 'renderer/app/db/delete/folder';
-
-type Path = Bang<Awaited<ReturnType<typeof getFoldersInCurrentCollection>>>;
-type Bang<T> = T extends null | undefined ? never : T;
+import type { Props as ItemType } from './Item/Item';
 
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);
@@ -27,7 +23,12 @@ export const FileTree: React.FC = () => {
       if (type === 'request') deleteRequest(id).then(refresh);
       if (type === 'folder') deleteFolder(id).then(refresh);
     });
+    window.electron.ipcRenderer.on(channels.RENAME_ITEM, (e, id: string) => {
+      const item = getElementByID(data, id)
+    });
+  }, []);
 
+  useEffect(() => {
     (async () => {
       const requests = getAllRequests();
       const paths = folders.getFoldersInCurrentCollection();
@@ -95,3 +96,12 @@ export const FileTree: React.FC = () => {
     </div>
   );
 };
+
+function getElementByID(data: ItemType[], id: string): ItemType | null {
+  for (const item of data) {
+    if (item.id === id) return item;
+    const result = getElementByID(item.children || [], id);
+    if (result) return result;
+  }
+  return null;
+}

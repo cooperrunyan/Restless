@@ -31,6 +31,7 @@ export default class MenuBuilder {
       const response = await this.mainWindow.webContents.executeJavaScript(`Array.from(document.elementsFromPoint(${x}, ${y})).map(el => el.id)`);
 
       let deletable = false;
+      let renamable = false;
       let type: null | string = null;
       let id: null | string = null;
 
@@ -38,12 +39,22 @@ export default class MenuBuilder {
         try {
           const parsed = JSON.parse(elId);
           deletable = parsed.deletable;
+          renamable = parsed.deletable;
           id = parsed.id;
           type = parsed.type;
         } catch {}
       }
 
       const toBeAdded = [];
+
+      if (renamable && id && type) {
+        toBeAdded.push({
+          label: `Rename ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+          click: () => {
+            return this.mainWindow.webContents.send(channels.RENAME_ITEM, id);
+          },
+        });
+      }
 
       if (deletable && id && type) {
         toBeAdded.push(

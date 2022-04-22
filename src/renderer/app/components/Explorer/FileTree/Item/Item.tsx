@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import style from './Item.module.scss';
 
-interface Props {
+export interface Props {
   method?: string;
   name: string;
   id: string;
@@ -19,7 +19,7 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id }) => 
       <div
         className={style.content + ' ' + style[`layer-${layer || 0}`] + ' ' + (open ? style.open : '')}
         ref={ref}
-        id={`{"deletable":true,"id":"${id}","type":"${children ? 'folder' : 'request'}"}`}
+        id={`{"deletable":true,"renamable":true,"id":"${id}","type":"${children ? 'folder' : 'request'}"}`}
         onContextMenu={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation();
