@@ -13,8 +13,6 @@ export const Home: React.FC = () => {
     db.get.user.getUser().then(user => setUser(user));
   }, [iteration]);
 
-  useEffect(() => console.log(user));
-
   return (
     <App>
       <div className={style.App}>

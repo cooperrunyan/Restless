@@ -11,6 +11,9 @@ import { deleteRequest } from 'renderer/app/db/delete/request';
 import { TemplateItem } from './TemplateItem/TemplateItem';
 import { deleteFolder } from 'renderer/app/db/delete/folder';
 import type { Props as ItemType } from './Item/Item';
+import { renameFolder } from 'renderer/app/db/rename/folder';
+import { toast } from 'react-toastify';
+import { renameRequest } from 'renderer/app/db/rename/request';
 
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);
@@ -19,14 +22,41 @@ export const FileTree: React.FC = () => {
   const [templateType, setTemplateType] = useState<'request' | 'folder'>('request');
 
   useEffect(() => {
-    window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e, type: string, id: string) => {
+    const listener = (e: any, type: string, id: string) => {
       if (type === 'request') deleteRequest(id).then(refresh);
       if (type === 'folder') deleteFolder(id).then(refresh);
-    });
-    window.electron.ipcRenderer.on(channels.RENAME_ITEM, (e, id: string) => {
-      const item = getElementByID(data, id)
-    });
-  }, []);
+    };
+    window.electron.ipcRenderer.on(channels.DELETE_ITEM, listener);
+    const rListener = (e: any, id: string) => {
+      const item = getElementByID(data, id);
+      if (!item) return;
+
+      item.rename = true;
+      item.stopRenaming = (save: boolean, type?: string, name?: string) => {
+        item.rename = false;
+        if (!save || !name || !type) return setData([...data]);
+
+        if (/\//.test(name)) throw new Error('Request name cannot contain the "/" slash character.');
+
+        if (type === 'folder')
+          renameFolder(id, name)
+            .catch(err => toast.error(err.message))
+            .then(refresh);
+
+        if (type === 'request')
+          renameRequest(id, name)
+            .catch(err => toast.error(err.message))
+            .then(refresh);
+      };
+      setData([...data]);
+    };
+    window.electron.ipcRenderer.on(channels.RENAME_ITEM, rListener);
+
+    return () => {
+      window.electron.ipcRenderer.off(channels.RENAME_ITEM, rListener);
+      window.electron.ipcRenderer.off(channels.DELETE_ITEM, listener);
+    };
+  }, [data]);
 
   useEffect(() => {
     (async () => {
@@ -62,7 +92,13 @@ export const FileTree: React.FC = () => {
     <div
       className={style.FileTree}
       onDoubleClick={e => {
-        if (!showTemplate) setShowTemplate(true);
+        if (
+          !showTemplate &&
+          !Array.from(document.elementsFromPoint(e.pageX, e.pageY))
+            .map(el => el.classList.contains('ITEM'))
+            .includes(true)
+        )
+          setShowTemplate(true);
       }}>
       <div className={style.manager} onClick={e => e.stopPropagation()}>
         <button
