@@ -15,6 +15,8 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
     if (path === data.path) throw new Error('That name has been taken');
   }
 
+  await createFolder(collectionId, { value: ('/' + data.path.split('/').slice(0, -1).join('/')).replaceAll('//', '/').replace('/', '') });
+
   const response = prisma.request.create({
     data: {
       ...data,
@@ -25,8 +27,6 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
       },
     },
   });
-
-  createFolder(collectionId, { value: data.path.split('/').slice(0, -1).join('/') });
 
   return await response;
 }

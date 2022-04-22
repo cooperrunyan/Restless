@@ -42,12 +42,6 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
       .join('/')
       .replaceAll('//', '/');
 
-    console.log(
-      segment,
-      ['/', '', ...allPaths.map((d: any) => d.path || d.value)],
-      ['/', '', ...allPaths.map((d: any) => d.path || d.value)].includes(segment),
-    );
-
     if (['/', '', ...allPaths.map((d: any) => d.path || d.value)].includes(segment)) continue;
 
     await prisma.path.create({
