@@ -9,18 +9,16 @@ import { db } from 'renderer/app/db';
 import { RefresherContext } from 'renderer/app/Refresher';
 import { App } from '../../App';
 import style from './Rest.module.scss';
+import ReactSplitPane from 'react-split-pane';
 
 export const Rest: React.FC = () => {
-  const [workspace, setWorkspace] = useState<Awaited<ReturnType<PrismaClient['workspace']['findFirst']>>>(null);
   const { refresh, iteration } = useContext(RefresherContext);
   const navigate = useNavigate();
 
   useEffect(
     () =>
       void db.get.workspace.getCurrentWorkspace().then(workspace => {
-        if (!workspace) return void navigate('/home');
-        setWorkspace(workspace);
-        return;
+        if (!workspace) navigate('/home');
       }),
     [iteration],
   );
@@ -30,7 +28,20 @@ export const Rest: React.FC = () => {
       <div className={style.App}>
         <Main>
           <Toolbar />
-          <Explorer />
+          <div className={style.content}>
+            <ReactSplitPane
+              allowResize
+              split="vertical"
+              primary="first"
+              resizerClassName="Resizer vertical"
+              minSize={180}
+              defaultSize={360}
+              maxSize={640}
+              className="hello_world">
+              <Explorer />
+              <div className="Panel">Panel</div>
+            </ReactSplitPane>
+          </div>
         </Main>
       </div>
       <StatusBar />

@@ -5,6 +5,9 @@
   user-select: none;
   cursor: pointer;
 
+  overflow: hidden;
+  white-space: nowrap;
+
   .content {
     display: flex;
     gap: 0.4rem;

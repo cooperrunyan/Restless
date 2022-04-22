@@ -1,8 +1,8 @@
 .Explorer {
   height: 100%;
-  width: 36rem;
+  // width: 36rem;
+  width: 100%;
   background-color: var(--0);
-  border-right: 0.3rem solid var(--4);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,12 @@
 }
 
 .Collections {
+  h6 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   .content {
     padding: 1.8rem;
     display: flex;
