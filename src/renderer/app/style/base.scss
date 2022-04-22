@@ -38,3 +38,7 @@ html {
   height: 4.4rem;
   border-bottom: solid 0.1rem var(--4);
 }
+
+button {
+  user-select: none;
+}

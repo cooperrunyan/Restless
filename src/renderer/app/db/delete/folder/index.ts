@@ -1,1 +1,1 @@
-export * from './deleteRequest';
+export * from './deleteFolder';

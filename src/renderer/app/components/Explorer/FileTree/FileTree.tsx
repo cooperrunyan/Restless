@@ -11,6 +11,7 @@ import { pathsToJSON } from './parse/pathsToJSON';
 import * as channels from '../../../../../channels';
 import { deleteRequest } from 'renderer/app/db/delete/request';
 import { TemplateItem } from './TemplateItem/TemplateItem';
+import { deleteFolder } from 'renderer/app/db/delete/folder';
 
 type Path = Bang<Awaited<ReturnType<typeof getFoldersInCurrentCollection>>>;
 type Bang<T> = T extends null | undefined ? never : T;
@@ -24,6 +25,7 @@ export const FileTree: React.FC = () => {
   useEffect(() => {
     window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e, type: string, id: string) => {
       if (type === 'request') deleteRequest(id).then(refresh);
+      if (type === 'folder') deleteFolder(id).then(refresh)
     });
 
     (async () => {

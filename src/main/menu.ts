@@ -28,18 +28,20 @@ export default class MenuBuilder {
     this.mainWindow.webContents.on('context-menu', async (e, props) => {
       const { x, y } = props;
 
-      const response = await this.mainWindow.webContents.executeJavaScript(`Array.from(document.elementsFromPoint(${x}, ${y}))[0].id`);
+      const response = await this.mainWindow.webContents.executeJavaScript(`Array.from(document.elementsFromPoint(${x}, ${y})).map(el => el.id)`);
 
       let deletable = false;
       let type: null | string = null;
       let id: null | string = null;
 
-      try {
-        const parsed = JSON.parse(response);
-        deletable = parsed.deletable;
-        id = parsed.id;
-        type = parsed.type;
-      } catch {}
+      for (const elId of response) {
+        try {
+          const parsed = JSON.parse(elId);
+          deletable = parsed.deletable;
+          id = parsed.id;
+          type = parsed.type;
+        } catch {}
+      }
 
       const toBeAdded = [];
 

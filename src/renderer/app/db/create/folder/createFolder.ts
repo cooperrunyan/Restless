@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { getCurrentCollection } from '../../get/collection';
 import { getUser } from '../../get/user/getUser';
 
 export async function createFolder(collectionId: string, data: Exclude<Prisma.PathCreateInput, 'owner'>) {
@@ -8,17 +9,30 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
   const user = await getUser();
   if (!user) return;
 
-  const allPaths = await prisma.path.findMany({});
+  const currentCollection = await getCurrentCollection();
+  if (!currentCollection) return;
 
-  for (const { value } of allPaths) {
-    if (value === data.value) throw new Error('That name has been taken.');
+  const paths = prisma.path.findMany({
+    where: { collectionId: currentCollection.id },
+  });
+
+  const requests = prisma.request.findMany({
+    where: { collectionId: currentCollection.id },
+  });
+
+  await Promise.all([paths, requests]);
+  const allPaths = [...((await paths) || []), ...((await requests) || [])];
+
+  for (const p of allPaths) {
+    if ((p as any).value) {
+      if ((p as any).value === data.value) throw new Error('That name has been taken.');
+    }
+    if ((p as any).path) {
+      if ((p as any).path === data.value) throw new Error('That name has been taken.');
+    }
   }
 
-  function slice(string: string) {
-    return string.split('/');
-  }
-
-  const path = ['/', ...slice(data.value)];
+  const path = ['/', ...data.value.split('/')];
 
   const segments = [];
 
@@ -27,19 +41,24 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
       .slice(0, i + 1)
       .join('/')
       .replaceAll('//', '/');
-    segments.push(
-      prisma.path.create({
-        data: {
-          value: segment,
-          Collection: {
-            connect: {
-              id: collectionId,
-            },
+
+    console.log(
+      segment,
+      ['/', '', ...allPaths.map((d: any) => d.path || d.value)],
+      ['/', '', ...allPaths.map((d: any) => d.path || d.value)].includes(segment),
+    );
+
+    if (['/', '', ...allPaths.map((d: any) => d.path || d.value)].includes(segment)) continue;
+
+    await prisma.path.create({
+      data: {
+        value: segment,
+        Collection: {
+          connect: {
+            id: collectionId,
           },
         },
-      }),
-    );
+      },
+    });
   }
-
-  return await Promise.all(segments);
 }
