@@ -9,7 +9,6 @@ import style from './FileTree.module.scss';
 import { Item } from './Item/Item';
 import { pathsToJSON } from './parse/pathsToJSON';
 import * as channels from '../../../../../channels';
-import { ipcRenderer } from 'electron';
 import { deleteRequest } from 'renderer/app/db/delete/request';
 
 type Path = Bang<Awaited<ReturnType<typeof getFoldersInCurrentCollection>>>;
@@ -20,6 +19,10 @@ export const FileTree: React.FC = () => {
   const { iteration, refresh } = useContext(RefresherContext);
 
   useEffect(() => {
+    window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e, type: string, id: string) => {
+      if (type === 'request') deleteRequest(id).then(refresh);
+    });
+
     (async () => {
       const requests = getAllRequests();
       const paths = folders.getFoldersInCurrentCollection();

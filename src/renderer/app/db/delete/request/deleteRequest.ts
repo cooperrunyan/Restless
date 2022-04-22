@@ -2,8 +2,11 @@ export async function deleteRequest(id: string) {
   const prisma = window.electron.prisma;
   if (!prisma) return;
 
-  const result = await prisma.request.delete({ where: { id } });
+  try {
+    await prisma.request.delete({ where: { id } });
+  } catch {
+    return;
+  }
 
-  // prisma.$disconnect();
-  return result;
+  return true;
 }

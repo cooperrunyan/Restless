@@ -1,5 +1,5 @@
-import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions, ipcMain, ipcRenderer } from 'electron';
-import * as channels from '../channels'
+import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions, ipcMain } from 'electron';
+import * as channels from '../channels';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -43,12 +43,13 @@ export default class MenuBuilder {
 
       const toBeAdded = [];
 
-      console.log(deletable, id, type);
       if (deletable && id && type) {
         toBeAdded.push(
           {
             label: `Delete ${type.charAt(0).toUpperCase() + type.slice(1)}`,
-            click: () => ipcMain.emit(channels.DELETE_ITEM, type, id),
+            click: () => {
+              return this.mainWindow.webContents.send(channels.DELETE_ITEM, type, id);
+            },
           },
           { type: 'separator' } as const,
         );

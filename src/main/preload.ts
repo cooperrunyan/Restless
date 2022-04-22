@@ -4,7 +4,29 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer,
+  ipcRenderer: {
+    on: (...args) => ipcRenderer.on(...args),
+    addListener: (...args) => ipcRenderer.addListener(...args),
+    emit: (...args) => ipcRenderer.emit(...args),
+    eventNames: (...args) => ipcRenderer.eventNames(...args),
+    getMaxListeners: (...args) => ipcRenderer.getMaxListeners(...args),
+    invoke: (...args) => ipcRenderer.invoke(...args),
+    listenerCount: (...args) => ipcRenderer.listenerCount(...args),
+    listeners: (...args) => ipcRenderer.listeners(...args),
+    off: (...args) => ipcRenderer.off(...args),
+    once: (...args) => ipcRenderer.once(...args),
+    postMessage: (...args) => ipcRenderer.postMessage(...args),
+    prependListener: (...args) => ipcRenderer.prependListener(...args),
+    prependOnceListener: (...args) => ipcRenderer.prependOnceListener(...args),
+    rawListeners: (...args) => ipcRenderer.rawListeners(...args),
+    removeAllListeners: (...args) => ipcRenderer.removeAllListeners(...args),
+    removeListener: (...args) => ipcRenderer.removeListener(...args),
+    send: (...args) => ipcRenderer.send(...args),
+    sendSync: (...args) => ipcRenderer.sendSync(...args),
+    sendTo: (...args) => ipcRenderer.sendTo(...args),
+    sendToHost: (...args) => ipcRenderer.sendToHost(...args),
+    setMaxListeners: (...args) => ipcRenderer.setMaxListeners(...args),
+  } as typeof ipcRenderer,
   prisma: {
     user: {
       aggregate: async (...args) => await prisma.user.aggregate(...args),
