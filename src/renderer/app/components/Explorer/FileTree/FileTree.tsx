@@ -10,6 +10,7 @@ import { Item } from './Item/Item';
 import { pathsToJSON } from './parse/pathsToJSON';
 import * as channels from '../../../../../channels';
 import { deleteRequest } from 'renderer/app/db/delete/request';
+import { TemplateItem } from './TemplateItem/TemplateItem';
 
 type Path = Bang<Awaited<ReturnType<typeof getFoldersInCurrentCollection>>>;
 type Bang<T> = T extends null | undefined ? never : T;
@@ -17,6 +18,8 @@ type Bang<T> = T extends null | undefined ? never : T;
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);
   const { iteration, refresh } = useContext(RefresherContext);
+  const [showTemplate, setShowTemplate] = useState(false);
+  const [templateType, setTemplateType] = useState<'request' | 'folder'>('request');
 
   useEffect(() => {
     window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e, type: string, id: string) => {
@@ -29,14 +32,14 @@ export const FileTree: React.FC = () => {
 
       await Promise.all([requests, paths]);
 
+      const p = (await paths) || [];
+
       setData(
         pathsToJSON([
-          { path: '/Users', id: 'sdf' },
-          { path: '/Profiles', id: 'sdfsg' },
-          ...((await paths) || []).map(path => {
-            (path as any).path = path.value;
-            return path;
-          }),
+          ...p.map(path => ({
+            path: path.value,
+            id: path.id,
+          })),
 
           ...((await requests) || []).map(request => {
             return {
@@ -59,24 +62,29 @@ export const FileTree: React.FC = () => {
           tabIndex={-1}
           onClick={e => {
             e.preventDefault();
-
-            (async () => {
-              refresh();
-            })();
+            setTemplateType('request');
+            setShowTemplate(true);
           }}>
           <AddOutline height="1.2rem" width="1.2rem" color="var(--7)" />
           Request
         </button>
-        <button tabIndex={-1}>
+        <button
+          tabIndex={-1}
+          onClick={e => {
+            e.preventDefault();
+            setTemplateType('folder');
+            setShowTemplate(true);
+          }}>
           <AddOutline height="1.2rem" width="1.2rem" color="var(--7)" />
           Folder
         </button>
       </div>
 
       <div className={style.Tree}>
-        {(data[0] as any)?.children!.map((item: any) => (
+        {(data[0] as any)?.children?.map((item: any) => (
           <Item key={item.id} {...item} />
         ))}
+        {showTemplate && <TemplateItem type={templateType} setter={setShowTemplate} />}
       </div>
     </div>
   );

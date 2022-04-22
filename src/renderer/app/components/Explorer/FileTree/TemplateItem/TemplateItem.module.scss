@@ -1,0 +1,49 @@
+.TemplateItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  user-select: none;
+  pointer-events: none;
+
+  .content {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    padding-right: none;
+    transition: all 0.1s ease-in-out;
+    background-color: var(--1);
+    width: 100%;
+    padding: 0.4rem 1.4rem;
+
+    input {
+      width: 100%;
+      border: none;
+      background-color: transparent;
+      outline: none;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      letter-spacing: -0.02em;
+      color: var(--7);
+      pointer-events: all;
+    }
+
+    h6 {
+      font-size: 1.2rem;
+      color: var(--5);
+
+      span {
+        transform: rotate(-90deg);
+      }
+
+      &,
+      span {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

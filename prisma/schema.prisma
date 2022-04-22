@@ -44,7 +44,7 @@ model Collection {
 
 model Path {
   id           String      @id @unique @default(uuid())
-  value        String      @unique
+  value        String
   Collection   Collection? @relation(fields: [collectionId], references: [id])
   collectionId String?
 }

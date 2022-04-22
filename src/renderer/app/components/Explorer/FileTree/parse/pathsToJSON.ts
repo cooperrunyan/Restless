@@ -4,7 +4,7 @@ export function pathsToJSON(paths: { path: string; method?: string; id: string; 
       let directories = ('root' + (path || '')).split('/');
 
       directories.reduce((d: any, key) => {
-        if (!d[key] && key) {
+        if (key && !d[key]) {
           d[key] = { _: [] };
           d._.push((d[key].parent = { children: !isRequest ? d[key]._ : null, name: key, id, method, layer: path.split('/').indexOf(key) - 1 }));
         }
