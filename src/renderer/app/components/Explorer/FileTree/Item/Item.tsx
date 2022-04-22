@@ -19,6 +19,11 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id }) => 
       <div
         className={style.content + ' ' + style[`layer-${layer || 0}`] + ' ' + (open ? style.open : '')}
         ref={ref}
+        id={`{"deletable":true,"id":"${id}","type":"${children ? 'folder' : 'request'}"}`}
+        onContextMenu={e => {
+          e.stopPropagation();
+          (e.nativeEvent as any).CUSTOM_PROP = ref.current!.parentElement!.id;
+        }}
         onClick={e => {
           e.stopPropagation();
 

@@ -8,6 +8,9 @@ import { RefresherContext } from 'renderer/app/Refresher';
 import style from './FileTree.module.scss';
 import { Item } from './Item/Item';
 import { pathsToJSON } from './parse/pathsToJSON';
+import * as channels from '../../../../../channels';
+import { ipcRenderer } from 'electron';
+import { deleteRequest } from 'renderer/app/db/delete/request';
 
 type Path = Bang<Awaited<ReturnType<typeof getFoldersInCurrentCollection>>>;
 type Bang<T> = T extends null | undefined ? never : T;

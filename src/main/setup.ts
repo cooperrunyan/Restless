@@ -1,5 +1,5 @@
 import * as channels from '../channels';
-import { app, ipcMain, shell } from 'electron';
+import { app, ipcMain, shell, screen, ipcRenderer } from 'electron';
 import contextMenu from 'electron-context-menu';
 import { mainWindow } from './window';
 
@@ -29,17 +29,6 @@ export function info() {
 }
 
 export function setup() {
-  // Context menu
-  contextMenu({
-    showSaveImageAs: true,
-    showSaveLinkAs: true,
-    showCopyImage: true,
-    showCopyImageAddress: true,
-    showLookUpSelection: true,
-    showSaveImage: true,
-    showSearchWithGoogle: true,
-  });
-
   if (process.env.NODE_ENV === 'production') require('source-map-support').install();
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') require('electron-debug')();
 }

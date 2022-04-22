@@ -1,4 +1,5 @@
-import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions, ipcMain, ipcRenderer } from 'electron';
+import * as channels from '../channels'
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -24,10 +25,37 @@ export default class MenuBuilder {
   }
 
   setupEnvironment(): void {
-    this.mainWindow.webContents.on('context-menu', (e, props) => {
+    this.mainWindow.webContents.on('context-menu', async (e, props) => {
       const { x, y } = props;
 
+      const response = await this.mainWindow.webContents.executeJavaScript(`Array.from(document.elementsFromPoint(${x}, ${y}))[0].id`);
+
+      let deletable = false;
+      let type: null | string = null;
+      let id: null | string = null;
+
+      try {
+        const parsed = JSON.parse(response);
+        deletable = parsed.deletable;
+        id = parsed.id;
+        type = parsed.type;
+      } catch {}
+
+      const toBeAdded = [];
+
+      console.log(deletable, id, type);
+      if (deletable && id && type) {
+        toBeAdded.push(
+          {
+            label: `Delete ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+            click: () => ipcMain.emit(channels.DELETE_ITEM, type, id),
+          },
+          { type: 'separator' } as const,
+        );
+      }
+
       Menu.buildFromTemplate([
+        ...toBeAdded,
         {
           label: 'Inspect element',
           click: () => this.mainWindow.webContents.inspectElement(x, y),

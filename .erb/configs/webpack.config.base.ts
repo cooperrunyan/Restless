@@ -44,6 +44,7 @@ const configuration: webpack.Configuration = {
     fallback: {
       stream: require.resolve('stream-browserify'),
       crypto: require.resolve('crypto-browserify'),
+      path: require.resolve('path-browserify'),
     },
   },
 
