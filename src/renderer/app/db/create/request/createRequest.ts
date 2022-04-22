@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { getUser } from '../../get/user/getUser';
+import { createFolder } from '../folder';
 
 export async function createRequest(collectionId: string, data: Exclude<Prisma.RequestCreateInput, 'owner'>) {
   const prisma = window.electron.prisma;
@@ -8,7 +9,7 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
   const user = await getUser();
   if (!user) return;
 
-  const response = await prisma.request.create({
+  const response = prisma.request.create({
     data: {
       ...data,
       owner: {
@@ -19,7 +20,7 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
     },
   });
 
-  // prisma.$disconnect();
+  createFolder(collectionId, { value: data.path.split('/').slice(0, -1).join('/') });
 
-  return response;
+  return await response;
 }
