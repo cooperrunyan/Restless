@@ -11,6 +11,10 @@ html {
   font-size: 62.5%;
 }
 
+:root {
+  color-scheme: dark;
+}
+
 .App {
   width: 100vw;
   height: 100vh;
@@ -56,4 +60,8 @@ button {
       cursor: col-resize;
     }
   }
+}
+
+.current-dragging-over {
+  background-color: #133041;
 }

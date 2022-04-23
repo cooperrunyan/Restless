@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AddOutline } from 'react-ionicons';
 import { folders } from 'renderer/app/db/get';
 import { getAllRequests } from 'renderer/app/db/get/request';
@@ -20,6 +20,7 @@ export const FileTree: React.FC = () => {
   const { iteration, refresh } = useContext(RefresherContext);
   const [showTemplate, setShowTemplate] = useState(false);
   const [templateType, setTemplateType] = useState<'request' | 'folder'>('request');
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const listener = (e: any, type: string, id: string) => {
@@ -123,7 +124,18 @@ export const FileTree: React.FC = () => {
         </button>
       </div>
 
-      <div className={style.Tree}>
+      <div
+        ref={ref}
+        id={(data[0] as any)?.id}
+        className={style.Tree}
+        onDragOver={e => {
+          e.stopPropagation();
+          e.preventDefault();
+          ref.current!.classList.add('current-dragging-over');
+        }}
+        onDragLeave={e => {
+          ref.current!.classList.remove('current-dragging-over');
+        }}>
         {(data[0] as any)?.children?.map((item: any) => (
           <Item key={item.id} {...item} />
         ))}

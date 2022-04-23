@@ -1,5 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
+import { toast } from 'react-toastify';
+import { moveXintoY } from 'renderer/app/db/move';
 import { RefresherContext } from 'renderer/app/Refresher';
 import style from './Item.module.scss';
 
@@ -18,13 +20,61 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, renam
   const [open, setOpen] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const { iteration, refresh } = useContext(RefresherContext);
+  const itemRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (rename) nameRef.current?.focus();
   }, [iteration, rename]);
 
   return (
-    <div className={style.Item + ' ITEM'} onClick={e => e.stopPropagation()}>
+    <div
+      ref={itemRef}
+      className={style.Item + ' ITEM'}
+      draggable
+      id={id}
+      onDragOver={e => {
+        if (!children) return;
+        if (document.querySelector('.current-dragging-element')?.classList.contains('current-dragging-over'))
+          return document.querySelector('.current-dragging-element')?.classList.remove('current-dragging-over');
+
+        if (document.querySelector('.current-dragging-element')?.parentElement === document.querySelector('.current-parent-element')) return;
+
+        e.stopPropagation();
+        setOpen(true);
+        itemRef.current!.classList.add('current-dragging-over');
+        e.preventDefault();
+      }}
+      onDragLeave={e => {
+        itemRef.current!.classList.remove('current-dragging-over');
+        if (!children) return;
+      }}
+      onDragStart={e => {
+        e.stopPropagation();
+        itemRef.current!.classList.add('current-dragging-element');
+        setOpen(false);
+      }}
+      onDragEnd={e => {
+        e.stopPropagation();
+
+        const element = id;
+        const to = document.querySelector('.current-dragging-over')?.id;
+
+        itemRef.current!.classList.remove('current-dragging-element');
+        document.querySelector('.current-dragging-over')?.classList.remove('current-dragging-over');
+
+        if (
+          (document.querySelector('.current-dragging-element')?.parentElement?.id === document.querySelector('.current-parent-element')?.id ||
+            document.querySelector('.current-dragging-element')?.parentElement?.parentElement?.id === document.querySelector('.current-parent-element')?.id) &&
+          document.querySelector('.current-parent-element')?.id
+        )
+          return;
+
+        if (!to) return;
+
+        moveXintoY(element, to)
+          .catch(err => toast.error(err.message))
+          .then(refresh);
+      }}>
       <form
         className={style.content + ' ' + style[`layer-${layer || 0}`] + ' ' + (open ? style.open : '') + ' ' + (rename ? style.rename : '')}
         ref={ref}
@@ -53,7 +103,6 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, renam
         {!rename && <p>{name}</p>}
         {rename && <input ref={nameRef} defaultValue={name} onBlur={e => stopRenaming(false)} />}
       </form>
-
       {children && children[0] && open && (
         <div className={style.children}>
           {children.map(child => (
