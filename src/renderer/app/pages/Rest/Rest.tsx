@@ -10,6 +10,7 @@ import { RefresherContext } from 'renderer/app/Refresher';
 import { App } from '../../App';
 import style from './Rest.module.scss';
 import ReactSplitPane from 'react-split-pane';
+import { RestPanel } from 'renderer/app/components/RestPanel/RestPanel';
 
 export const Rest: React.FC = () => {
   const { refresh, iteration } = useContext(RefresherContext);
@@ -36,10 +37,10 @@ export const Rest: React.FC = () => {
               resizerClassName="Resizer vertical"
               minSize={180}
               defaultSize={360}
-              maxSize={640}
+              maxSize={Math.min(640, window.innerWidth)}
               className="hello_world">
               <Explorer />
-              <div className="Panel">Panel</div>
+              <RestPanel />
             </ReactSplitPane>
           </div>
         </Main>

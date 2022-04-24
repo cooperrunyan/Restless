@@ -1,0 +1,23 @@
+import { useContext, useEffect, useState } from 'react';
+import { getCurrentRequest } from 'renderer/app/db/get/request';
+import { getAllTabs } from 'renderer/app/db/get/tab';
+import { RefresherContext } from 'renderer/app/Refresher';
+import { Tab } from './Tab/Tab';
+import style from './Tabs.module.scss';
+
+export const Tabs: React.FC = () => {
+  const { refresh, iteration } = useContext(RefresherContext);
+  const [tabs, setTabs] = useState<Awaited<ReturnType<typeof getAllTabs>>>();
+  const [currentRequest, setCurrentRequest] = useState<Awaited<ReturnType<typeof getCurrentRequest>>>();
+
+  useEffect(() => void getAllTabs().then(setTabs), [iteration, currentRequest]);
+  useEffect(() => void getCurrentRequest().then(setCurrentRequest), [iteration, tabs]);
+
+  return (
+    <div className={style.Tabs}>
+      {tabs?.map(tab => (
+        <Tab active={currentRequest?.id === tab.requestId} key={tab.id} tab={tab} />
+      ))}
+    </div>
+  );
+};

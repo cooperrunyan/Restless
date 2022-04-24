@@ -35,15 +35,17 @@
   }
 
   .content {
-    padding: 1.8rem;
+    padding: 0 1.8rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
     border-bottom: 0.1rem solid var(--4);
     user-select: none;
     position: relative;
     z-index: 1;
+    height: 5.6rem;
 
     &:hover {
       background-color: var(--1);

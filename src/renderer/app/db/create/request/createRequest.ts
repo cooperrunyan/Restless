@@ -9,12 +9,16 @@ export async function createRequest(collectionId: string, data: Exclude<Prisma.R
   const user = await getUser();
   if (!user) return;
 
-  const allPaths = [...(await prisma.request.findMany()).map(request => request.path), ...(await prisma.path.findMany()).map(path => path.value)];
+  const allPaths = [
+    ...(await prisma.request.findMany({ where: { collectionId } })).map(request => request.path),
+    ...(await prisma.path.findMany({ where: { collectionId } })).map(path => path.value),
+  ];
 
   for (const path of allPaths) {
     if (path === data.path) throw new Error('That name has been taken');
   }
 
+  await createFolder(collectionId, { value: '/' });
   await createFolder(collectionId, { value: ('/' + data.path.split('/').slice(0, -1).join('/')).replaceAll('//', '/').replace('/', '') });
 
   const response = prisma.request.create({

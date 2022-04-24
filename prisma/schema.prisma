@@ -40,6 +40,15 @@ model Collection {
   children       Request[]
   currentRequest String?
   paths          Path[]
+  tabs           Tab[]
+}
+
+model Tab {
+  id           String      @id @unique @default(uuid())
+  Request      Request     @relation(fields: [requestId], references: [id])
+  requestId    String
+  Collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId String?
 }
 
 model Path {
@@ -63,6 +72,7 @@ model Request {
   responses       Response[]
   collectionId    String?
   currentResponse String?
+  Tab             Tab[]
 }
 
 model Response {

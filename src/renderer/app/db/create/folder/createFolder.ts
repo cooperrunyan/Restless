@@ -21,15 +21,15 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
   });
 
   await Promise.all([paths, requests]);
-  const allPaths = [...((await paths) || []), ...((await requests) || [])];
 
-  for (const p of allPaths) {
-    if ((p as any).value) {
-      if ((p as any).value === data.value) throw new Error('That name has been taken.');
-    }
-    if ((p as any).path) {
-      if ((p as any).path === data.value) throw new Error('That name has been taken.');
-    }
+  const allPaths = [
+    ...(await prisma.request.findMany({ where: { collectionId: currentCollection.id } })).map(request => request.path),
+    ...(await prisma.path.findMany({ where: { collectionId: currentCollection.id } })).map(path => path.value),
+  ];
+
+  for (const path of allPaths) {
+    if (path === '/') return;
+    if (path === data.value) throw new Error('That name has been taken');
   }
 
   const path = ['/', ...data.value.split('/')];
@@ -40,9 +40,12 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
     const segment = path
       .slice(0, i + 1)
       .join('/')
+      .replaceAll('//', '/')
+      .replaceAll('//', '/')
+      .replaceAll('//', '/')
       .replaceAll('//', '/');
 
-    if (['/', '', ...allPaths.map((d: any) => d.path || d.value)].includes(segment)) continue;
+    if ([...allPaths.map((d: any) => d.path || d.value)].includes(segment)) continue;
 
     await prisma.path.create({
       data: {

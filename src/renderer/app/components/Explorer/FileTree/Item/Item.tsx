@@ -1,7 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
+import { createTabInCurrentCollection as createTab } from 'renderer/app/db/create/tab';
 import { moveXintoY } from 'renderer/app/db/move';
+import { setCurrentRequest } from 'renderer/app/db/set/request';
 import { RefresherContext } from 'renderer/app/Refresher';
 import style from './Item.module.scss';
 
@@ -12,10 +14,11 @@ export interface Props {
   children?: Props[];
   layer: number;
   rename?: boolean;
+  show: boolean;
   stopRenaming: (id: boolean, type?: 'folder' | 'request', name?: string) => void;
 }
 
-export const Item: React.FC<Props> = ({ method, name, children, layer, id, rename = false, stopRenaming = () => {} }) => {
+export const Item: React.FC<Props> = ({ method, name, children, layer, id, show, rename = false, stopRenaming = () => {} }) => {
   const ref = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -89,7 +92,9 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, renam
         onContextMenu={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation();
-          if (children) setOpen(!open);
+          if (children) return setOpen(!open);
+
+          Promise.all([setCurrentRequest(id), createTab(id)]).then(refresh);
         }}
         onMouseOver={e => {
           e.stopPropagation();
@@ -101,7 +106,7 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, renam
         }}>
         <h6 className={style.method}>{!children ? method : <ChevronDownOutline width="1.6rem" height="1.6rem" color="var(--7)" />}</h6>
         {!rename && <p>{name}</p>}
-        {rename && <input ref={nameRef} defaultValue={name} onBlur={e => stopRenaming(false)} />}
+        {rename && <input ref={nameRef} defaultValue={name} onClick={e => e.stopPropagation()} onBlur={e => stopRenaming(false)} />}
       </form>
       {children && children[0] && open && (
         <div className={style.children}>

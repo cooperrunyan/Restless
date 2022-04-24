@@ -1,0 +1,18 @@
+.RestPanel {
+  height: 100%;
+  width: 100%;
+}
+
+.Logocontainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    max-width: min(36rem, 80%);
+    max-height: min(36rem, 80%);
+    aspect-ratio: 1 / 1;
+  }
+}

@@ -10,7 +10,9 @@ interface Props {
   children?: ReactChild | ReactChild[];
 }
 
-export const App: React.FC<Props> = ({ children }: Props) => {
+import * as Sentry from '@sentry/react';
+
+const _App: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     window.addEventListener(
       'error',
@@ -37,3 +39,5 @@ export const App: React.FC<Props> = ({ children }: Props) => {
     </Refresher>
   );
 };
+
+export const App = Sentry.withProfiler(_App);

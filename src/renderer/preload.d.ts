@@ -12,6 +12,7 @@ declare global {
         request: PrismaClient['request'];
         response: PrismaClient['response'];
         path: PrismaClient['path'];
+        tab: PrismaClient['tab'];
         $connect: PrismaClient['$connect'];
         $disconnect: PrismaClient['$disconnect'];
       };

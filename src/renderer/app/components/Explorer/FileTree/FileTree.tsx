@@ -23,12 +23,12 @@ export const FileTree: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const listener = (e: any, type: string, id: string) => {
+    window.electron.ipcRenderer.on(channels.DELETE_ITEM, (e: any, type: string, id: string) => {
       if (type === 'request') deleteRequest(id).then(refresh);
       if (type === 'folder') deleteFolder(id).then(refresh);
-    };
-    window.electron.ipcRenderer.on(channels.DELETE_ITEM, listener);
-    const rListener = (e: any, id: string) => {
+    });
+
+    window.electron.ipcRenderer.on(channels.RENAME_ITEM, (e: any, id: string) => {
       const item = getElementByID(data, id);
       if (!item) return;
 
@@ -50,12 +50,11 @@ export const FileTree: React.FC = () => {
             .then(refresh);
       };
       setData([...data]);
-    };
-    window.electron.ipcRenderer.on(channels.RENAME_ITEM, rListener);
+    });
 
     return () => {
-      window.electron.ipcRenderer.off(channels.RENAME_ITEM, rListener);
-      window.electron.ipcRenderer.off(channels.DELETE_ITEM, listener);
+      window.electron.ipcRenderer.removeAllListeners(channels.RENAME_ITEM);
+      window.electron.ipcRenderer.removeAllListeners(channels.DELETE_ITEM);
     };
   }, [data]);
 

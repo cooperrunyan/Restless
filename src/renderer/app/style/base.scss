@@ -50,6 +50,7 @@ button {
 .Resizer {
   &.vertical {
     width: 0.3rem;
+    min-width: 0.3rem;
     background-color: var(--4);
     cursor: col-resize;
     position: relative;
@@ -57,6 +58,7 @@ button {
 
     &:hover {
       width: 0.9rem;
+      min-width: 0.9rem;
       cursor: col-resize;
     }
   }
