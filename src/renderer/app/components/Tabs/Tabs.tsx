@@ -8,7 +8,6 @@ import style from './Tabs.module.scss';
 export const Tabs: React.FC = () => {
   const { refresh, iteration } = useContext(RefresherContext);
   const [tabs, setTabs] = useState<Awaited<ReturnType<typeof getAllTabs>>>();
-  const [alive, setAlive] = useState(true);
   const [currentRequest, setCurrentRequest] = useState<Awaited<ReturnType<typeof getCurrentRequest>>>();
 
   useEffect(() => void getAllTabs().then(setTabs), [iteration]);
