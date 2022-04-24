@@ -1,0 +1,132 @@
+.UrlBar {
+  width: 100%;
+  padding: 0.8rem;
+
+  form {
+    display: flex;
+    width: 100%;
+    position: relative;
+    height: 4.8rem;
+    border: 0.1rem solid var(--4);
+    padding-left: 12.8rem;
+    border-radius: var(--border-radius);
+
+    button {
+      width: 9.6rem;
+      min-width: 9.6rem;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: var(--8);
+
+      &:hover {
+        filter: brightness(0.95);
+      }
+
+      &:active {
+        filter: brightness(0.9);
+      }
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding-inline: 1.8rem;
+      font-family: var(--mono);
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 2.1rem;
+      letter-spacing: 0.03em;
+      color: var(--5);
+      background-color: transparent;
+    }
+
+    .method {
+      &.closed {
+        height: 4.8rem;
+      }
+
+      position: absolute;
+      left: -0.1rem;
+      top: -0.1rem;
+      border-radius: var(--border-radius) 0 0 var(--border-radius);
+      background-color: var(--1);
+      border: 0.1rem solid var(--4);
+      width: 12.8rem;
+      min-width: 12.8rem;
+      display: flex;
+      flex-direction: column;
+
+      user-select: none;
+      border-right: 0.1rem solid var(--4);
+      transition: all 0.1s ease-in-out;
+
+      &.open {
+        border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius);
+      }
+
+      .content {
+        cursor: pointer;
+        height: 4.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem;
+        border-bottom: 0.1rem solid var(--4);
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+
+        &:hover {
+          background-color: var(--2);
+        }
+      }
+
+      &.open {
+        .content {
+          border-radius: var(--border-radius) 0 0 0;
+        }
+
+        .caret {
+          transform: rotate(-90deg);
+        }
+      }
+
+      .caret {
+        transition: all 0.1s ease-in-out;
+      }
+
+      .methodDropdown {
+        li {
+          user-select: none;
+          padding: 0.8rem 1.4rem;
+          border-top: 0.1rem solid var(--4);
+          transition: all 0.1s ease-in-out;
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--2);
+          }
+
+          &:first-of-type {
+            border-top: none;
+          }
+
+          &:last-of-type {
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+          }
+        }
+      }
+    }
+  }
+}
