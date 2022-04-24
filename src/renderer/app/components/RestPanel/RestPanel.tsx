@@ -15,6 +15,7 @@ export const RestPanel: React.FC = () => {
   if (!request)
     return (
       <div className={style.RestPanel}>
+        <Tabs />
         <div className={style.Logocontainer}>
           <Logo color="var(--4)" />
         </div>

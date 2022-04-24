@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Explorer } from '../../components/Explorer/Explorer';

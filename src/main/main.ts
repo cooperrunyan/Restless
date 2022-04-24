@@ -7,15 +7,6 @@ import { mainWindow } from './window';
 import { setup, listen, info } from './setup';
 import { ensureUser } from './ensureUser';
 
-import * as Sentry from '@sentry/electron';
-import { BrowserTracing } from '@sentry/tracing';
-
-Sentry.init({
-  dsn: 'https://592f35dbbadc4566b007e38b33f057e3@o1217299.ingest.sentry.io/6359350',
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 1,
-});
-
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';

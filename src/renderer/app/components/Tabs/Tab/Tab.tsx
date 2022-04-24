@@ -29,7 +29,9 @@ export const Tab: React.FC<Props> = ({ tab, active }) => {
         onClick={e => {
           e.preventDefault();
           e.stopPropagation();
-          deleteTab(tab.id).then(refresh);
+          deleteTab(tab.id)
+            .then(() => setCurrentRequest(''))
+            .then(refresh);
         }}>
         <CloseOutline color="var(--5)" />
       </button>
