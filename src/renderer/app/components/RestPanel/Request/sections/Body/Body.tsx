@@ -56,7 +56,6 @@ export const Body: React.FC<Props> = ({ request, containerSize, updateInterval }
             json: true,
             tabSize: 2,
             lineNumbers: true,
-            gutters: ['CodeMirror-lint-markers'],
             styleActiveLine: true,
             line: true,
             lineWrapping: false,
@@ -75,14 +74,14 @@ export const Body: React.FC<Props> = ({ request, containerSize, updateInterval }
   );
 };
 
-const mode = (mime: null | 'application/json' | 'application/xml' | 'text/plain' | 'text/yaml' | 'text/html') =>
-  mime === 'application/json'
+const mode = (mimeType: null | 'application/json' | 'application/xml' | 'text/plain' | 'text/yaml' | 'text/html') =>
+  mimeType === 'application/json'
     ? 'application/json'
-    : mime === 'application/xml'
+    : mimeType === 'application/xml'
     ? 'xml'
-    : mime === 'text/html'
+    : mimeType === 'text/html'
     ? 'html'
-    : mime === 'text/yaml'
+    : mimeType === 'text/yaml'
     ? 'yaml'
     : 'text';
 
