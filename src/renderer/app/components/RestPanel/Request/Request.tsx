@@ -17,8 +17,6 @@ export const Request: React.FC<Props> = ({ request, updateInterval }) => {
   const [selected, setSelected] = useState<SectionName>('Body');
   const [ref, size] = useElementSize();
 
-  useEffect(() => console.log(size), [size]);
-
   if (!request) return <></>;
 
   return (
