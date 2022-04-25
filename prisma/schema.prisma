@@ -69,6 +69,7 @@ model Request {
   body            String?
   authentication  String?
   documentation   String
+  contentType     String?
   responses       Response[]
   collectionId    String?
   currentResponse String?

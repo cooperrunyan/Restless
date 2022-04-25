@@ -1,0 +1,26 @@
+.SectionsSelector {
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 0.1rem solid var(--4);
+
+  .option {
+    padding: 1rem 1.2rem;
+    border-right: 0.1rem solid var(--4);
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    user-select: none;
+
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    color: var(--7);
+
+    &:hover,
+    &.active {
+      background-color: var(--2);
+    }
+  }
+}
