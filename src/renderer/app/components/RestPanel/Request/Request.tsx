@@ -3,6 +3,7 @@ import { getRequest } from 'renderer/app/db/get/request';
 import { Bang } from 'renderer/app/types/Bang';
 import { useElementSize } from 'usehooks-ts';
 import { Header } from './Header/Header';
+import { Headers } from './sections/Headers/Headers';
 import style from './Request.module.scss';
 import { Body } from './sections/Body/Body';
 
@@ -25,6 +26,9 @@ export const Request: React.FC<Props> = ({ request, updateInterval }) => {
       <Overlap>
         <Show when={selected === 'Body'}>
           <Body request={request} containerSize={size} updateInterval={updateInterval} />
+        </Show>
+        <Show when={selected === 'Headers'}>
+          <Headers request={request} />
         </Show>
       </Overlap>
     </div>
