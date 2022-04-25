@@ -15,6 +15,9 @@ export const RestPanel: React.FC = () => {
   const [request, setRequest] = useState<RequestType & { responses: ResponseType[] }>();
   const { iteration, refresh } = useContext(RefresherContext);
   const container = useRef<HTMLDivElement>(null);
+  const [updateInterval, setUpdateInterval] = useState(0);
+
+  const updatePanelSize = () => setUpdateInterval(updateInterval + 1);
 
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -42,11 +45,12 @@ export const RestPanel: React.FC = () => {
           primary="first"
           split={matches ? 'horizontal' : 'vertical'}
           pane1Style={{ background: 'var(--1)' }}
-          pane2Style={{ background: 'var(--1)' }}
+          pane2Style={{ background: 'var(--1)', zIndex: 4 }}
+          onDragFinished={updatePanelSize}
           defaultSize="50%"
           minSize={0}
           maxSize={matches ? size.height - 132 : containerWidth - 6}>
-          <Request request={request} />
+          <Request request={request} updateInterval={updateInterval} />
           <Response responses={request.responses} />
         </SplitPane>
       </div>

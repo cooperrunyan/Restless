@@ -51,6 +51,7 @@ button {
   background-color: var(--4);
   transition: all 0.1s ease-in-out;
   position: relative;
+  z-index: 4;
 
   &:hover {
     background-color: var(--primary);
