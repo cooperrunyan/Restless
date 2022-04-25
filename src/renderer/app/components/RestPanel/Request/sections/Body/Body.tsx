@@ -36,14 +36,14 @@ export const Body: React.FC<Props> = ({ request, containerSize, updateInterval }
   useEffect(() => {
     const codeMirrorElement = container.current?.querySelector('.CodeMirror') as HTMLDivElement;
 
-    codeMirrorElement.style.setProperty('height', `0px`);
-    codeMirrorElement.style.setProperty('width', `0px`);
+    codeMirrorElement?.style?.setProperty('height', `0px`);
+    codeMirrorElement?.style?.setProperty('width', `0px`);
 
     const height = container.current?.children[0]?.clientHeight;
     const width = container.current?.children[0]?.clientWidth;
 
-    codeMirrorElement.style.setProperty('height', `${height}px`);
-    codeMirrorElement.style.setProperty('width', `${width}px`);
+    codeMirrorElement?.style?.setProperty('height', `${height}px`);
+    codeMirrorElement?.style?.setProperty('width', `${width}px`);
   }, [size.height, size.width, containerSize.height, containerSize.width, container.current?.clientHeight, container.current?.clientWidth, updateInterval]);
 
   return (

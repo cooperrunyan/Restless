@@ -1,0 +1,68 @@
+$unit: 3.6rem;
+$border: 0.1rem solid var(--4);
+
+.Headers {
+  padding: 0.8rem;
+
+  .grid {
+    display: grid;
+    grid-template-columns: #{$unit} 1fr 1fr #{$unit};
+    width: 100%;
+    align-items: center;
+    justify-content: stretch;
+
+    & > * {
+      height: $unit;
+      border-bottom: $border;
+      display: flex;
+      border-left: $border;
+
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        height: 100%;
+        color: var(--7);
+      }
+
+      span {
+        height: 100%;
+        width: $unit;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.end {
+          border-right: $border;
+        }
+
+        &:hover {
+          background-color: var(--2);
+        }
+      }
+    }
+
+    .head {
+      height: 4.8rem;
+      display: flex;
+      align-items: center;
+      padding-inline: 1.2rem;
+
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      letter-spacing: -0.02em;
+      color: var(--7);
+      border-inline: none;
+    }
+
+    .add {
+      justify-content: center;
+      padding: 0;
+    }
+  }
+}
