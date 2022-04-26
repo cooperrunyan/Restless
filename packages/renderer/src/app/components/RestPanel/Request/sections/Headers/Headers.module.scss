@@ -5,8 +5,10 @@ $border: 0.1rem solid var(--4);
   padding: 0.8rem;
 
   .grid {
+    --side: #{$unit};
+
     display: grid;
-    grid-template-columns: #{$unit} 1fr 1fr #{$unit};
+    grid-template-columns: var(--side) 1fr 1fr var(--side);
     width: 100%;
     align-items: center;
     justify-content: stretch;
@@ -24,19 +26,28 @@ $border: 0.1rem solid var(--4);
         background-color: transparent;
         height: 100%;
         color: var(--7);
+        padding-inline: 0.8rem;
       }
 
-      span {
+      .button {
         height: 100%;
         width: $unit;
+        aspect-ratio: 1 / 1;
         cursor: pointer;
         transition: all 0.1s ease-in-out;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-inline: $border;
+
+        & > span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
 
         &.end {
-          border-right: $border;
+          border-left: 0;
         }
 
         &:hover {
@@ -46,10 +57,10 @@ $border: 0.1rem solid var(--4);
     }
 
     .head {
-      height: 4.8rem;
+      height: 4.2rem;
       display: flex;
       align-items: center;
-      padding-inline: 1.2rem;
+      padding-inline: 0.8rem;
 
       font-family: var(--sans);
       font-weight: 500;
@@ -63,6 +74,11 @@ $border: 0.1rem solid var(--4);
     .add {
       justify-content: center;
       padding: 0;
+      border-inline: 0;
+    }
+
+    .spacer {
+      border-inline: none;
     }
   }
 }
