@@ -28,13 +28,11 @@ export async function createFolder(collectionId: string, data: Exclude<Prisma.Pa
   ];
 
   for (const path of allPaths) {
-    if (path === '/') return;
+    if (path === '/') continue;
     if (path === data.value) throw new Error('That name has been taken');
   }
 
   const path = ['/', ...data.value.split('/')];
-
-  const segments = [];
 
   for (let i = 0; i < path.length; i++) {
     const segment = path
