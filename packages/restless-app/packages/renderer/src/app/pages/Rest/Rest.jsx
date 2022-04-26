@@ -8,6 +8,7 @@ import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 import { Main } from '@/app/components/Main/Main';
 import { useNavigate } from 'react-router-dom';
 import style from './Rest.module.scss';
+import SplitPane from 'react-split-pane';
 
 export const Rest = () => {
   const navigate = useNavigate();

@@ -8,6 +8,7 @@ import { Tabs } from '../Tabs/Tabs';
 import style from './RestPanel.module.scss';
 import { Request } from './Request/Request';
 import { Response } from './Response/Response';
+import SplitPane from 'react-split-pane';
 
 export const RestPanel = () => {
   const [request, setRequest] = useState();

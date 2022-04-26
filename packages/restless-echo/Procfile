@@ -1,0 +1,1 @@
+web: deno run --no-check --cached-only --allow-env --allow-read --allow-net src/server.ts
