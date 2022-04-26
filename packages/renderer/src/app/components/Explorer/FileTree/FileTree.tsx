@@ -4,7 +4,6 @@ import { folders } from '../../../db/get';
 import { getAllRequests } from '../../../db/get/request';
 import style from './FileTree.module.scss';
 import { Item } from './Item/Item';
-import { pathsToJSON } from './parse/pathsToJSON';
 import * as channels from '../../../../../../main/channels';
 import { deleteRequest } from '../../../db/delete/request';
 import { TemplateItem } from './TemplateItem/TemplateItem';
@@ -15,6 +14,7 @@ import { toast } from 'react-toastify';
 import { renameRequest } from '../../../db/rename/request';
 import { useRefresher } from '@/app/hooks/useRefresher';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { pathsToJSON } from '@/app/lib/pathsToJSON';
 
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);

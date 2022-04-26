@@ -1,3 +1,8 @@
+/**
+ * @author Nina Scholz - https://stackoverflow.com/a/62089720
+ * @param paths
+ * @returns
+ */
 export function pathsToJSON(paths: { path: string; method?: string; id: string; isRequest?: boolean }[]) {
   return paths.reduce(
     (r, { path, method, id, isRequest }) => {
