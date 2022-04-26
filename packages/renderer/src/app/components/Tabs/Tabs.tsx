@@ -1,7 +1,7 @@
+import { getCurrentRequest } from '@/app/db/get/request';
+import { getAllTabs } from '@/app/db/get/tab';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 import { useState } from 'react';
-import { getCurrentRequest } from '../../db/get/request';
-import { getAllTabs } from '../../db/get/tab';
 import { Tab } from './Tab/Tab';
 import style from './Tabs.module.scss';
 

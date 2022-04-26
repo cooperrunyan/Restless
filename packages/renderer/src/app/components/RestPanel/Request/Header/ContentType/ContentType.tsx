@@ -1,8 +1,8 @@
+import { modifyCurrentRequest } from '@/app/db/modify/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { useState } from 'react';
 import { ChevronBackOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
-import { modifyCurrentRequest } from '../../../../../db/modify/request';
-import { useRefresher } from '../../../../../hooks/useRefresher';
 import style from './ContentType.module.scss';
 
 const contentTypes = [null, 'application/json', 'application/xml', 'text/plain', 'text/yaml', 'text/html'] as const;

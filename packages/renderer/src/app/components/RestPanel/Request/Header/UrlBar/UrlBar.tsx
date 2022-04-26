@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { getRequest } from '@/app/db/get/request';
+import { modifyCurrentRequest } from '@/app/db/modify/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
+import { Bang } from '@/app/types/Bang';
+import { useState, useRef, ChangeEvent, useEffect } from 'react';
 import { ChevronBackOutline } from 'react-ionicons';
-import { getRequest } from '../../../../../db/get/request';
-import { modifyCurrentRequest } from '../../../../../db/modify/request';
-import { useRefresher } from '../../../../../hooks/useRefresher';
-import { Bang } from '../../../../../types/Bang';
 import { useDebounce } from 'usehooks-ts';
 import style from './UrlBar.module.scss';
 

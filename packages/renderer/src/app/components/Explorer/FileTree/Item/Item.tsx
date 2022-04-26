@@ -1,11 +1,11 @@
+import { createTabInCurrentCollection } from '@/app/db/create/tab';
+import { moveXintoY } from '@/app/db/move';
+import { setCurrentRequest } from '@/app/db/set/request';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
-import { createTabInCurrentCollection as createTab } from '../../../../db/create/tab';
-import { moveXintoY } from '../../../../db/move';
-import { setCurrentRequest } from '../../../../db/set/request';
-import { useRefresher } from '../../../../hooks/useRefresher';
 import style from './Item.module.scss';
 
 export interface Props {
@@ -95,7 +95,7 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, show,
           e.stopPropagation();
           if (children) return setOpen(!open);
 
-          Promise.all([setCurrentRequest(id), createTab(id)]).then(refresh);
+          Promise.all([setCurrentRequest(id), createTabInCurrentCollection(id)]).then(refresh);
         }}
         onMouseOver={e => {
           e.stopPropagation();

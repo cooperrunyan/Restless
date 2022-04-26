@@ -1,10 +1,10 @@
+import { getRequest } from '@/app/db/get/request';
 import { modifyCurrentRequest } from '@/app/db/modify/request';
 import { useRefresher } from '@/app/hooks/useRefresher';
+import { Bang } from '@/app/types/Bang';
 import { useEffect } from 'react';
 import { AddOutline, CheckboxOutline, TrashOutline } from 'react-ionicons';
 import { useElementSize } from 'usehooks-ts';
-import { getRequest } from '../../../../../db/get/request';
-import { Bang } from '../../../../../types/Bang';
 import style from './Headers.module.scss';
 
 const MaxGridWidth = 480;

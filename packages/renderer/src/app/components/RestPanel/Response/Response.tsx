@@ -1,5 +1,5 @@
-import { getResponse } from '../../../db/get/response';
-import { Bang } from '../../../types/Bang';
+import { getResponse } from '@/app/db/get/response';
+import { Bang } from '@/app/types/Bang';
 import style from './Response.module.scss';
 
 interface Props {

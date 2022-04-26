@@ -19,6 +19,6 @@
     "types": ["node", "react", "../../types.d.ts"],
     "typeRoots": ["./src/app/types", "../../node_modules/@types"]
   },
-  "include": ["./**/*.ts*"],
+  "include": ["./**/*.ts*", "src/app/pages/Rest/Rest.jsx", "src/app/components/RestPanel/RestPanel.jsx"],
   "exclude": []
 }

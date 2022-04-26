@@ -1,4 +1,4 @@
-import { Setter } from '../../../../../types/Setter';
+import { Setter } from '@/app/types/Setter';
 import style from './SectionsSelector.module.scss';
 
 type SectionName = 'Body' | 'Headers' | 'Query' | 'Authorization' | 'Documentation';

@@ -1,12 +1,11 @@
 import style from './Body.module.scss';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-import { useEffect, useRef, useState } from 'react';
-import { Bang } from '../../../../../types/Bang';
-import { getRequest } from '../../../../../db/get/request';
-import { useWindowSize } from 'usehooks-ts';
-import { modifyCurrentRequest } from '../../../../../db/modify/request';
-import { useDebounce } from 'usehooks-ts';
-import { useRefresher } from '../../../../../hooks/useRefresher';
+import { getRequest } from '@/app/db/get/request';
+import { modifyCurrentRequest } from '@/app/db/modify/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
+import { Bang } from '@/app/types/Bang';
+import { useState, useRef, useEffect } from 'react';
+import { useWindowSize, useDebounce } from 'usehooks-ts';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/yaml/yaml';
@@ -14,7 +13,7 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/theme/material.css';
 
-import '../../../../../style/codemirror.scss';
+import '@/app/style/codemirror.scss';
 
 interface Props {
   request: Bang<Awaited<ReturnType<typeof getRequest>>>;

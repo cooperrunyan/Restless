@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import SplitPane from 'react-split-pane';
-import { getCurrentRequest } from '../../db/get/request';
-import { useRefresher } from '../../hooks/useRefresher';
+import { getCurrentRequest } from '@/app/db/get/request';
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useRefresher } from '@/app/hooks/useRefresher';
+import { useState, useRef, useEffect } from 'react';
+import { useWindowSize, useMediaQuery } from 'usehooks-ts';
 import { Logo } from '../Logo/Logo';
 import { Tabs } from '../Tabs/Tabs';
 import style from './RestPanel.module.scss';
-
 import { Request } from './Request/Request';
 import { Response } from './Response/Response';
-import { useMediaQuery, useWindowSize } from 'usehooks-ts';
-import { useOnRefresh } from '../../hooks/useOnRefresh';
 
 export const RestPanel = () => {
   const [request, setRequest] = useState();

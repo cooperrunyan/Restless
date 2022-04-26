@@ -1,20 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import { AddOutline } from 'react-ionicons';
-import { folders } from '../../../db/get';
-import { getAllRequests } from '../../../db/get/request';
-import style from './FileTree.module.scss';
-import { Item } from './Item/Item';
-import * as channels from '../../../../../../main/channels';
-import { deleteRequest } from '../../../db/delete/request';
-import { TemplateItem } from './TemplateItem/TemplateItem';
-import { deleteFolder } from '../../../db/delete/folder';
-import type { Props as ItemType } from './Item/Item';
-import { renameFolder } from '../../../db/rename/folder';
-import { toast } from 'react-toastify';
-import { renameRequest } from '../../../db/rename/request';
-import { useRefresher } from '@/app/hooks/useRefresher';
+import { deleteFolder } from '@/app/db/delete/folder';
+import { deleteRequest } from '@/app/db/delete/request';
+import { folders } from '@/app/db/get';
+import { getAllRequests } from '@/app/db/get/request';
+import { renameFolder } from '@/app/db/rename/folder';
+import { renameRequest } from '@/app/db/rename/request';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { pathsToJSON } from '@/app/lib/pathsToJSON';
+import { useState, useRef, useEffect } from 'react';
+import { AddOutline } from 'react-ionicons';
+import { toast } from 'react-toastify';
+import { TemplateItem } from './TemplateItem/TemplateItem';
+
+import type { Props as ItemType } from './Item/Item';
+import { Item } from './Item/Item';
+
+import * as channels from '@/channels';
+
+import style from './FileTree.module.scss';
 
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);

@@ -1,14 +1,14 @@
+import { createCollectionInCurrentWorkspace } from '@/app/db/create/collection';
+import { getCurrentCollection, getAllCollections } from '@/app/db/get/collection';
+import { setCurrentCollection } from '@/app/db/set/collection';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { PrismaClient } from '@prisma/client';
-import { useEffect, useRef, useState } from 'react';
-import { AddOutline, ChevronBackOutline } from 'react-ionicons';
+import { useState, useRef } from 'react';
+import { ChevronBackOutline, AddOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
-import { createCollectionInCurrentWorkspace as createCollection } from '../../db/create/collection';
-import { getAllCollections, getCurrentCollection } from '../../db/get/collection';
-import { setCurrentCollection } from '../../db/set/collection';
-import { useRefresher } from '../../hooks/useRefresher';
-import style from './Explorer.module.scss';
 import { FileTree } from './FileTree/FileTree';
+import style from './Explorer.module.scss';
 
 export const Explorer: React.FC = () => {
   const [collection, setCollection] = useState<Awaited<ReturnType<typeof getCurrentCollection>>>();
@@ -62,7 +62,7 @@ export const Explorer: React.FC = () => {
                   toastId: id,
                 });
 
-                createCollection(value).then(() => {
+                createCollectionInCurrentWorkspace(value).then(() => {
                   toast.dismiss(id);
 
                   setOpen(false);

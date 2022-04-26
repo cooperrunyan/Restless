@@ -1,5 +1,5 @@
-import style from './StatusBar.module.scss';
 import { CloudyOutline, FlashOutline, TerminalOutline } from 'react-ionicons';
+import style from './StatusBar.module.scss';
 
 export const StatusBar: React.FC = () => {
   return (

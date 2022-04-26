@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { ArrowBackOutline, OptionsOutline, ReaderOutline, ServerOutline, ShapesOutline, TimerOutline } from 'react-ionicons';
 import { useLocation, useNavigate, useResolvedPath } from 'react-router-dom';
-import style from './Toolbar.module.scss';
 import { Triangle } from './Triangle';
+import { useState } from 'react';
+import style from './Toolbar.module.scss';
 
 export const Toolbar: React.FC = () => {
   return (

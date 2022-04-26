@@ -1,11 +1,11 @@
-import React, { ReactElement, useState } from 'react';
-import { getRequest } from '../../../db/get/request';
-import { Bang } from '../../../types/Bang';
+import { getRequest } from '@/app/db/get/request';
+import { Bang } from '@/app/types/Bang';
+import { useState, ReactElement } from 'react';
+import { Body } from './sections/Body/Body';
+import { Headers } from './sections/Headers/Headers';
 import { useElementSize } from 'usehooks-ts';
 import { Header } from './Header/Header';
-import { Headers } from './sections/Headers/Headers';
 import style from './Request.module.scss';
-import { Body } from './sections/Body/Body';
 
 type SectionName = 'Body' | 'Headers' | 'Query' | 'Authorization' | 'Documentation';
 

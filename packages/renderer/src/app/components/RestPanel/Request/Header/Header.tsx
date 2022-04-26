@@ -1,10 +1,10 @@
-import { getRequest } from '../../../../db/get/request';
-import { Bang } from '../../../../types/Bang';
+import { getRequest } from '@/app/db/get/request';
+import { Bang } from '@/app/types/Bang';
+import { Setter } from '@/app/types/Setter';
+import { ContentType } from './ContentType/ContentType';
 import style from './Header.module.scss';
 import { SectionsSelector } from './SectionsSelector/SectionsSelector';
 import { UrlBar } from './UrlBar/UrlBar';
-import { Setter } from '../../../../types/Setter';
-import { ContentType } from './ContentType/ContentType';
 
 type SectionName = 'Body' | 'Headers' | 'Query' | 'Authorization' | 'Documentation';
 

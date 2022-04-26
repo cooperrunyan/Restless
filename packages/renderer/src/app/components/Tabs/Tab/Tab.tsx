@@ -1,9 +1,9 @@
+import { deleteTab } from '@/app/db/delete/tab';
+import { getTab } from '@/app/db/get/tab';
+import { setCurrentRequest } from '@/app/db/set/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { useState } from 'react';
 import { CloseOutline } from 'react-ionicons';
-import { deleteTab } from '../../../db/delete/tab';
-import { getTab } from '../../../db/get/tab';
-import { setCurrentRequest } from '../../../db/set/request';
-import { useRefresher } from '../../../hooks/useRefresher';
 import style from './Tab.module.scss';
 
 interface Props {

@@ -1,9 +1,9 @@
+import { createFolderInCurrentCollection } from '@/app/db/create/folder';
+import { createRequestInCurrentCollection } from '@/app/db/create/request';
 import { useRefresher } from '@/app/hooks/useRefresher';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
-import { createFolderInCurrentCollection } from '../../../../db/create/folder';
-import { createRequestInCurrentCollection } from '../../../../db/create/request';
 import style from './TemplateItem.module.scss';
 
 interface Props {
