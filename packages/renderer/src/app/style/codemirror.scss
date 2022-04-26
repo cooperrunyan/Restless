@@ -1,0 +1,58 @@
+.react-codemirror2 {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.CodeMirror {
+  background-color: var(--1);
+  color: var(--4);
+
+  * {
+    font-family: var(--mono) !important;
+    font-size: 1.6rem;
+  }
+
+  .cm-string {
+    color: var(--5);
+  }
+
+  .cm-property {
+    color: var(--7);
+  }
+
+  .cm-atom,
+  .cm-number {
+    color: var(--primary);
+  }
+
+  .CodeMirror-selected,
+  *::selection {
+    background-color: var(--2);
+  }
+
+  .CodeMirror-linenumber {
+    color: var(--5);
+  }
+}
+
+.CodeMirror-cursor {
+  border-color: var(--primary);
+}
+
+.CodeMirror-gutter {
+  background-color: var(--1);
+}
+
+.CodeMirror-gutters {
+  border-right: transparent;
+}
+
+.CodeMirror-linenumbers {
+  padding-right: 0.8rem;
+}
+
+.yaml-editor .CodeMirror {
+  color: var(--5);
+}

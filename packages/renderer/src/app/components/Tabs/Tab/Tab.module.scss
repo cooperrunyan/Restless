@@ -1,0 +1,73 @@
+.Tab {
+  display: flex;
+  padding: 1.8rem;
+  gap: 1.8rem;
+  padding-right: 6rem;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-right: 0.1rem solid var(--4);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+  border-bottom: 0.1rem solid transparent;
+  min-width: fit-content;
+
+  &.active {
+    border-bottom: 0.1rem solid var(--primary);
+  }
+
+  &:hover,
+  &.active {
+    background-color: var(--2);
+  }
+
+  span {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 1.4rem;
+    height: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    color: var(--5);
+  }
+
+  p {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.6rem;
+    height: 1.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.03em;
+    color: var(--8);
+  }
+
+  button {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    border-radius: var(--border-radius);
+
+    &:hover {
+      background-color: var(--3);
+    }
+
+    & > * {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
