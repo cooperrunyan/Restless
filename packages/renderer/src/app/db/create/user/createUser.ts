@@ -5,7 +5,9 @@ export async function createUser() {
   const response = await prisma.user.create({
     data: {
       workspaces: {
-        create: {},
+        create: {
+          name: 'My Workspace',
+        },
       },
     },
   });
