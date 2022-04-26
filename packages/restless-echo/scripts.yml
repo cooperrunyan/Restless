@@ -1,3 +1,0 @@
-scripts:
-  start: deno run --no-check=remote -A src/server.ts
-  test: deno test --no-check=remote -A src/test/index.spec.ts

@@ -1,36 +1,33 @@
-import { oak } from './deps.ts';
+import Application from 'koa';
 
-export const app = new oak.Application();
-
-app.addEventListener('listen', (e) => console.log(`App running on port: ${e.port}`));
-app.addEventListener('error', (e) => console.error(e.error));
+export const app = new Application();
 
 app.use(async (ctx) => {
   const args: Record<string, string> = {};
-  ctx.request.url.searchParams.forEach(([v, k]) => (args[k] = v));
+  ctx.request.URL.searchParams.forEach(([v, k]) => (args[k!] = v!));
 
-  const headers: Record<string, string> = {};
-  Array.from(ctx.request.headers.entries()).forEach(([k, v]) => {
-    headers[k] = v;
-  });
+  const headers: Record<string, string | string[]> = {};
+  Object.entries(ctx.request.headers).forEach(([k, v]) => (headers[k!] = v!));
 
-  ctx.response.headers.set('access-control-allow-credentials', 'true');
-  ctx.response.headers.set('access-control-allow-headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  ctx.response.headers.set('access-control-allow-methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD');
-  ctx.response.headers.set('access-control-allow-origin', '*');
-  ctx.response.headers.set('cache-control', 'no-cache');
-  ctx.response.headers.set('content-type', 'application/json');
-  ctx.response.headers.set('date', new Date().toDateString());
+  ctx.response.headers;
+
+  ctx.response.headers['access-control-allow-credentials'] = 'true';
+  ctx.response.headers['access-control-allow-headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+  ctx.response.headers['access-control-allow-methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD';
+  ctx.response.headers['access-control-allow-origin'] = '*';
+  ctx.response.headers['cache-control'] = 'no-cache';
+  ctx.response.headers['content-type'] = 'application/json';
+  ctx.response.headers['date'] = new Date().toDateString();
 
   const body = {
     method: ctx.request.method,
     args,
-    body: await ctx.request.body().value,
+    body: await ctx.request.toJSON(),
     headers,
-    path: ctx.request.url.pathname,
+    path: ctx.request.URL.pathname,
   };
 
-  ctx.response.headers.set('content-length', `${JSON.stringify(body).length}`);
+  ctx.response.headers['content-length'] = `${JSON.stringify(body).length}`;
 
   ctx.response.body = body;
 });

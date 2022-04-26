@@ -1,8 +1,6 @@
-console.log('Starting...');
+import { app } from './app';
+import { config } from 'dotenv';
 
-import { app } from './app.ts';
-import { config as env } from 'https://deno.land/x/dotenv@v3.2.0/mod.ts';
+config();
 
-Object.entries(env()).forEach(([key, value]) => Deno.env.set(key, value));
-
-await app.listen({ port: +Deno.env.get('PORT')! });
+app.listen({ port: +process.env.PORT! }, () => console.log(`App running on port: ${process.env.PORT}`));
