@@ -1,10 +1,10 @@
 {
-  "appId": "YourAppID",
-  "productName": "YourAppName",
-  "copyright": "Copyright © 2022 ${author}",
+  "appId": "cc.restless.app",
+  "productName": "Restless",
+  "copyright": "Copyright © 2022 Cooper Runyan",
   "asar": true,
   "directories": {
-    "output": "release/${version}",
+    "output": "release/0.0.0",
     "buildResources": "resources"
   },
   "files": ["dist"],
@@ -15,7 +15,7 @@
         "arch": ["x64"]
       }
     ],
-    "artifactName": "${productName}-${version}-Setup.${ext}"
+    "artifactName": "Restless-0.0.0-Setup.${ext}"
   },
   "nsis": {
     "oneClick": false,
@@ -25,10 +25,10 @@
   },
   "mac": {
     "target": ["dmg"],
-    "artifactName": "${productName}-${version}-Installer.${ext}"
+    "artifactName": "Restless-0.0.0-Installer.${ext}"
   },
   "linux": {
     "target": ["AppImage"],
-    "artifactName": "${productName}-${version}-Installer.${ext}"
+    "artifactName": "Restless-0.0.0-Installer.${ext}"
   }
 }
