@@ -1,4 +1,4 @@
-import { ReactChild, useEffect } from 'react';
+import { type ReactElement, useEffect } from 'react';
 import React from 'react';
 import { Refresher } from './Refresher';
 import { toast } from 'react-toastify';
@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './style/toastify.scss';
 
 interface Props {
-  children?: ReactChild | ReactChild[];
+  children?: ReactElement | ReactElement[];
 }
 
 export const App: React.FC<Props> = ({ children }: Props) => {

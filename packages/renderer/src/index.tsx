@@ -1,4 +1,3 @@
-import { render } from 'react-dom';
 import { Router } from './app/Router';
 import { createRoot } from 'react-dom/client';
 

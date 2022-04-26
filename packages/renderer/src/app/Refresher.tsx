@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 
 export const RefresherContext = React.createContext<{ refresh: () => boolean; iteration: number }>({ refresh: () => false, iteration: 0 });
 
