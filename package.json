@@ -6,6 +6,7 @@
   "author": "cooperrunyan",
   "license": "EPL-2.0",
   "main": "dist/main/index.cjs",
+  "typings": "./types.d.ts",
   "scripts": {
     "dev": "node scripts/watch.mjs",
     "build": "tsc --noEmit -p packages/renderer/tsconfig.json && node scripts/build.mjs && electron-builder"

@@ -5,8 +5,3 @@ declare namespace NodeJS {
     readonly VITE_DEV_SERVER_PORT: string;
   }
 }
-
-declare module '*.module.scss' {
-  const data: Record<string, string>;
-  export default data;
-}

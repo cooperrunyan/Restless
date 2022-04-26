@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { getRequest } from '../../../db/get/request';
 import { Bang } from '../../../types/Bang';
 import { useElementSize } from 'usehooks-ts';
