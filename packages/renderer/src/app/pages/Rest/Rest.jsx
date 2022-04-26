@@ -14,10 +14,11 @@ import { RestPanel } from '../../components/RestPanel/RestPanel';
 export const Rest = () => {
   const navigate = useNavigate();
 
-  useOnRefresh(() =>
-    db.get.workspace.getCurrentWorkspace().then(workspace => {
-      if (!workspace) navigate('/home');
-    }),
+  useOnRefresh(
+    () =>
+      void db.get.workspace.getCurrentWorkspace().then(workspace => {
+        if (!workspace) navigate('/home');
+      }),
   );
 
   return (

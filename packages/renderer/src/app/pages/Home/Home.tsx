@@ -8,7 +8,7 @@ import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 export const Home: React.FC = () => {
   const [user, setUser] = useState<Awaited<ReturnType<PrismaClient['user']['findFirst']>>>(null);
 
-  useOnRefresh(() => db.get.user.getUser().then(user => setUser(user)));
+  useOnRefresh(() => void db.get.user.getUser().then(user => setUser(user)));
 
   return (
     <App>

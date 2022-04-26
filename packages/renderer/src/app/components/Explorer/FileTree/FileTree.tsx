@@ -59,35 +59,36 @@ export const FileTree: React.FC = () => {
     };
   }, [data]);
 
-  useOnRefresh(() => {
-    (async () => {
-      const requests = getAllRequests();
-      const paths = folders.getFoldersInCurrentCollection();
+  useOnRefresh(
+    () =>
+      void (async () => {
+        const requests = getAllRequests();
+        const paths = folders.getFoldersInCurrentCollection();
 
-      await Promise.all([requests, paths]);
+        await Promise.all([requests, paths]);
 
-      const p = (await paths) || [];
+        const p = (await paths) || [];
 
-      setData(
-        pathsToJSON([
-          ...p.map(path => ({
-            path: path.value,
-            id: path.id,
-          })),
+        setData(
+          pathsToJSON([
+            ...p.map(path => ({
+              path: path.value,
+              id: path.id,
+            })),
 
-          ...((await requests) || []).map(request => {
-            return {
-              path: request.path,
-              method: request.method,
-              id: request.id,
-              name: request.name,
-              isRequest: true,
-            };
-          }),
-        ] as any),
-      );
-    })();
-  });
+            ...((await requests) || []).map(request => {
+              return {
+                path: request.path,
+                method: request.method,
+                id: request.id,
+                name: request.name,
+                isRequest: true,
+              };
+            }),
+          ] as any),
+        );
+      })(),
+  );
 
   return (
     <div

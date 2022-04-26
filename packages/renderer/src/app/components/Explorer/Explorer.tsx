@@ -19,8 +19,8 @@ export const Explorer: React.FC = () => {
   const [open, setOpen] = useState(false);
   const refresh = useRefresher();
 
-  useOnRefresh(() => (async () => setCollection(await getCurrentCollection()))());
-  useOnRefresh(() => (async () => setAllCollections((await getAllCollections()) || []))());
+  useOnRefresh(() => void (async () => setCollection(await getCurrentCollection()))());
+  useOnRefresh(() => void (async () => setAllCollections((await getAllCollections()) || []))());
 
   return (
     <div className={style.Explorer}>
