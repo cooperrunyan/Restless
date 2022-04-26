@@ -17,7 +17,5 @@ export async function setCurrentWorkspace(id: string) {
     },
   });
 
-  // prisma.$disconnect();
-
   return result;
 }

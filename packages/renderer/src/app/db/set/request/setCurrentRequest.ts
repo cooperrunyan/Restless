@@ -17,7 +17,5 @@ export async function setCurrentRequest(id: string) {
     },
   });
 
-  // prisma.$disconnect();
-
   return result;
 }

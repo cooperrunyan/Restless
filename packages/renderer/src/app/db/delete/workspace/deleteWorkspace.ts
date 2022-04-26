@@ -4,6 +4,5 @@ export async function deleteWorkspace(id: string) {
 
   const result = await prisma.workspace.delete({ where: { id } });
 
-  // prisma.$disconnect();
   return result;
 }

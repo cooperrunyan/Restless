@@ -11,6 +11,5 @@ export async function deleteCurrentResponse() {
   const result = await prisma.response.delete({ where: { id: request.currentResponse } });
   await modifyCurrentRequest({ currentResponse: null });
 
-  // prisma.$disconnect();
   return result;
 }

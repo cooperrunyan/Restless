@@ -18,6 +18,5 @@ export async function getCurrentRequest() {
     },
   });
 
-  // prisma.$disconnect();
   return result[0];
 }

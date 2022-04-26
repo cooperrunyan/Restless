@@ -14,6 +14,5 @@ export async function getFoldersInCurrentCollection() {
     },
   });
 
-  // prisma.$disconnect();
   return result;
 }

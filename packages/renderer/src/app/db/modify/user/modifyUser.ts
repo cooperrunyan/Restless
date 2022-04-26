@@ -16,7 +16,5 @@ export async function modifyUser(data: Prisma.UserUpdateInput) {
     data,
   });
 
-  // prisma.$disconnect();
-
   return result;
 }

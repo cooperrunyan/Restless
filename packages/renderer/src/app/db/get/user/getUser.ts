@@ -18,6 +18,5 @@ export async function getUser() {
     },
   });
 
-  // prisma.$disconnect();
   return user;
 }

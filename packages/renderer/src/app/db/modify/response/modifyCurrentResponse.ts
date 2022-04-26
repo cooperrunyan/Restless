@@ -15,7 +15,5 @@ export async function modifyCurrentResponse(data: Prisma.ResponseUpdateInput) {
     data,
   });
 
-  // prisma.$disconnect();
-
   return result;
 }

@@ -15,6 +15,5 @@ export async function getCurrentResponse() {
     },
   });
 
-  // prisma.$disconnect();
   return result[0];
 }

@@ -13,7 +13,5 @@ export async function getCurrentWorkspace() {
     },
   });
 
-  // prisma.$disconnect();
-
   return result;
 }

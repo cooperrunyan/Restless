@@ -10,6 +10,5 @@ export async function getAllResponses() {
 
   const result = await prisma.response.findMany({ where: { ownerId: currentRequest.id } });
 
-  // prisma.$disconnect();
   return result;
 }

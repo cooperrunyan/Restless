@@ -16,6 +16,6 @@ export async function getAllRequests() {
       responses: true,
     },
   });
-  // prisma.$disconnect();
+
   return result;
 }

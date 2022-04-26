@@ -19,6 +19,5 @@ export async function createCollection(workspaceId: string, name: string) {
     currentCollection: response.id,
   });
 
-  // prisma.$disconnect();
   return response;
 }

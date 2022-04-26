@@ -11,7 +11,5 @@ export async function modifyWorkspace(id: string, data: Prisma.WorkspaceUpdateIn
     data,
   });
 
-  // prisma.$disconnect();
-
   return result;
 }
