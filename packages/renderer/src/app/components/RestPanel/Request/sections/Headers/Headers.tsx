@@ -1,3 +1,5 @@
+import { modifyCurrentRequest } from '@/app/db/modify/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
 import { useEffect } from 'react';
 import { AddOutline, CheckboxOutline, TrashOutline } from 'react-ionicons';
 import { useElementSize } from 'usehooks-ts';
@@ -13,14 +15,20 @@ interface Props {
 
 export const Headers: React.FC<Props> = ({ request }) => {
   const [ref, { width }] = useElementSize<HTMLDivElement>();
+  const refresh = useRefresher();
 
   useEffect(() => {
     const grid = document.querySelector<HTMLDivElement>(`.${style.Headers} .${style.grid}`)!;
+
     if (width < MaxGridWidth) return grid.style.setProperty('grid-template-columns', '1fr 1fr');
     return grid.style.setProperty('grid-template-columns', '');
   }, [width]);
 
   if (!request) return <></>;
+
+  useEffect(() => {
+    if (!request.headers) modifyCurrentRequest({ headers: '{}' }).then(refresh);
+  }, []);
 
   return (
     <div className={style.Headers}>

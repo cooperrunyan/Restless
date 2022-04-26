@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CloseOutline } from 'react-ionicons';
 import { deleteTab } from '../../../db/delete/tab';
 import { getTab } from '../../../db/get/tab';
 import { setCurrentRequest } from '../../../db/set/request';
-import { RefresherContext } from '../../../Refresher';
+import { useRefresher } from '../../../hooks/useRefresher';
 import style from './Tab.module.scss';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const Tab: React.FC<Props> = ({ tab, active }) => {
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
   const [hover, setHover] = useState(false);
 
   if (!tab) return <></>;

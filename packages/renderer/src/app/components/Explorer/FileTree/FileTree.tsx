@@ -1,8 +1,7 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AddOutline } from 'react-ionicons';
 import { folders } from '../../../db/get';
 import { getAllRequests } from '../../../db/get/request';
-import { RefresherContext } from '../../../Refresher';
 import style from './FileTree.module.scss';
 import { Item } from './Item/Item';
 import { pathsToJSON } from './parse/pathsToJSON';
@@ -14,10 +13,12 @@ import type { Props as ItemType } from './Item/Item';
 import { renameFolder } from '../../../db/rename/folder';
 import { toast } from 'react-toastify';
 import { renameRequest } from '../../../db/rename/request';
+import { useRefresher } from '@/app/hooks/useRefresher';
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 
 export const FileTree: React.FC = () => {
   const [data, setData] = useState([]);
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
   const [showTemplate, setShowTemplate] = useState(false);
   const [templateType, setTemplateType] = useState<'request' | 'folder'>('request');
   const ref = useRef<HTMLDivElement>(null);
@@ -58,7 +59,7 @@ export const FileTree: React.FC = () => {
     };
   }, [data]);
 
-  useEffect(() => {
+  useOnRefresh(() => {
     (async () => {
       const requests = getAllRequests();
       const paths = folders.getFoldersInCurrentCollection();
@@ -86,7 +87,7 @@ export const FileTree: React.FC = () => {
         ] as any),
       );
     })();
-  }, [iteration]);
+  });
 
   return (
     <div

@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { ChevronBackOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
 import { modifyCurrentRequest } from '../../../../../db/modify/request';
-import { RefresherContext } from '../../../../../Refresher';
+import { useRefresher } from '../../../../../hooks/useRefresher';
 import style from './ContentType.module.scss';
 
 const contentTypes = [null, 'application/json', 'application/xml', 'text/plain', 'text/yaml', 'text/html'] as const;
@@ -13,7 +13,7 @@ interface Props {
 
 export const ContentType: React.FC<Props> = ({ contentType }) => {
   const [open, setOpen] = useState(false);
-  const { refresh, iteration } = useContext(RefresherContext);
+  const refresh = useRefresher();
 
   return (
     <div className={style.ContentType + ' ' + (open ? style.open : '')} onClick={() => setOpen(!open)}>

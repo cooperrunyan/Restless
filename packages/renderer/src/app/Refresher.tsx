@@ -12,5 +12,3 @@ export const Refresher: React.FC<{ children: React.ReactElement | React.ReactEle
 
   return <RefresherContext.Provider value={{ refresh, iteration }}>{children}</RefresherContext.Provider>;
 };
-
-export const useRefresher = () => useContext(RefresherContext);

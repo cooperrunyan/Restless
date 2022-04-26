@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useRefresher } from '@/app/hooks/useRefresher';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
 import { createFolderInCurrentCollection } from '../../../../db/create/folder';
 import { createRequestInCurrentCollection } from '../../../../db/create/request';
-import { RefresherContext } from '../../../../Refresher';
 import style from './TemplateItem.module.scss';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 export const TemplateItem: React.FC<Props> = ({ type, setter }) => {
   const ref = useRef<HTMLInputElement>(null);
   const item = useRef<HTMLFormElement>(null);
-  const { refresh, iteration } = useContext(RefresherContext);
+  const refresh = useRefresher();
 
   const [input, setInput] = useState('');
 

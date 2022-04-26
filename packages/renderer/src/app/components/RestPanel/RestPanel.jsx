@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SplitPane from 'react-split-pane';
 import { getCurrentRequest } from '../../db/get/request';
-import { RefresherContext } from '../../Refresher';
+import { useRefresher } from '../../hooks/useRefresher';
 import { Logo } from '../Logo/Logo';
 import { Tabs } from '../Tabs/Tabs';
 import style from './RestPanel.module.scss';
@@ -12,7 +12,7 @@ import { useMediaQuery, useWindowSize } from 'usehooks-ts';
 
 export const RestPanel = () => {
   const [request, setRequest] = useState();
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
   const container = useRef(null);
   const [updateInterval, setUpdateInterval] = useState(0);
 

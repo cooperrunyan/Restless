@@ -1,12 +1,12 @@
 import style from './Body.module.scss';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Bang } from '../../../../../types/Bang';
 import { getRequest } from '../../../../../db/get/request';
 import { useWindowSize } from 'usehooks-ts';
 import { modifyCurrentRequest } from '../../../../../db/modify/request';
 import { useDebounce } from 'usehooks-ts';
-import { RefresherContext } from '../../../../../Refresher';
+import { useRefresher } from '../../../../../hooks/useRefresher';
 
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/yaml/yaml';
@@ -26,7 +26,7 @@ export const Body: React.FC<Props> = ({ request, containerSize, updateInterval }
   const [value, setValue] = useState('');
   const size = useWindowSize();
   const container = useRef<HTMLDivElement>(null);
-  const { refresh, iteration } = useContext(RefresherContext);
+  const refresh = useRefresher();
 
   const debouncedValue = useDebounce<string>(value, 10);
 

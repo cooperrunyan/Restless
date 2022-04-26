@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ChevronBackOutline } from 'react-ionicons';
 import { getRequest } from '../../../../../db/get/request';
 import { modifyCurrentRequest } from '../../../../../db/modify/request';
-import { RefresherContext } from '../../../../../Refresher';
+import { useRefresher } from '../../../../../hooks/useRefresher';
 import { Bang } from '../../../../../types/Bang';
 import { useDebounce } from 'usehooks-ts';
 import style from './UrlBar.module.scss';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const UrlBar: React.FC<Props> = ({ request }) => {
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
   const [value, setValue] = useState<string>(request.url);
   const debouncedValue = useDebounce<string>(value, 40);
   const urlBox = useRef<HTMLInputElement>(null);

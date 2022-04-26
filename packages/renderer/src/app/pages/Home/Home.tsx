@@ -1,17 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { useEffect, useState, useContext } from 'react';
+import { useState } from 'react';
 import { db } from '../../db';
 import { App } from '../../App';
 import style from './Home.module.scss';
-import { RefresherContext } from '../../Refresher';
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 
 export const Home: React.FC = () => {
   const [user, setUser] = useState<Awaited<ReturnType<PrismaClient['user']['findFirst']>>>(null);
-  const { refresh, iteration } = useContext(RefresherContext);
 
-  useEffect(() => {
-    db.get.user.getUser().then(user => setUser(user));
-  }, [iteration]);
+  useOnRefresh(() => db.get.user.getUser().then(user => setUser(user)));
 
   return (
     <App>

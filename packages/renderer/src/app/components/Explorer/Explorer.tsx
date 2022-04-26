@@ -1,11 +1,12 @@
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 import { PrismaClient } from '@prisma/client';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AddOutline, ChevronBackOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
 import { createCollectionInCurrentWorkspace as createCollection } from '../../db/create/collection';
 import { getAllCollections, getCurrentCollection } from '../../db/get/collection';
 import { setCurrentCollection } from '../../db/set/collection';
-import { RefresherContext } from '../../Refresher';
+import { useRefresher } from '../../hooks/useRefresher';
 import style from './Explorer.module.scss';
 import { FileTree } from './FileTree/FileTree';
 
@@ -16,10 +17,10 @@ export const Explorer: React.FC = () => {
   const newCollectionRef = useRef<HTMLInputElement>(null);
 
   const [open, setOpen] = useState(false);
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
 
-  useEffect(() => void (async () => setCollection(await getCurrentCollection()))(), [iteration]);
-  useEffect(() => void (async () => setAllCollections((await getAllCollections()) || []))(), [iteration]);
+  useOnRefresh(() => (async () => setCollection(await getCurrentCollection()))());
+  useOnRefresh(() => (async () => setAllCollections((await getAllCollections()) || []))());
 
   return (
     <div className={style.Explorer}>

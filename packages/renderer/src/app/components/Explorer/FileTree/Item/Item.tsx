@@ -1,10 +1,11 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useRef, useState } from 'react';
 import { ChevronDownOutline } from 'react-ionicons';
 import { toast } from 'react-toastify';
 import { createTabInCurrentCollection as createTab } from '../../../../db/create/tab';
 import { moveXintoY } from '../../../../db/move';
 import { setCurrentRequest } from '../../../../db/set/request';
-import { RefresherContext } from '../../../../Refresher';
+import { useRefresher } from '../../../../hooks/useRefresher';
 import style from './Item.module.scss';
 
 export interface Props {
@@ -22,12 +23,12 @@ export const Item: React.FC<Props> = ({ method, name, children, layer, id, show,
   const ref = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
-  const { iteration, refresh } = useContext(RefresherContext);
+  const refresh = useRefresher();
   const itemRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  useOnRefresh(() => {
     if (rename) nameRef.current?.focus();
-  }, [iteration, rename]);
+  }, [rename]);
 
   return (
     <div

@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useOnRefresh } from '@/app/hooks/useOnRefresh';
+import { useState } from 'react';
 import { getCurrentRequest } from '../../db/get/request';
 import { getAllTabs } from '../../db/get/tab';
-import { RefresherContext } from '../../Refresher';
 import { Tab } from './Tab/Tab';
 import style from './Tabs.module.scss';
 
 export const Tabs: React.FC = () => {
-  const { refresh, iteration } = useContext(RefresherContext);
   const [tabs, setTabs] = useState<Awaited<ReturnType<typeof getAllTabs>>>();
   const [currentRequest, setCurrentRequest] = useState<Awaited<ReturnType<typeof getCurrentRequest>>>();
 
-  useEffect(() => void getAllTabs().then(setTabs), [iteration]);
-  useEffect(() => void getCurrentRequest().then(setCurrentRequest), [iteration]);
+  useOnRefresh(() => void getAllTabs().then(setTabs));
+  useOnRefresh(() => void getCurrentRequest().then(setCurrentRequest));
 
   if (!tabs?.at(0)) return <></>;
 
