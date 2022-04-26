@@ -9,6 +9,7 @@ import style from './RestPanel.module.scss';
 import { Request } from './Request/Request';
 import { Response } from './Response/Response';
 import { useMediaQuery, useWindowSize } from 'usehooks-ts';
+import { useOnRefresh } from '../../hooks/useOnRefresh';
 
 export const RestPanel = () => {
   const [request, setRequest] = useState();
@@ -24,7 +25,7 @@ export const RestPanel = () => {
   const matches = useMediaQuery('(max-width: 1400px)');
 
   useEffect(() => void setContainerWidth(container.current?.clientWidth || 0), [size.width]);
-  useEffect(() => void getCurrentRequest().then(setRequest), [iteration]);
+  useOnRefresh(() => void getCurrentRequest().then(setRequest));
 
   if (!request)
     return (
