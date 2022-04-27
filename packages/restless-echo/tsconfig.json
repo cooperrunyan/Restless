@@ -76,7 +76,7 @@
     "useDefineForClassFields": true // Use more modern ECMA syntax
   },
 
-  "include": ["./src"], // Files to include
+  "include": ["./src", "./src/types.d.ts"], // Files to include
   "exclude": ["./bin", "node_modules"], // Files to exclude
 
   "buildOptions": {

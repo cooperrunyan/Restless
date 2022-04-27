@@ -9,8 +9,6 @@ app.use(async (ctx) => {
   const headers: Record<string, string | string[]> = {};
   Object.entries(ctx.request.headers).forEach(([k, v]) => (headers[k!] = v!));
 
-  ctx.response.headers;
-
   ctx.response.headers['access-control-allow-credentials'] = 'true';
   ctx.response.headers['access-control-allow-headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
   ctx.response.headers['access-control-allow-methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD';
@@ -21,10 +19,9 @@ app.use(async (ctx) => {
 
   const body = {
     method: ctx.request.method,
-    args,
-    body: await ctx.request.toJSON(),
-    headers,
     path: ctx.request.URL.pathname,
+    args,
+    headers,
   };
 
   ctx.response.headers['content-length'] = `${JSON.stringify(body).length}`;
