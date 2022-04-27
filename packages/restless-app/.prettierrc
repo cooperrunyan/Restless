@@ -1,7 +1,7 @@
 {
   "tabWidth": 2,
   "useTabs": false,
-  "arrowParens": "always",
+  "arrowParens": "avoid",
   "bracketSameLine": true,
   "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",

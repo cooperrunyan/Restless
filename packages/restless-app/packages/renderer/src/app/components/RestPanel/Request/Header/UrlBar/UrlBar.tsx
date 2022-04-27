@@ -16,6 +16,7 @@ export const UrlBar: React.FC<Props> = ({ request }) => {
   const [value, setValue] = useState<string>(request.url);
   const debouncedValue = useDebounce<string>(value, 40);
   const urlBox = useRef<HTMLInputElement>(null);
+  useEffect(() => setValue(request.url), [request.id]);
 
   const [showDropdown, setShowDropdown] = useState(false);
 

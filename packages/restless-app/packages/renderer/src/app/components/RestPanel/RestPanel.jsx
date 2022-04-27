@@ -1,7 +1,7 @@
 import { getCurrentRequest } from '@/app/db/get/request';
+import { useState, useRef, useEffect } from 'react';
 import { useOnRefresh } from '@/app/hooks/useOnRefresh';
 import { useRefresher } from '@/app/hooks/useRefresher';
-import { useState, useRef, useEffect } from 'react';
 import { useWindowSize, useMediaQuery } from 'usehooks-ts';
 import { Logo } from '../Logo/Logo';
 import { Tabs } from '../Tabs/Tabs';
@@ -12,7 +12,6 @@ import SplitPane from 'react-split-pane';
 
 export const RestPanel = () => {
   const [request, setRequest] = useState();
-  const refresh = useRefresher();
   const container = useRef(null);
   const [updateInterval, setUpdateInterval] = useState(0);
 
@@ -24,7 +23,7 @@ export const RestPanel = () => {
   const matches = useMediaQuery('(max-width: 1400px)');
 
   useEffect(() => void setContainerWidth(container.current?.clientWidth || 0), [size.width]);
-  useOnRefresh(() => void getCurrentRequest().then(setRequest));
+  useOnRefresh(() => void getCurrentRequest().then(setRequest), []);
 
   if (!request)
     return (

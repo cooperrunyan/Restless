@@ -31,7 +31,7 @@ export const Body: React.FC<Props> = ({ request, containerSize, updateInterval }
 
   useEffect(() => void modifyCurrentRequest({ body: debouncedValue }).then(refresh), [debouncedValue]);
 
-  useEffect(() => setValue(request.body || ''), []);
+  useEffect(() => setValue(request.body || ''), [request.id]);
   useEffect(() => {
     const codeMirrorElement = container.current?.querySelector('.CodeMirror') as HTMLDivElement;
 
