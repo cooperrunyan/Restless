@@ -15,11 +15,10 @@ export interface Props {
   children?: Props[];
   layer: number;
   rename?: boolean;
-  show: boolean;
   stopRenaming: (id: boolean, type?: 'folder' | 'request', name?: string) => void;
 }
 
-export const Item: React.FC<Props> = ({ method, name, children, layer, id, show, rename = false, stopRenaming = () => {} }) => {
+export const Item: React.FC<Props> = ({ method, name, children, layer, id, rename = false, stopRenaming = () => {} }) => {
   const ref = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
